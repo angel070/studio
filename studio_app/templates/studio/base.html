@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>DIT | Studio</title>
+
+    <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/w3.css' %}" rel="stylesheet">
+    <link href="{% static 'productPage/css/styles.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'font.css' %}">
+
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>DIT STUDIO </h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="">
+                    <a href="#labSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lab</a>
+                    <ul class="collapse list-unstyled" id="labSubmenu">
+                        <li>
+                            <a href=" {% url 'addLab' %}" class="w3-bar-item ">Add New</a>
+                           
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewLab' %}" class="w3-bar-item ">View </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home2Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Component</a>
+                    <ul class="collapse list-unstyled" id="home2Submenu">
+                        <li>
+                            <a href="{% url 'addComponent' %}" class="w3-bar-item ">Add New</a>
+                        
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewComponent' %}" class="w3-bar-item ">View </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home3Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Income</a>
+                    <ul class="collapse list-unstyled" id="home3Submenu">
+                        <li>
+                            <a href="{% url 'addSourceOfIncome' %}" class="w3-bar-item ">Add Income Source</a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewSourceOfIncome' %}" class="w3-bar-item ">View Income Source </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'addIncome' %}" class="w3-bar-item ">Add Income </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewIncome' %}" class="w3-bar-item ">View Income </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home4Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Purchases</a>
+                    <ul class="collapse list-unstyled" id="home4Submenu">
+                        <li>
+                            <a href="{% url 'addPurchase' %}" class="w3-bar-item ">Add Purchase</a>
+                            
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewPurchases' %}" class="w3-bar-item ">View Purchases </a>
+                        </li>
+            
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home5Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Expenses</a>
+                    <ul class="collapse list-unstyled" id="home5Submenu">
+                        <li>
+                            <a href="{% url 'addSourceOfExpenses' %}" class="w3-bar-item ">Add Expenses Source</a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewSourceOfExpenses' %}" class="w3-bar-item ">View Expenses Source </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'addExpenses' %}" class="w3-bar-item ">Add Expenses</a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'viewExpenses' %}" class="w3-bar-item ">View Expenses</a>
+                        </li>
+            
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home6Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Member</a>
+                    <ul class="collapse list-unstyled" id="home6Submenu">
+                        <li>
+                            <a href="{% url 'addMemberType' %}" class="w3-bar-item ">Add Member Type</a> 
+                        </li>
+                        <li>
+                            <a href="{% url 'viewMemberType' %}" class="w3-bar-item ">View Member Type</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'addLocation' %}" class="w3-bar-item ">Add Location</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'viewLocation' %}" class="w3-bar-item ">view Location</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'addMember' %}" class="w3-bar-item ">Register Member</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
+                        </li>
+            
+                    </ul>
+                </li>
+                
+    
+            </ul>
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+            <div class="row headerMiddle">
+                <div class="col-1">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                <div class=" col-11 text-center top">
+                    <h2>STUDIO MANAGEMENT SYSTEM</h2>
+                    
+                </div>
+                <!-- <div>
+                    <div class="w3-dropdown-hover col-3">
+                        <a class="nav-link settings"><i class="fa fa-cogs mr-3"></i>Settings</a>
+                        <div class="w3-dropdown-content w3-bar-block navback">
+                            <a href="#" class="w3-bar-item "><i class="fa fa-key mr-3"></i>Logout</a>
+                    
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div>
+                 {% block content %}{% endblock %}
+            </div>
+
+        
+        </div>
+    </div>
+    <div class="page ">
+    
+        <footer class="footer  text-center">
+            <p>Copyright &copy <a href="#">Developed By Angela Macha</a>
+                <script>document.write(new Date().getFullYear());</script>. All rights reserved
+            </p>
+        </footer>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fontawesome/js/all.js' %}"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

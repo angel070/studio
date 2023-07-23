@@ -1,0 +1,144 @@
+{% extends 'studio/base.html' %}
+{% block title %}Components{% endblock %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="outer-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="w-100">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <h3 class="text-center">Members</h3>
+                    <table id="example" class="table table-hover table-striped table-bordered table-responsive mb-5 ">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last name</th>
+                                <th>Birth date</th>
+                                <th>Registration No.</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Registered Date</th>
+                                <th>Nationality</th>
+                                <th>Type</th>
+                                <th>Location</th>
+                                <th>Id No.</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td>
+                                    {{ forloop.counter}}
+                                </td>
+                                <td>
+                                    {{ member.firstName}}
+                                </td>
+                                <td>
+                                    {{ member.middleName}}
+                                </td>
+                                <td>
+                                    {{ member.lastName}}
+                                </td>
+                                <td>
+                                    {{ member.dateOfBirth}}
+                                </td>
+                                <td>
+                                    {{ member.registrationNumber}}
+                                </td>
+                                <td>
+                                    {{ member.phoneNumber}}
+                                </td>
+                                <td>
+                                    {{ member.email}}
+                                </td>
+                                <td>
+                                    {{ member.registeredDate}}
+                                </td>
+                                <td>
+                                    {{ member.nationality}}
+                                </td>
+                                <td>
+                                    {{ member.gender}}
+                                </td>
+                                <td>
+                                    {{ member.location}}
+                                </td>
+                                <td>
+                                    {{ member.idNumber}}
+                                </td>
+                              
+
+                                <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#deleteMember{{member.id}}"><i class="fa fa-trash"></i></a> |
+                                    <a href="#" type="button" class="btn btn-outline-danger"><i
+                                            class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+
+                            <div class="modal fade" id="deleteMember{{student.id}}" data-backdrop="static"
+                                data-keyboard="false" tabindex="-1" aria-labelledby="deleteproductLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteproductLabel">Confirm Student Deletion</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure, you want to delete?</p>
+                                        </div>
+                                        <div class="p-4">
+                                            <button type="button" class="btn button"
+                                                data-dismiss="modal">Cancel</button>
+                                            <a href=" {% url 'deleteMember' member.id %}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
+<script type="text/javascript">
+    // Data table
+    $(document).ready(function () {
+        $('#example').DataTable();
+
+    })
+</script>
+{% endblock %}

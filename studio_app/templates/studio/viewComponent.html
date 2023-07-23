@@ -1,0 +1,115 @@
+{% extends 'studio/base.html' %}
+{% block title %}Components{% endblock %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="outer-container mt-5 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="w3-card mt-5" style="margin-left:70px">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <h3 class="text-center">Components</h3>
+                    <table id="example" class="table table-hover table-striped table-bordered  ">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Lab</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Value</th>
+                                <th>Cost</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for component in Components %}
+                            <tr>
+                                <td>
+                                    {{ forloop.counter}}
+                                </td>
+                                <td>
+                                    {{ component.lab}}
+                                </td>
+                                <td>
+                                    {{ component.name}}
+                                </td>
+                                <td>
+                                    {{ component.quantity}}
+                                </td>
+                                <td>
+                                    {{ component.value}}
+                                </td>
+                                <td>
+                                    {{ component.cost}}
+                                </td>
+
+                                <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#deleteComponent{{component.id}}"><i class="fa fa-trash"></i></a> |
+                                    <a href="#" type="button" class="btn btn-outline-danger"><i
+                                            class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+
+                            <div class="modal fade" id="deleteComponent{{component.id}}" data-backdrop="static"
+                                data-keyboard="false" tabindex="-1" aria-labelledby="deleteproductLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteproductLabel">Confirm Component Deletion</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure, you want to delete?</p>
+                                        </div>
+                                        <div class="p-4">
+                                            <button type="button" class="btn button"
+                                                data-dismiss="modal">Cancel</button>
+                                            <a href=" {% url 'deleteComponent' component.id %}" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
+<script type="text/javascript">
+    // Data table
+    $(document).ready(function () {
+        $('#example').DataTable();
+
+    })
+</script>
+{% endblock %}

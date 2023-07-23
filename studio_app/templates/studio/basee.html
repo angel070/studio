@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title> Studio</title> | {% block title %}{% endblock %}</title>
+
+{% block link %}{% endblock %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/w3.css' %}">
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'font.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navback fixed-top">
+    <a class="navbar-brand" href="{% url 'home' %}">Studio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+            <i class="fas fa-bars"></i>
+        </span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          
+            <li class="nav-item">
+                <a class="nav-link w3-hide-large" href="#">Quick Links <span
+                        class="sr-only">(current)</span></a>
+            </li>
+            <div class="w3-dropdown-hover">
+                <li class="nav-item">
+                    <a class=" nav-link " href="#">Lab</a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href=" {% url 'addLab' %}" class="w3-bar-item ">Add New</a>
+                        <a href=" {% url 'viewLab' %}" class="w3-bar-item ">View </a>
+                        
+                    </div>
+                </li>
+            </div>
+           
+        
+
+            <div class="w3-dropdown-hover">
+                <li class="nav-item">
+                    <a class=" nav-link " href="#">Components</a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="{% url 'addComponent' %}" class="w3-bar-item ">Add New</a>
+                        <a href=" {% url 'viewComponent' %}" class="w3-bar-item ">View </a>
+                    </div>
+                </li>
+            </div>
+
+            <div class="w3-dropdown-hover">
+                <li class="nav-item">
+                    <a class=" nav-link " href="#">Income</a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="{% url 'addSourceOfIncome' %}" class="w3-bar-item ">Add Income Source</a>
+                        <a href=" {% url 'viewSourceOfIncome' %}" class="w3-bar-item ">View Income Source </a>
+                        <a href=" {% url 'addIncome' %}" class="w3-bar-item ">Add Income </a>
+                        <a href=" {% url 'viewIncome' %}" class="w3-bar-item ">View Income  </a>
+                    </div>
+                </li>
+            </div>
+
+            <div class="w3-dropdown-hover">
+                <li class="nav-item">
+                    <a class=" nav-link " href="#">Purchases</a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="{% url 'addPurchase' %}" class="w3-bar-item ">Add Purchase</a>
+                        <a href=" {% url 'viewPurchases' %}" class="w3-bar-item ">View Purchases </a>
+                    </div>
+                </li>
+            </div>
+
+            <div class="w3-dropdown-hover">
+                <li class="nav-item">
+                    <a class=" nav-link " href="#">Expenses</a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="{% url 'addSourceOfExpenses' %}" class="w3-bar-item ">Add Expenses Source</a>
+                        <a href=" {% url 'viewSourceOfExpenses' %}" class="w3-bar-item ">View Expenses Source </a>
+                        <a href="{% url 'addExpenses' %}" class="w3-bar-item ">Add Expenses</a>
+                        <a href=" {% url 'viewExpenses' %}" class="w3-bar-item ">View Expenses</a>
+                    </div>
+                </li>
+            </div>
+            <div class="w3-dropdown-hover">
+                <li class="nav-item">
+                    <a class=" nav-link " href="#">Member </a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="{% url 'addMemberType' %}" class="w3-bar-item ">Add Member Type</a>
+                        <a href="{% url 'viewMemberType' %}" class="w3-bar-item ">View Member Type</a>
+                        <a href="{% url 'addMember' %}" class="w3-bar-item ">Register</a>
+                        <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
+                        <a href="{% url 'addLocation' %}" class="w3-bar-item ">Location</a>
+                        <a href="{% url 'viewLocation' %}" class="w3-bar-item ">view Location</a>
+                       
+                    </div>
+                </li>
+            </div>
+        
+        </ul>
+        <div class="w3-dropdown-hover">
+            <a class="nav-link settings"><i class="fa fa-cogs mr-3"></i>Settings</a>
+            <div class="w3-dropdown-content w3-bar-block navback">
+                <a href="#" class="w3-bar-item "><i class="fa fa-key mr-3"></i>Setup</a>
+            
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div >
+    {% block content %}{% endblock %}
+</div>
+<div class="page"> 
+   
+    <footer class="footer  text-center">
+        <p>Copyright &copy <a href="#">Developed By Angela Macha</a>
+            <script>document.write(new Date().getFullYear());</script>. All rights reserved
+        </p>
+    </footer>
+</div>
+
+{% block js %}
+{% endblock %}
+
+<script src="{% static 'script.js' %}"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'fontawesome/js/all.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/chart.js' %}"></script>
+
+</body>
+</html>
