@@ -1,6 +1,7 @@
 {% extends 'studio/base.html' %}
 {% block title %}Components{% endblock %}
 {% load static %}
+{% load humanize %}
 
 {% block link %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
@@ -12,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <div class="w-100">
+                <div class="w3-card">
                     {% if messages %}
                     {% for message in messages %}
                     <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
@@ -25,6 +26,8 @@
                     {% endif %}
 
                     <h3 class="text-center">Members</h3>
+                    <a href="{% url 'addMember' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i class="fa fa-plus"></i> Add
+                            New</button></a>
                     <table id="example" class="table table-hover table-striped table-bordered table-responsive mb-5 ">
                         <thead>
                             <tr>
@@ -73,7 +76,7 @@
                                     {{ member.email}}
                                 </td>
                                 <td>
-                                    {{ member.registeredDate}}
+                                    {{ member.registeredDate }}
                                 </td>
                                 <td>
                                     {{ member.nationality}}
@@ -91,7 +94,7 @@
 
                                 <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#deleteMember{{member.id}}"><i class="fa fa-trash"></i></a> |
-                                    <a href="#" type="button" class="btn btn-outline-danger"><i
+                                    <a href="{% url 'updateMember' member.id %}" type="button" class="btn btn-outline-danger"><i
                                             class="fa fa-edit"></i></a>
                                 </td>
                             </tr>

@@ -7,7 +7,17 @@ class addLabsForm(forms.ModelForm):
         model = Lab
         fields = '__all__'
 
+class updateLabsForm(forms.ModelForm):
+    class Meta:
+        model = Lab
+        fields = '__all__'
+
 class addComponentsForm(forms.ModelForm):
+    class Meta:
+        model = Component
+        fields = '__all__'
+
+class updateComponentsForm(forms.ModelForm):
     class Meta:
         model = Component
         fields = '__all__'
@@ -54,6 +64,11 @@ class addExpensesForm(forms.ModelForm):
             super(addExpensesForm, self).__init__(*args, **kwargs)
             self.fields['name','lab'].widget.attrs.update({'class': 'form-control'})
 
+class updateExpensesForm(forms.ModelForm):
+    class Meta:
+        model = Expenses
+        fields = '__all__'
+
 class addSourceOfExpensesForm(forms.ModelForm):
     class Meta:
         model = Source_Of_Expenses
@@ -69,8 +84,6 @@ class addLocationForm(forms.ModelForm):
         model = Location
         fields = '__all__'
 
-
-
 class addMemberForm(forms.ModelForm):
     class Meta:
         model = Member
@@ -79,3 +92,8 @@ class addMemberForm(forms.ModelForm):
         widgets = {
             'dateOfBirth': forms.DateInput(attrs={'type':'date' }),
         }
+
+class addCheckInAndOutForm(forms.ModelForm):    
+    class meta: 
+        model = CheckInAndout  
+        fields ='__all__'        

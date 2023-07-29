@@ -70,7 +70,7 @@ class Source_Of_Expenses(models.Model):
     name = models.CharField(max_length = 255, null = False, blank = False)
 
     class Meta:
-        verbose_name_plural = 'Source-Of-Expenses'
+        verbose_name_plural = 'Source Of Expenses'
 
 
     def __str__(self):
@@ -130,8 +130,21 @@ class Member(models.Model):
     gender = models.CharField(max_length=255, choices = CHOICES,null = False, blank = False)
 
     class Meta:
-        verbose_name_plural = 'Students'
+        verbose_name_plural = 'Members'
 
 
     def __str__(self):
      return f'{self.firstName}  {self.lastName}'
+    
+class CheckInAndout(models.Model):
+    member = models.ForeignKey(Member,on_delete= models.PROTECT)
+    date = models.DateTimeField(blank=False, null=False)
+    status  =  models.CharField(max_length= 255, null=False , blank=False)
+
+    class Meta:
+        verbose_name_plural = 'CheckInAndout'
+
+
+    def __str__(self):
+     return f'{self.member.firstName} '
+

@@ -1,0 +1,98 @@
+{% extends 'studio/base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{%block content %}
+
+<div class="outer-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 ">
+                <div class="contents mt-5">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <h5 class="text-center">Update Member </h5>
+
+                    <form action="" method="post" class="mt-3 w3-card pt-3 pb-4">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>First Name<strong>*</strong></h6>
+                                {{ form.firstName | add_class:'form-control'}}
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Middle Name</h6>
+                                {{ form.middleName | add_class:'form-control'}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Last Name<strong>*</strong></h6>
+                                {{ form.lastName  | add_class:'form-control'}}
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Birth Date<strong>*</strong></h6>
+                                {{ form.dateOfBirth | add_class:'form-control'}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Reg No.<strong>*</strong></h6>
+                                {{ form.registrationNumber | add_class:'form-control'}}
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Phone<strong>*</strong></h6>
+                                {{ form.phoneNumber | add_class:'form-control'}}
+                            </div>
+                         
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Email<strong>*</strong></h6>
+                                {{ form.email | add_class:'form-control'}}
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Nationality<strong>*</strong></h6>
+                                {{ form.nationality | add_class:'form-control'}}
+                            </div>
+                         
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Gender<strong>*</strong></h6>
+                                {{ form.gender | add_class:'form-control'}}
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Type<strong>*</strong></h6>
+                                {{ form.type | add_class:'form-control'}}
+                            </div>
+                         
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Location<strong>*</strong></h6>
+                                {{ form.location | add_class:'form-control'}}
+                            </div>
+                         
+                        </div>
+                        <button class="btn btn-primary btn-block mt-3" type="submit" name="button">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

@@ -4,19 +4,15 @@ from django.contrib import messages
 from datetime import datetime, timedelta, date
 
 # Create your views here.
-def home(request):              
-    return render(request,'studio/home.html')  
-
 #....................................Labs...............................
 def add_lab(request):
     form = addLabsForm()
     if request.method == 'POST':
         form = addLabsForm(request.POST or None)
-        get_lab = request.POST.get('name')
         if form.is_valid():          
             form.save()
             messages.success(request, f'Lab added successfully!')
-            return redirect('addLab')
+            return redirect('viewLab')
 
     context = {
      'form': form,
@@ -33,10 +29,29 @@ def viewLab(request):
     myTemplate = 'studio/viewLabs.html'
     return render(request, myTemplate, context)
 
+def updateLab(request,id):
+    instance = get_object_or_404(Lab, pk = id)
+    form = updateLabsForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Lab updated successfully!')
+            return redirect('viewLab')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateLab.html'
+    return render(request, myTemplate, context) 
+
 def deleteLab(request, id):
-    get_lab = Lab.objects.filter(id=id)
-    get_lab.delete()
-    return redirect('viewLab')
+    try:
+        get_lab = Lab.objects.get(id=id)
+        get_lab.delete()
+        return redirect('viewLab')
+    except:
+        messages.success(request,"Lab is already used can't be deleted ")
+        return redirect('viewLab')
 
 #.........................Components...................
 def addComponent(request):
@@ -46,7 +61,7 @@ def addComponent(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Component added successfully!')
-            return redirect('addComponent')
+            return redirect('viewComponent')
 
     context = {
      'form': form,
@@ -63,6 +78,21 @@ def viewComponent(request):
     myTemplate = 'studio/viewComponent.html'
     return render(request, myTemplate, context)
 
+def updateComponent(request,id):
+    instance = get_object_or_404(Component, pk = id)
+    form =addComponentsForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Component updated successfully!')
+            return redirect('viewComponent')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateComponent.html'
+    return render(request, myTemplate, context) 
+
 def deleteComponent(request, id):
     get_object = Lab.objects.filter(id=id)
     get_object.delete()
@@ -76,7 +106,7 @@ def addSourceOfIncome(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Source of income added successfully!')
-            return redirect('addSourceOfIncome')
+            return redirect('viewSourceOfIncome')
 
     context = {
      'form': form,
@@ -93,6 +123,21 @@ def viewSourceOfIncome(request):
     myTemplate = 'studio/viewSourceOfIncome.html'
     return render(request, myTemplate, context)
 
+def updateSourceOfIncome(request,id):
+    instance = get_object_or_404(Source_of_Income, pk = id)
+    form =addSourceOfIncomeForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Source of income updated successfully!')
+            return redirect('viewSourceOfIncome')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateSourceOfIncome.html'
+    return render(request, myTemplate, context) 
+
 def deleteSourceOfIncome(request, id):
     get_object = Source_of_Income.objects.filter(id=id)
     get_object.delete()
@@ -106,7 +151,7 @@ def addIncome(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Income added successfully!')
-            return redirect('addIncome')
+            return redirect('viewIncome')
 
     context = {
      'form': form,
@@ -123,6 +168,21 @@ def viewIncome(request):
     myTemplate = 'studio/viewIncome.html'
     return render(request, myTemplate, context)
 
+def updateIncome(request,id):
+    instance = get_object_or_404(Income, pk = id)
+    form =addIncomeForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Income updated successfully!')
+            return redirect('viewIncome')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateIncome.html'
+    return render(request, myTemplate, context) 
+
 def deleteIncome(request, id):
     get_object = Income.objects.filter(id=id)
     get_object.delete()
@@ -136,7 +196,7 @@ def addPurchase(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Purchase added successfully!')
-            return redirect('addPurchase')
+            return redirect('viewPurchases')
 
     context = {
      'form': form,
@@ -153,6 +213,21 @@ def viewPurchases(request):
     myTemplate = 'studio/viewPurchases.html'
     return render(request, myTemplate, context)
 
+def updatePurchases(request,id):
+    instance = get_object_or_404(Purchases, pk = id)
+    form =addPurchaseForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Purchases updated successfully!')
+            return redirect('viewPurchases')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updatePurchase.html'
+    return render(request, myTemplate, context) 
+
 def deletePurchase(request, id):
     get_object = Purchases.objects.filter(id=id)
     get_object.delete()
@@ -166,7 +241,7 @@ def addSourceOfExpenses(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Source of Expenses added successfully!')
-            return redirect('addSourceOfExpenses')
+            return redirect('viewSourceOfExpenses')
 
     context = {
      'form': form,
@@ -183,6 +258,21 @@ def viewSourceOfExpenses(request):
     myTemplate = 'studio/viewSourceOfExpenses.html'
     return render(request, myTemplate, context)
 
+def updateExpensesSource(request,id):
+    instance = get_object_or_404(Source_Of_Expenses, pk = id)
+    form =addSourceOfExpensesForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Source of expenses updated successfully!')
+            return redirect('viewSourceOfExpenses')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateSourceOfExpenses.html'
+    return render(request, myTemplate, context) 
+
 def deleteSourceOfExpenses(request, id):
     get_object = Source_Of_Expenses.objects.filter(id=id)
     get_object.delete()
@@ -196,7 +286,7 @@ def addExpenses(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Expenses added successfully!')
-            return redirect('addExpenses')
+            return redirect('viewExpenses')
 
     context = {
      'form': form,
@@ -213,6 +303,21 @@ def viewExpenses(request):
     myTemplate = 'studio/viewExpenses.html'
     return render(request, myTemplate, context)
 
+def updateExpenses(request,id):
+    instance = get_object_or_404(Expenses, pk = id)
+    form = updateExpensesForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Expenses updated successfully!')
+            return redirect('viewExpenses')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateExpenses.html'
+    return render(request, myTemplate, context) 
+
 def deleteExpenses(request, id):
     get_object = Expenses.objects.filter(id=id)
     get_object.delete()
@@ -226,7 +331,7 @@ def addLocation(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Member Location added successfully!')
-            return redirect('addLocation')
+            return redirect('viewLocation')
 
     context = {
      'form': form,
@@ -243,6 +348,21 @@ def viewLocation(request):
     myTemplate = 'studio/viewLocation.html'
     return render(request, myTemplate, context)
 
+def updateLocation(request,id):
+    instance = get_object_or_404(Location, pk = id)
+    form =addLocationForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Location updated successfully!')
+            return redirect('viewLocation')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateLocation.html'
+    return render(request, myTemplate, context) 
+
 def deleteLocation(request, id):
     get_object = Location.objects.filter(id=id)
     get_object.delete()
@@ -256,7 +376,7 @@ def addMemberType(request):
         if form.is_valid():          
             form.save()
             messages.success(request, f'Member Type added successfully!')
-            return redirect('addMemberType')
+            return redirect('viewMemberType')
 
     context = {
      'form': form,
@@ -272,6 +392,21 @@ def viewMemberType(request):
          }
     myTemplate = 'studio/viewMemberType.html'
     return render(request, myTemplate, context)
+
+def updateMemberType(request,id):
+    instance = get_object_or_404(Member_type, pk = id)
+    form =addMemberTypeForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Member Type updated successfully!')
+            return redirect('viewMemberType')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateMemberType.html'
+    return render(request, myTemplate, context) 
 
 def deleteMemberType(request, id):
     get_object = Member_type.objects.filter(id=id)
@@ -301,8 +436,7 @@ def addMember(request):
             #get name of member type and location using their Id
             get_memberTypeName = Member_type.objects.get(id=get_memberType )  
             get_LocationName = Location.objects.get(id=get_location )  
-            memberType = str(get_memberTypeName ) 
-            print("hello"+str(get_memberTypeName)) 
+            memberType = str(get_memberTypeName)
            
             dob = datetime.strptime(get_DOB, '%Y-%m-%d').date().day
            
@@ -324,7 +458,7 @@ def addMember(request):
             )     
             form.save()
             messages.success(request, f'Student added successfully!')
-            return redirect('addMember')
+            return redirect('viewMember')
 
     context = {
      'form': form,
@@ -341,7 +475,54 @@ def viewMembers(request):
     myTemplate = 'studio/viewMembers.html'
     return render(request, myTemplate, context)
 
+def updateMember(request,id):
+    instance = get_object_or_404(Member, pk = id)
+    form =addMemberForm(request.POST or None,instance = instance)
+    if request.method == 'POST': 
+        if form.is_valid():          
+            form.save()
+            messages.success(request, f'Member updated successfully!')
+            return redirect('viewMembers')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateMember.html'
+    return render(request, myTemplate, context) 
+
 def deleteMember(request, id):
     get_object = Member.objects.filter(id=id)
     get_object.delete()
     return redirect('viewMembers')
+
+#.........................................CheckInAndCheckOut....................................................
+def viewCheck(request):
+    allMembers = Member.objects.all()
+
+    context = {
+        'allMembers': allMembers,
+         }
+    myTemplate = 'studio/checkinAndOut.html'
+    return render(request, myTemplate, context)
+
+def addCheckInAndOut(request, member_id):
+    check = CheckInAndout.objects.filter(member=member_id, date__date=datetime.now().date()).count()
+    member = Member.objects.get(id=member_id)
+    status = "CHECK-IN" if check % 2 == 0 else "CHECK-OUT"  
+    check = CheckInAndout(
+        member_id = member_id,
+        date = datetime.now(),
+        status = status
+    )
+    status_message  = "checked in" if status == "CHECK-IN " else "checked out"      
+    messages.success(request, f'{member.firstName} {member.lastName} you have successful {status_message}')
+    check.save()
+    return redirect('checkInAndOut')
+
+def viewCheckedInAndOut(request):
+    members = CheckInAndout.objects.all()       
+    context = {
+        'members': members 
+         }  
+    myTemplate ='studio/viewCheckInAndOut.html'  
+    return render(request, myTemplate,context)   

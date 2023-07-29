@@ -24,7 +24,9 @@
                     {% endfor %}
                     {% endif %}
 
-                    <h3 class="text-center">Income Sources</h3>
+                    <h3 class="text-center">Income </h3>
+                    <a href="{% url 'addIncome' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i class="fa fa-plus"></i> Add
+                            New</button></a>
                     <table id="example" class="table table-hover table-striped table-bordered  ">
                         <thead>
                             <tr>
@@ -63,7 +65,7 @@
 
                                 <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#deleteIncome{{income.id}}"><i class="fa fa-trash"></i></a> |
-                                    <a href="#" type="button" class="btn btn-outline-danger"><i
+                                    <a href="{% url 'updateIncome' income.id %}" type="button" class="btn btn-outline-danger"><i
                                             class="fa fa-edit"></i></a>
                                 </td>
                             </tr>

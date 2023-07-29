@@ -457,11 +457,13 @@ section:after {
 
 .w3-card button {
 	border-radius: 40px;
-	background: var(--background);
+	/* background: var(--background); */
+	color: var(--background) !important;	
 }
 
 .w3-card button:hover {
-	color: var(--hover);
+	/* color: var(--hover); */
+	color: #f0f0f0 !important;
 	text-decoration: none !important;
 	background: var(--background)
 }

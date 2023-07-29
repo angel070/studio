@@ -29,73 +29,46 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="">
-                    <a href="#labSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lab</a>
-                    <ul class="collapse list-unstyled" id="labSubmenu">
-                        <li>
-                            <a href=" {% url 'addLab' %}" class="w3-bar-item ">Add New</a>
-                           
-                        </li>
-                        <li>
-                            <a href=" {% url 'viewLab' %}" class="w3-bar-item ">View </a>
-                        </li>
-                    </ul>
+                <li>
+                    <a href=" {% url 'viewLab' %}" class="w3-bar-item ">Lab </a>
                 </li>
-                <li class="">
+                <li>
+                    <a href=" {% url 'viewComponent' %}" class="w3-bar-item ">View </a>
+                </li>
+                <!-- <li class="">
                     <a href="#home2Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Component</a>
                     <ul class="collapse list-unstyled" id="home2Submenu">
                         <li>
                             <a href="{% url 'addComponent' %}" class="w3-bar-item ">Add New</a>
                         
                         </li>
-                        <li>
-                            <a href=" {% url 'viewComponent' %}" class="w3-bar-item ">View </a>
-                        </li>
+                        
 
                     </ul>
-                </li>
+                </li> -->
                 <li class="">
                     <a href="#home3Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Income</a>
                     <ul class="collapse list-unstyled" id="home3Submenu">
-                        <li>
-                            <a href="{% url 'addSourceOfIncome' %}" class="w3-bar-item ">Add Income Source</a>
-                        </li>
+                
                         <li>
                             <a href=" {% url 'viewSourceOfIncome' %}" class="w3-bar-item ">View Income Source </a>
                         </li>
-                        <li>
-                            <a href=" {% url 'addIncome' %}" class="w3-bar-item ">Add Income </a>
-                        </li>
+                    
                         <li>
                             <a href=" {% url 'viewIncome' %}" class="w3-bar-item ">View Income </a>
                         </li>
 
                     </ul>
                 </li>
-                <li class="">
-                    <a href="#home4Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Purchases</a>
-                    <ul class="collapse list-unstyled" id="home4Submenu">
-                        <li>
-                            <a href="{% url 'addPurchase' %}" class="w3-bar-item ">Add Purchase</a>
-                            
-                        </li>
-                        <li>
-                            <a href=" {% url 'viewPurchases' %}" class="w3-bar-item ">View Purchases </a>
-                        </li>
-            
-                    </ul>
+                <li>
+                    <a href=" {% url 'viewPurchases' %}" class="w3-bar-item "> Purchases </a>
                 </li>
+                
                 <li class="">
                     <a href="#home5Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Expenses</a>
                     <ul class="collapse list-unstyled" id="home5Submenu">
                         <li>
-                            <a href="{% url 'addSourceOfExpenses' %}" class="w3-bar-item ">Add Expenses Source</a>
-                        </li>
-                        <li>
                             <a href=" {% url 'viewSourceOfExpenses' %}" class="w3-bar-item ">View Expenses Source </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'addExpenses' %}" class="w3-bar-item ">Add Expenses</a>
                         </li>
                         <li>
                             <a href=" {% url 'viewExpenses' %}" class="w3-bar-item ">View Expenses</a>
@@ -125,6 +98,30 @@
                             <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
                         </li>
             
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home7Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">CheckIn & Out</a>
+                    <ul class="collapse list-unstyled" id="home7Submenu">
+                        <li>
+                            <a href="{% url 'checkInAndOut' %}" class="w3-bar-item ">Check</a> 
+                        </li>
+                        <li>
+                            <a href="{% url 'viewCheckedInAndOut' %}" class="w3-bar-item ">view</a> 
+                        </li>
+            
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#home8Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User </a>
+                    <ul class="collapse list-unstyled" id="home8Submenu">
+                        <li>
+                            <a href="{% url 'addUser' %}" class="w3-bar-item ">Add User</a> 
+                        </li>
+                        <li>
+                            <a href="{% url 'login' %}" class="w3-bar-item ">Logout </a> 
+                        </li>
+                    
                     </ul>
                 </li>
                 
