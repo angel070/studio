@@ -35,7 +35,7 @@ def users(request):
 
 @login_required
 def allUsers(request):
-    users = CustomUser.objects.all()
+    users = CustomUser.objects.filter(is_superuser=False)
     query = request.GET.get("q")
     if query:
         if users.filter(Q(first_name__icontains = query)| Q(last_name__icontains = query)):
@@ -45,7 +45,7 @@ def allUsers(request):
             users = users.filter(Q(username__icontains = query))
 
         else:
-            users = CustomUser.objects.all()
+            users = CustomUser.objects.filter(is_superuser=False)
             messages.warning(request, f'No results found!')
     context = {
         'users': users

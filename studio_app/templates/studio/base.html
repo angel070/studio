@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'font.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/virtual-select.min.css' %}">
 
 </head>
 
@@ -160,14 +161,11 @@
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-
-    {% block js %}
-    {% endblock %}
-    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'script.js' %}"></script>
     <script type="text/javascript" src="{% static 'fontawesome/js/all.js' %}"></script>
-  
+    <script src="{% static '/js/virtual-select.min.js' %}"></script>
    
     <script type="text/javascript">
         $(document).ready(function () {
@@ -176,8 +174,13 @@
                 $(this).toggleClass('active');
             });
         });
+       
     </script>
-  
+    {% block js %}
+    
+    {% endblock %}
+
+
 </body>
 
 

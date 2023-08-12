@@ -3,10 +3,6 @@
 {% load widget_tweaks %}
 
 {%block link %}
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/">
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 {%endblock  %}
 
 {%block content %}
@@ -36,20 +32,16 @@
                         </div>
                         <div class="col-md-6">
                             <!-- <select id="multiple-checkboxes" multiple="multiple">
-                                {% for component in components %}
-                                    <option value="component.id">component.name</option>
-                                {% endfor %}
+                                
                             </select> -->
+                            <label for="components">Components</label> <br>
+                            <select class="w-100" multiple name="components" placeholder="" data-search="true"
+                                data-silent-initial-value-set="true">
+                                {% for component in components %}
 
-                            <select id="multiple-checkboxes" multiple="multiple">
-                                <option value="php">PHP</option>
-                                <option value="javascript">JavaScript</option>
-                                <option value="java">Java</option>
-                                <option value="sql">SQL</option>
-                                <option value="jquery">Jquery</option>
-                                <option value=".net">.Net</option>
+                                    <option value="{{component.id}}">{{ component.name}} </option>
+                                {% endfor %}
                             </select>
-                
                         </div>
                     </div>
                     <div class="row">
@@ -69,16 +61,10 @@
 {% endblock%}
 
 {% block js%}
-
-<script src="/js/bootstrap-multiselect.js"></script>
-
-
-<script type="text/javascript">
-    
-    $(document).ready(function () {
-
-        $('#multiple-checkboxes').multiselect();
-    });  
-</script>
+    <script type="text/javascript">
+        VirtualSelect.init({
+            ele: 'select'
+        });
+    </script>
 {% endblock%}
 
