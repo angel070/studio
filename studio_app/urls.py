@@ -2,6 +2,7 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
+    path('', views.addRequestedComponents, name='addRequestedComponents'),
     path('addLab/', views.add_lab, name='addLab'),
     path('viewLab/', views.viewLab, name='viewLab'),
     path('delete/lab/<int:id>/', views.deleteLab, name='deleteLab'),
@@ -45,7 +46,6 @@ urlpatterns = [
     path('checkInAndOut/', views.viewCheck, name='checkInAndOut'),
     path('addCheckInAndOut/<int:member_id>', views.addCheckInAndOut, name='addCheckInAndOut'),
     path('viewCheckInAndOut/', views.viewCheckedInAndOut, name='viewCheckedInAndOut'),
-    path('addRequestedComponents/', views.addRequestedComponents, name='addRequestedComponents'),
     path('viewRequestedComponents/', views.viewRequestedComponents, name='viewRequestedComponents'),
 
 ]

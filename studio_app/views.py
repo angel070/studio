@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from.forms import *
 from django.contrib import messages
 from datetime import datetime, timedelta, date
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 #....................................Labs...............................
@@ -594,6 +595,7 @@ def viewCheckedInAndOut(request):
     return render(request, myTemplate,context)   
 
 #.............................................Requested components..........................
+@login_required
 def addRequestedComponents(request):
     form = addRequestForm()
     components = Component.objects.all()          
