@@ -1,12 +1,7 @@
 {% extends 'studio/base.html' %}
-{% block title %}Labs{% endblock %}
+{% block title %}Components{% endblock %}
 {% load static %}
 
-
-{% block link %}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
-{% endblock %}
 
 {% block content %}
 
@@ -14,10 +9,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <div class="w3-card " >
+                <div class="w3-card mt-5" style="margin-left:70px">
                     {% if messages %}
                     {% for message in messages %}
-                    <div class="alert alert-{{message.tags}} alert-dismissible fade show " role="alert">
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
                         {{ message }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="">&times;</span>
@@ -26,43 +21,60 @@
                     {% endfor %}
                     {% endif %}
 
-                    <h3 class="text-center">Labs</h3>
-                    <a href="{% url 'addLab' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i class="fa fa-plus"></i> Add New</button></a>
+                    <h3 class="text-center">Components</h3>
+                    <a href="{% url 'addComponent' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i
+                                class="fa fa-plus"></i> Add New</button></a>
                     <table id="example" class="table table-hover table-striped table-bordered  ">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Name</th>
+                                <th>Member</th>
+                                <th>Member Id</th>
+                                <th>Component</th>
+                                <th>Value</th>
+                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {% for lab in labs %}
+                            {% for component in Components %}
                             <tr>
                                 <td>
                                     {{ forloop.counter}}
                                 </td>
                                 <td>
-                                    {{ lab.name}}
+                                    {{ component.member.firstName}} {{ component.member.middleName}} {{ component.member.lastName}}
                                 </td>
-                            
+                                <td>
+                                    {{ component.member.idNumber}}
+                                </td>
+                                <td>
+                                    {{ component.components.name}}
+                                </td>
+                                <td>
+                                    {{ component.components.value}}
+                                </td>
+                                <td>
+                                    {{ component.quantity}}
+                                </td>
+                                <td>
+                                    {{ component.requestedDate}}
+                                </td>
 
-                                <!-- <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
-                                        data-target="#deleteMember{{lab.id}}"><i class="fa fa-trash"></i></a> | -->
-                                <td><a href="{% url 'deleteLab' lab.id %}" class="btn btn-outline-danger" ><i class="fa fa-trash"></i></a> |
-                                    <a href="{% url 'updateLab' lab.id %}" type="button"
-                                        class="btn btn-outline-danger"><i class="fa fa-edit"></i></a>
+                                <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#deleteComponent{{component.id}}"><i class="fa fa-check"></i></a>
+                                    
                                 </td>
                             </tr>
 
-                            <!-- <div class="modal fade" id="deleteMember{{lab.id}}" data-backdrop="static"
+                            <div class="modal fade" id="deleteComponent{{component.id}}" data-backdrop="static"
                                 data-keyboard="false" tabindex="-1" aria-labelledby="deleteproductLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteproductLabel">Confirm Lab Deletion</h5>
+                                            <h5 class="modal-title" id="deleteproductLabel">Confirm Component Deletion</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -73,11 +85,10 @@
                                         <div class="p-4">
                                             <button type="button" class="btn button"
                                                 data-dismiss="modal">Cancel</button>
-                                            <a href=" {% url 'deleteLab' lab.id %}"
-                                                class="btn btn-danger">Delete</a>
+                                            <a href=" #" class="btn btn-danger">Delete</a>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                             {%endfor%}
                         </tbody>
@@ -92,8 +103,8 @@
 
 {% endblock %}
 
-
 {% block js %}
+
 <!--Import jQuery before export.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
@@ -109,16 +120,12 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
 
-<!--Export table button CSS-->
-
-
-
-<script >
+<script>
     // Data table
     $(document).ready(function () {
 
-       $.noConflict();
-         $('#example').DataTable({
+        $.noConflict();
+        $('#example').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'excel', 'pdf', 'print'

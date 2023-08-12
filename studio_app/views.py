@@ -9,10 +9,15 @@ def add_lab(request):
     form = addLabsForm()
     if request.method == 'POST':
         form = addLabsForm(request.POST or None)
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Lab added successfully!')
-            return redirect('viewLab')
+        get_name =request.POST.get('name') 
+        check_name = Lab.objects.filter(name=get_name ).count()
+        if form.is_valid():   
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Lab added successfully!')
+                 return redirect('viewLab')
+            else:
+                 messages.warning(request, f'Lab already exists!')      
 
     context = {
      'form': form,
@@ -32,11 +37,16 @@ def viewLab(request):
 def updateLab(request,id):
     instance = get_object_or_404(Lab, pk = id)
     form = updateLabsForm(request.POST or None,instance = instance)
+    get_name =request.POST.get('name') 
+    check_name = Lab.objects.filter(name=get_name ).count()
     if request.method == 'POST': 
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Lab updated successfully!')
-            return redirect('viewLab')
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Lab added successfully!')
+                 return redirect('viewLab')
+            else:
+                 messages.warning(request, f'Lab already exists!') 
 
     context = {
      'form': form,
@@ -58,10 +68,18 @@ def addComponent(request):
     form = addComponentsForm()
     if request.method == 'POST':
         form = addComponentsForm(request.POST or None)
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Component added successfully!')
-            return redirect('viewComponent')
+        get_name =request.POST.get('name') 
+        get_lab = request.POST.get('lab')   
+        get_value = request.POST.get('value')   
+        check_name = Component.objects.filter(name=get_name,lab = get_lab, value = get_value).count()
+    if request.method == 'POST': 
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Component added successfully!')
+                 return redirect('viewComponent')
+            else:
+                 messages.warning(request, f'Component already exists!') 
 
     context = {
      'form': form,
@@ -81,12 +99,18 @@ def viewComponent(request):
 def updateComponent(request,id):
     instance = get_object_or_404(Component, pk = id)
     form =addComponentsForm(request.POST or None,instance = instance)
+    get_name =request.POST.get('name') 
+    get_lab = request.POST.get('lab')   
+    get_value = request.POST.get('value')   
+    check_name = Component.objects.filter(name=get_name,lab = get_lab,value = get_value).count()
     if request.method == 'POST': 
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Component updated successfully!')
-            return redirect('viewComponent')
-
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Component added successfully!')
+                 return redirect('viewComponent')
+            else:
+                 messages.warning(request, f'Component already exists!') 
     context = {
      'form': form,
     }
@@ -103,10 +127,16 @@ def addSourceOfIncome(request):
     form = addSourceOfIncomeForm()
     if request.method == 'POST':
         form = addSourceOfIncomeForm(request.POST or None)
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Source of income added successfully!')
-            return redirect('viewSourceOfIncome')
+        get_name = request.POST.get('name')     
+        check_name = Source_of_Income.objects.filter(name=get_name).count()
+    if request.method == 'POST': 
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Source of income added successfully!')
+                 return redirect('viewSourceOfIncome')
+            else:
+                 messages.warning(request, f'Source of income already exists!')
 
     context = {
      'form': form,
@@ -126,12 +156,16 @@ def viewSourceOfIncome(request):
 def updateSourceOfIncome(request,id):
     instance = get_object_or_404(Source_of_Income, pk = id)
     form =addSourceOfIncomeForm(request.POST or None,instance = instance)
+    get_name = request.POST.get('name')     
+    check_name = Source_of_Income.objects.filter(name=get_name).count()
     if request.method == 'POST': 
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Source of income updated successfully!')
-            return redirect('viewSourceOfIncome')
-
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Source of income added successfully!')
+                 return redirect('viewSourceOfIncome')
+            else:
+                 messages.warning(request, f'Source of income already exists!')
     context = {
      'form': form,
     }
@@ -238,10 +272,18 @@ def addSourceOfExpenses(request):
     form = addSourceOfExpensesForm()
     if request.method == 'POST':
         form = addSourceOfExpensesForm(request.POST or None)
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Source of Expenses added successfully!')
-            return redirect('viewSourceOfExpenses')
+        get_name = request.POST.get('name')     
+        check_name = Source_Of_Expenses.objects.filter(name=get_name).count()
+        if request.method == 'POST': 
+            if form.is_valid():  
+                if check_name == 0:       
+                    form.save()
+                    messages.success(request, f'Source of expenses added successfully!')
+                    return redirect('viewSourceOfExpenses')
+                else:
+                    messages.warning(request, f'Source of expenses already exists!')
+                    return redirect('addSourceOfExpenses')
+
 
     context = {
      'form': form,
@@ -328,10 +370,17 @@ def addLocation(request):
     form =addLocationForm()
     if request.method == 'POST':
         form = addLocationForm(request.POST or None)
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Member Location added successfully!')
-            return redirect('viewLocation')
+        get_name = request.POST.get('name')     
+        check_name = Location.objects.filter(name=get_name).count()
+        if request.method == 'POST': 
+            if form.is_valid():  
+                if check_name == 0:       
+                    form.save()
+                    messages.success(request, f'Location added successfully!')
+                    return redirect('viewLocation')
+                else:
+                    messages.warning(request, f'Location already exists!')
+                    return redirect('addLocation')
 
     context = {
      'form': form,
@@ -351,12 +400,17 @@ def viewLocation(request):
 def updateLocation(request,id):
     instance = get_object_or_404(Location, pk = id)
     form =addLocationForm(request.POST or None,instance = instance)
+    get_name = request.POST.get('name')     
+    check_name = Location.objects.filter(name=get_name).count()
     if request.method == 'POST': 
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Location updated successfully!')
-            return redirect('viewLocation')
-
+        if form.is_valid():  
+            if check_name == 0:       
+                form.save()
+                messages.success(request, f'Location added successfully!')
+                return redirect('viewLocation')
+            else:
+                messages.warning(request, f'Location already exists!')
+                return redirect('addLocation')
     context = {
      'form': form,
     }
@@ -373,11 +427,17 @@ def addMemberType(request):
     form = addMemberTypeForm()
     if request.method == 'POST':
         form = addMemberTypeForm(request.POST or None)
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Member Type added successfully!')
-            return redirect('viewMemberType')
-
+        get_name = request.POST.get('type')     
+        check_name = Member_type.objects.filter(type=get_name).count()
+        if request.method == 'POST': 
+            if form.is_valid():  
+                if check_name == 0:       
+                    form.save()
+                    messages.success(request, f'Member type added successfully!')
+                    return redirect('viewMemberType')
+                else:
+                    messages.warning(request, f'Member type already exists!')
+                    return redirect('addMemberType')
     context = {
      'form': form,
     }
@@ -396,11 +456,17 @@ def viewMemberType(request):
 def updateMemberType(request,id):
     instance = get_object_or_404(Member_type, pk = id)
     form =addMemberTypeForm(request.POST or None,instance = instance)
+    get_name = request.POST.get('type')     
+    check_name = Member_type.objects.filter(type=get_name).count()
     if request.method == 'POST': 
-        if form.is_valid():          
-            form.save()
-            messages.success(request, f'Member Type updated successfully!')
-            return redirect('viewMemberType')
+        if form.is_valid():  
+            if check_name == 0:       
+                form.save()
+                messages.success(request, f'Member type added successfully!')
+                return redirect('viewMemberType')
+            else:
+                messages.warning(request, f'Member type already exists!')
+                return redirect('addMemberType')
 
     context = {
      'form': form,
@@ -440,7 +506,7 @@ def addMember(request):
            
             dob = datetime.strptime(get_DOB, '%Y-%m-%d').date().day
            
-            get_idNumber =f'{get_nationality.strip()[0].upper()} {get_fname.strip()[0].upper()} {get_lname.strip()[0].upper()} {get_gender.strip()[0].upper()} {memberType.strip()[0].upper()} {get_registeredDate.date().day} {str(get_phone).strip()[-2:]} {dob}'  
+            get_idNumber =f'{get_nationality.strip()[0].upper()} {get_fname.strip()[0].upper()} {get_lname.strip()[0].upper()} {get_gender.strip()[0].upper()} {memberType.strip()[0].upper()} {get_registeredDate.date().day} {str(get_phone).strip()[-2:]} {dob} '  
             form = Member(
                 firstName = get_fname,
                 middleName = get_mname,
@@ -458,7 +524,7 @@ def addMember(request):
             )     
             form.save()
             messages.success(request, f'Student added successfully!')
-            return redirect('viewMember')
+            return redirect('viewMembers')
 
     context = {
      'form': form,
@@ -526,3 +592,46 @@ def viewCheckedInAndOut(request):
          }  
     myTemplate ='studio/viewCheckInAndOut.html'  
     return render(request, myTemplate,context)   
+
+#.............................................Requested components..........................
+def addRequestedComponents(request):
+    form = addRequestForm()
+    components = Component.objects.all()          
+    if request.method == 'POST':
+        form = addrequestedComponentsForm(request.POST or None)
+                      
+        if form.is_valid(): 
+            get_email = request.POST.get('email') 
+            # get_components = request.POST.get('components') 
+            # get_components = request.POST.get('components')
+            get_member = Member.objects.get(email=get_email)
+            # get_quantity = request.POST.get('quantity')
+        
+
+            form = Request(  
+                member = get_member,
+                email = get_email,
+                requestedDate = datetime.now()
+            )
+            req = form.save()      
+            messages.success(request, f'Request sent successfully!')
+            return redirect('addRequestedComponents')
+
+    context = {
+     'form': form,
+     'components': components,  
+    }
+    myTemplate = 'studio/requestComponents.html'
+    return render(request, myTemplate, context) 
+
+def viewRequestedComponents(request):
+    Components = Request.objects.all()
+
+    context = {
+        'Components': Components,
+         }
+    myTemplate = 'studio/viewRequestedComponents.html'
+    return render(request, myTemplate, context)
+
+
+ 

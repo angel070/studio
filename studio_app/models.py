@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db import models
+from multiselectfield import MultiSelectField
 
 # Create your models here
 class Lab(models.Model):       
@@ -57,7 +58,8 @@ class Purchases(models.Model):
     component =models.ForeignKey(Component, on_delete = models.PROTECT)
     quantity = models.PositiveIntegerField(null = False, blank = False)
     amount = models.FloatField(null = True, blank = True)
-    date= models.DateField(null = False, blank = False)  
+    description = models.CharField(max_length = 1000, null = True ,blank = True)
+    date= models.DateField(null = False, blank = False,default = datetime.now())  
 
     class Meta:
         verbose_name_plural = 'Purchases'
@@ -80,7 +82,8 @@ class Expenses(models.Model):
     name = models.ForeignKey(Source_Of_Expenses, on_delete =models.PROTECT)
     lab = models.ForeignKey(Lab, on_delete = models.PROTECT)
     amount = models.FloatField(null = False, blank = False)
-    date = models.DateField(null = False, blank = False)
+    description = models.CharField(max_length = 1000, null = True ,blank = True)
+    date = models.DateField(null = False, blank = False,default = datetime.now())
 
     class Meta:
         verbose_name_plural = 'Expenses'
@@ -147,4 +150,26 @@ class CheckInAndout(models.Model):
 
     def __str__(self):
      return f'{self.member.firstName} '
+    
+class Request(models.Model):
+   member = models.ForeignKey(Member, on_delete= models.PROTECT,null = True) 
+   requestedDate = models.DateTimeField(auto_now_add=True)  
+   email = models.EmailField(null = True, blank = True)
+
+   class Meta:
+        verbose_name_plural = 'Requests'
+
+   def __str__(self):
+     return f'{self.member.firstName} {self.member.lastName}'    
+
+class Requestcomponents(models.Model):
+   request = models.ForeignKey(Request, on_delete=models.CASCADE)
+   component = models.ForeignKey(Component,  on_delete=models.PROTECT)
+   quantity = models.PositiveIntegerField()
+
+   class Meta:
+        verbose_name_plural = 'Request Components'
+
+   def __str__(self):
+     return f'{self.request.member.firstName} {self.request.member.lastName}'   
 

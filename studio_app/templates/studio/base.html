@@ -3,6 +3,7 @@
 
 <head>
     {% load static %}
+    {% block link %}{% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +16,7 @@
     <link href="{% static 'productPage/css/styles.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'font.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
 
 </head>
 
@@ -25,7 +26,9 @@
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>DIT STUDIO </h3>
+                    <img src="{% static 'img/ditSttudio.jpg' %}" class="image-logo">
+                <!-- <h3>DIT STUDIO </h3> -->
+               
             </div>
 
             <ul class="list-unstyled components">
@@ -33,21 +36,11 @@
                     <a href=" {% url 'viewLab' %}" class="w3-bar-item ">Lab </a>
                 </li>
                 <li>
-                    <a href=" {% url 'viewComponent' %}" class="w3-bar-item ">View </a>
+                    <a href=" {% url 'viewComponent' %}" class="w3-bar-item ">Component </a>
                 </li>
-                <!-- <li class="">
-                    <a href="#home2Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Component</a>
-                    <ul class="collapse list-unstyled" id="home2Submenu">
-                        <li>
-                            <a href="{% url 'addComponent' %}" class="w3-bar-item ">Add New</a>
-                        
-                        </li>
-                        
-
-                    </ul>
-                </li> -->
+        
                 <li class="">
-                    <a href="#home3Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Income</a>
+                    <a href="#home3Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="material-icons"></span>Income</a>
                     <ul class="collapse list-unstyled" id="home3Submenu">
                 
                         <li>
@@ -65,7 +58,7 @@
                 </li>
                 
                 <li class="">
-                    <a href="#home5Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Expenses</a>
+                    <a href="#home5Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Expenses</a>
                     <ul class="collapse list-unstyled" id="home5Submenu">
                         <li>
                             <a href=" {% url 'viewSourceOfExpenses' %}" class="w3-bar-item ">View Expenses Source </a>
@@ -79,23 +72,22 @@
                 <li class="">
                     <a href="#home6Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Member</a>
                     <ul class="collapse list-unstyled" id="home6Submenu">
-                        <li>
-                            <a href="{% url 'addMemberType' %}" class="w3-bar-item ">Add Member Type</a> 
-                        </li>
+                    
                         <li>
                             <a href="{% url 'viewMemberType' %}" class="w3-bar-item ">View Member Type</a>
                         </li>
-                        <li>
-                            <a href="{% url 'addLocation' %}" class="w3-bar-item ">Add Location</a>
-                        </li>
+                    
                         <li>
                             <a href="{% url 'viewLocation' %}" class="w3-bar-item ">view Location</a>
                         </li>
                         <li>
-                            <a href="{% url 'addMember' %}" class="w3-bar-item ">Register Member</a>
+                            <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
                         </li>
                         <li>
-                            <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
+                            <a href="{% url 'addRequestedComponents' %}" class="w3-bar-item ">Request</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'viewRequestedComponents' %}" class="w3-bar-item ">view Request</a>
                         </li>
             
                     </ul>
@@ -139,19 +131,16 @@
                         <span></span>
                     </button>
                 </div>
-                <div class=" col-11 text-center top">
-                    <h2>STUDIO MANAGEMENT SYSTEM</h2>
-                    
+                <div class=" col-8 text-center top">
+                    <h4>STUDIO MANAGEMENT SYSTEM</h2>
                 </div>
-                <!-- <div>
-                    <div class="w3-dropdown-hover col-3">
-                        <a class="nav-link settings"><i class="fa fa-cogs mr-3"></i>Settings</a>
-                        <div class="w3-dropdown-content w3-bar-block navback">
-                            <a href="#" class="w3-bar-item "><i class="fa fa-key mr-3"></i>Logout</a>
-                    
-                        </div>
+                <div class="w3-dropdown-hover col-3">
+                    <a class="nav-link settings"><i class="fa fa-user "></i></a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="#" class="w3-bar-item "><i class="fa fa-key "></i>Logout</a>
+                
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <div>
@@ -171,12 +160,15 @@
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
+
+    {% block js %}
+    {% endblock %}
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'script.js' %}"></script>
     <script type="text/javascript" src="{% static 'fontawesome/js/all.js' %}"></script>
-
-
+  
+   
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -185,6 +177,9 @@
             });
         });
     </script>
+  
 </body>
+
+
 
 </html>

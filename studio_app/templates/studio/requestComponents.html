@@ -1,0 +1,84 @@
+{% extends 'studio/base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{%block link %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+{%endblock  %}
+
+{%block content %}
+
+<div class="outer-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 ">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <h5 class="text-center">Request Components </h5>
+                
+                <form action="" method="post" class="mt-3 w3-card pt-3 pb-4">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for = "email" >Email <strong>*</strong></label>
+                            <input type="email" name="email" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <!-- <select id="multiple-checkboxes" multiple="multiple">
+                                {% for component in components %}
+                                    <option value="component.id">component.name</option>
+                                {% endfor %}
+                            </select> -->
+
+                            <select id="multiple-checkboxes" multiple="multiple">
+                                <option value="php">PHP</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="java">Java</option>
+                                <option value="sql">SQL</option>
+                                <option value="jquery">Jquery</option>
+                                <option value=".net">.Net</option>
+                            </select>
+                
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="quantity">Quantity <strong>*</strong></label>
+                            <input type="number" name="quantity" min="0" class="form-control">
+                        </div>
+                
+                    </div>
+                    <button class="btn btn-primary btn-block mt-3" type="submit" name="button">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
+
+{% block js%}
+
+<script src="/js/bootstrap-multiselect.js"></script>
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+
+        $('#multiple-checkboxes').multiselect();
+    });  
+</script>
+{% endblock%}
+

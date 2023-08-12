@@ -2,10 +2,6 @@
 {% block title %}Purchases{% endblock %}
 {% load static %}
 
-{% block link %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
-{% endblock %}
-
 {% block content %}
 
 <div class="outer-container mt-5 ">
@@ -27,7 +23,7 @@
                     <h3 class="text-center">Purchases </h3>
                     <a href="{% url 'addPurchase' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i class="fa fa-plus"></i> Add
                             New</button></a>
-                    <table id="example" class="table table-hover table-striped table-bordered  ">
+                    <table id="example" class="table table-hover table-striped table-bordered table-responsive">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -35,6 +31,7 @@
                                 <th>Component</th>
                                 <th>Quantity</th>
                                 <th>Amount</th>
+                                <th>Description</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -57,6 +54,9 @@
                                 </td>
                                 <td>
                                     {{ purchase.amount}}
+                                </td>
+                                <td>
+                                    {{ purchase.description}}
                                 </td>
                                 <td>
                                     {{ purchase.date}}
@@ -109,12 +109,32 @@
 
 {% block js %}
 
-<script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
-<script type="text/javascript">
+<!--Import jQuery before export.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
+<!--Data Table-->
+<script type="text/javascript" src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src=" https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+
+<!--Export table buttons-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
+
+<script>
     // Data table
     $(document).ready(function () {
-        $('#example').DataTable();
 
-    })
+        $.noConflict();
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf', 'print'
+            ]
+        });
+    });
 </script>
 {% endblock %}

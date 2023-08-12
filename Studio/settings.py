@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'widget_tweaks',
     'django.contrib.humanize',  
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
