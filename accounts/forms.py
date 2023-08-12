@@ -31,14 +31,7 @@ class UserLoginForm(forms.Form):
 class userUpdatingForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'is_active', 'is_admin', 'is_shopkeeper']
-
-
-class ShopKeeperProfileUpdateForm(forms.ModelForm):
-
-    class Meta:
-        model = ShopKeeperProfile
-        fields = ['phone_number', 'profile_pic' ]
+        fields = ['first_name', 'last_name', 'username', 'email', 'is_active', 'is_admin']
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -51,4 +44,4 @@ class AdminProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = AdminProfile
-        fields = ['phone_number','profile_pic' ]
+        fields = ['phone_number']

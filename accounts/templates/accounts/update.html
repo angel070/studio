@@ -7,7 +7,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                   <legend class="mb-4">{{ profile.user.first_name }} Profile</legend>
-                  <img class="rounded-circle" src="{{ profile.profile_pic.url }}" alt="{{ profile.user.first_name }}">
+                  <img class="rounded-circle" src="#" alt="{{ profile.user.first_name }}">
                 </div>
                 <fieldset class="forms">
                   {{ user_form| crispy}}

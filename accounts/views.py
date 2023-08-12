@@ -3,12 +3,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import get_template, render_to_string
 from django.views.generic import TemplateView, View, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth import login, get_user_model, logout
+from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse, HttpResponseRedirect
-from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -36,7 +34,6 @@ def users(request):
 
 
 @login_required
-@admin_login_required
 def allUsers(request):
     users = CustomUser.objects.all()
     query = request.GET.get("q")
@@ -57,7 +54,6 @@ def allUsers(request):
     return render(request, myTemplate, context)
 
 @login_required
-@admin_login_required
 def addNewUser(request):
     form = UserCreationForm(request.POST or None)
     if request.method == 'POST':
@@ -74,7 +70,6 @@ def addNewUser(request):
 
 
 @login_required
-@admin_login_required
 def updateUser(request, id):
     instance = get_object_or_404(CustomUser, id = id)
     form = userUpdatingForm(request.POST or None, instance = instance)
@@ -91,7 +86,6 @@ def updateUser(request, id):
 
 
 @login_required
-@admin_login_required
 def deleteUser(request, id):
     instance = get_object_or_404(CustomUser, id = id)
     instance.delete()
@@ -123,10 +117,6 @@ def ProfileView(request):
 
     if request.user.is_admin:
         profile = AdminProfile.objects.get(user = request.user)
-    elif request.user.is_shopkeeper:
-        profile = ShopKeeperProfile.objects.get(user = request.user)
-    # elif request.user.is_officer:
-    #     profile = OfficerProfile.objects.get(user = request.user)
     else:
         message = 'You have no permission to view this page'
         context = {
@@ -149,14 +139,6 @@ def ProfileUpdateView(request):
         profile_form = AdminProfileUpdateForm(instance = request.user.adminprofile)
         profile = AdminProfile.objects.get(user = request.user)
 
-    elif request.user.is_shopkeeper:
-        profile_form = ShopKeeperProfileUpdateForm(instance = request.user.shopkeeperprofile)
-        profile = ShopKeeperProfile.objects.get(user = request.user)
-
-    # elif request.user.is_officer:
-    #     profile_form = OfficerProfileUpdateForm(instance = request.user.officerprofile)
-    #     profile = OfficerProfile.objects.get(user = request.user)
-
     else :
         messages.warning(request, f'You have no permission to view this page')
         return redirect('dashboard')
@@ -169,25 +151,12 @@ def ProfileUpdateView(request):
                                         request.FILES,
                                         instance = request.user.adminprofile)
             profile = AdminProfile.objects.get(user = request.user)
-
-        elif request.user.is_shopkeeper:
-            profile_form = ShopKeeperProfileUpdateForm(request.POST,
-                                        request.FILES, instance = request.user.shopkeeperprofile)
-            profile = ShopKeeperProfile.objects.get(user = request.user)
-        # elif request.user.is_officer:
-        #     profile_form = OfficerProfileUpdateForm(request.POST,
-        #                                 request.FILES, instance = request.user.officerprofile)
-        #     profile = OfficerProfile.objects.get(user = request.user)
         else:
             return redirect('accounts:profile')
             #Saving my newly updated forms
         if profile_form.is_valid() and user_form.is_valid():
             if request.user.is_admin:
                 profiles = AdminProfile.objects.all()
-            elif request.user.is_shopkeeper:
-                profiles = ShopKeeperProfile.objects.all()
-            # elif request.user.is_officer:
-            #     profiles = OfficerProfile.objects.all()
             for profile in profiles:
                 if profile.phone_number:
                     if profile_form.cleaned_data['phone_number'] == profile.phone_number:

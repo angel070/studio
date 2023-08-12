@@ -67,13 +67,6 @@
                           <i class="fa fa-window-close text-danger"></i>
                           {% endif %}
                         </td>
-                        <td class="pr-4 text-center">
-                          {% if  user.is_shopkeeper  == True %}
-                            <i class="fa fa-check text-success"></i>
-                          {% else %}
-                            <i class="fa fa-window-close text-danger"></i>
-                          {% endif %}
-                        </td>
                         <td class="text-center">
                           <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{% url 'update-user' user.id %}" type="button" class="btn btn-outline-primary mr-2"><i class="fa fa-edit"></i></a>
