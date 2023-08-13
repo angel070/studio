@@ -157,6 +157,7 @@ body a {
 /*=================================== View.html ===================================*/
 .w3-card {
 	padding: 20px;
+	
 	/* border-radius: 30px; */
 }
 
@@ -179,8 +180,7 @@ body a {
 }
 
 .w3-card button {
-	border-radius: 40px;
-	/* background: var(--background); */
+	border:1px solid var(--background);
 	 color: var(--background) !important;	
 	 background: #fff ;	
 }
@@ -284,7 +284,8 @@ body a {
 }
 
 .contents form button {
-	background: var(--background)
+	background: var(--background);
+
 }
 
 .button {
