@@ -17,8 +17,8 @@ class Component(models.Model):
     lab = models.ForeignKey( Lab,on_delete=models.PROTECT)  
     name = models.CharField(max_length = 100, null = False , blank= False)
     value = models.CharField(max_length = 20, null = False, blank = False)
-    quantity = models.PositiveIntegerField(null = False, blank = False, default = 0 )
-    cost =models.IntegerField(null = False, blank = False, default = 0 )
+    quantity = models.PositiveIntegerField(null = False, blank = False)
+    cost =models.IntegerField(null = False, blank = False )
 
     class Meta:
         verbose_name_plural = 'Components'
@@ -42,7 +42,7 @@ class Source_of_Income(models.Model):
 class Income(models.Model): 
     name = models.ForeignKey(Source_of_Income, on_delete = models.PROTECT)  
     lab = models.ForeignKey(Lab, on_delete = models.PROTECT)  
-    amount = models.FloatField(null = False, blank = False, default = 0 ) 
+    amount = models.FloatField(null = False, blank = False ) 
     description = models.CharField(max_length = 1000, null = True ,blank = True)
     date = models.DateField(null = False, blank = False, default = datetime.now())  
 
@@ -153,8 +153,8 @@ class CheckInAndout(models.Model):
     
 class Request(models.Model):
    member = models.ForeignKey(Member, on_delete= models.PROTECT,null = True) 
-   requestedDate = models.DateTimeField(auto_now_add=True)  
-   email = models.EmailField(null = True, blank = True)
+   requestedDate = models.DateTimeField(auto_now_add=True)
+   requested = models.BooleanField(null=True)  
 
    class Meta:
         verbose_name_plural = 'Requests'
@@ -165,7 +165,7 @@ class Request(models.Model):
 class Requestcomponents(models.Model):
    request = models.ForeignKey(Request, on_delete=models.CASCADE)
    component = models.ForeignKey(Component,  on_delete=models.PROTECT)
-   quantity = models.PositiveIntegerField()
+   quantity = models.PositiveIntegerField(default=0)
 
    class Meta:
         verbose_name_plural = 'Request Components'

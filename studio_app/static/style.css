@@ -180,13 +180,26 @@ body a {
 }
 
 .w3-card button {
-	border:1px solid var(--background);
+	 border:1px solid var(--background);
+	 color: var(--background) !important;	
+	 background: #fff ;	
+}
+.w3-card button:hover {
+	/* color: var(--hover); */
+	color: #f0f0f0 !important;
+	text-decoration: none !important;
+	background: var(--background)
+}
+
+.btn {
+	 border:1px solid var(--background);
 	 color: var(--background) !important;	
 	 background: #fff ;	
 }
 
 
-.w3-card button:hover {
+
+.btn:hover {
 	/* color: var(--hover); */
 	color: #f0f0f0 !important;
 	text-decoration: none !important;

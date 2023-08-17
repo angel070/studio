@@ -98,28 +98,6 @@ class addCheckInAndOutForm(forms.ModelForm):
         model = CheckInAndout  
         fields ='__all__'  
 
-class addRequestForm(forms.ModelForm):    
-    class Meta: 
-        model = Request  
-        fields =('email',)
 
 
-# class addrequestedComponentsForm(forms.ModelForm):
-#     components = Component.objects.all()    
-#     component_choices  =(    
-#     ( component.value, component.name ) for component in components ), 
-
-#     comp =  forms.MultipleChoiceField(choices=component_choices)        
-#     class Meta: 
-#         model = Requestcomponents
-#         fields =(comp,'quantity'  )
-
-class addrequestedComponentsForm(forms.Form):
-    OPTIONS = (
-        ("AUT", "Austria"),
-        ("DEU", "Germany"),
-        ("NLD", "Neitherlands"),
-    )
-    Countries = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                          choices=OPTIONS)
 

@@ -47,5 +47,7 @@ urlpatterns = [
     path('addCheckInAndOut/<int:member_id>', views.addCheckInAndOut, name='addCheckInAndOut'),
     path('viewCheckInAndOut/', views.viewCheckedInAndOut, name='viewCheckedInAndOut'),
     path('viewRequestedComponents/', views.viewRequestedComponents, name='viewRequestedComponents'),
+    path('updateComponent/', views.updateComponent, name='updateComponent'),
+    path('updateRequest/<int:id>/', views.updateRequest, name='updateRequest'),
 
 ]

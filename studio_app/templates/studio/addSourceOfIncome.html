@@ -7,7 +7,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 ">
-                <div class="contents mt-5">
 
                     {% if messages %}
                     {% for message in messages %}
@@ -29,9 +28,8 @@
                                 {{ form.name |add_class:'form-control'}}
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block mt-3" type="submit" name="button">Save</button>
-                    </form>
-                </div>
+                        <button class="btn btn-block mt-3" type="submit" >Save</button>
+                    </form>                
             </div>
         </div>
     </div>

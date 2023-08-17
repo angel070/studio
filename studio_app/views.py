@@ -3,6 +3,8 @@ from.forms import *
 from django.contrib import messages
 from datetime import datetime, timedelta, date
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
 
 # Create your views here.
 #....................................Labs...............................
@@ -597,43 +599,69 @@ def viewCheckedInAndOut(request):
 #.............................................Requested components..........................
 @login_required
 def addRequestedComponents(request):
-    form = addRequestForm()
     components = Component.objects.all()          
     if request.method == 'POST':
-        form = addrequestedComponentsForm(request.POST or None)
-                      
-        if form.is_valid(): 
             get_email = request.POST.get('email') 
-            # get_components = request.POST.get('components') 
-            # get_components = request.POST.get('components')
             get_member = Member.objects.get(email=get_email)
-            # get_quantity = request.POST.get('quantity')
-        
 
-            form = Request(  
-                member = get_member,
-                email = get_email,
-                requestedDate = datetime.now()
-            )
-            req = form.save()      
-            messages.success(request, f'Request sent successfully!')
-            return redirect('addRequestedComponents')
-
-    context = {
-     'form': form,
-     'components': components,  
-    }
-    myTemplate = 'studio/requestComponents.html'
+            if get_member == None:
+                messages.success(request, f'Email does not exist')
+                return redirect('addRequestedComponents')
+            else: 
+                req, created =Request.objects.get_or_create(member = get_member, requested = False)   
+                # items = order.Requestcomponents_set.all()
+                items= Requestcomponents.objects.filter (request=req)  
+                context = {
+                'components':components,
+                'member': get_member,  
+                'items':items,
+                'request':req.id
+                }
+                myTemplate = 'studio/requestComponents.html'
+                return render(request, myTemplate, context) 
+    
+    context = { }
+    myTemplate = 'studio/checkEmail.html'
     return render(request, myTemplate, context) 
 
 def viewRequestedComponents(request):
-    Components = Request.objects.all()
+    Components = Requestcomponents.objects.all()
 
     context = {
         'Components': Components,
          }
     myTemplate = 'studio/viewRequestedComponents.html'
     return render(request, myTemplate, context)
+
+def updateComponent(request):
+    data = json.loads(request.body)
+    componentId = data['componentId']
+    action = data['action']
+    member = data['member']
+ 
+    print('member:', member, 'action:', action  )
+    req, created =Request.objects.get_or_create(member_id = member, requested = False) 
+
+    component = Component.objects.get(id=componentId)
+    requestcomponents, created = Requestcomponents.objects.get_or_create(request = req, component=component)
+
+    if action == 'add':
+        requestcomponents.quantity = (requestcomponents.quantity + 1)
+    elif action == 'remove':
+        requestcomponents.quantity = (requestcomponents.quantity - 1)
+    requestcomponents.save()
+
+    if requestcomponents.quantity <= 0 or action == 'delete':
+        print("hello am here")
+        requestcomponents.delete()
+    
+    return JsonResponse("component was added successfully", safe=False)
+
+def updateRequest(request,id):
+    req = Request.objects.get(id=id)
+    req.requested = True
+    req.save()
+    return redirect(addRequestedComponents)
 
 
  
