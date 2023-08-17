@@ -57,6 +57,9 @@
 
             <ul class="list-unstyled components">
                 <li>
+                    <a href=" {% url 'dashboard' %}" class="w3-bar-item ">Dashboard </a>
+                </li>
+                <li>
                     <a href=" {% url 'viewLab' %}" class="w3-bar-item ">Lab </a>
                 </li>
                 <li>
@@ -169,9 +172,8 @@
                 <div class="w3-dropdown-hover">
                     <a class="nav-link settings"><i class="fa fa-user mr-3"></i>Settings</a>
                     <div class="w3-dropdown-content w3-bar-block navback">
-                        <a href="{% url 'change-password' %}" class="w3-bar-item ">Change Password</a>
-                        <a href="{% url 'logout' %}" class="w3-bar-item "><i class="fa fa-arrow-right mr-3"
-                                aria-hidden="true"></i>Logout </a>
+                        <a href="{% url 'change-password' %}" class="w3-bar-item item">Change Password</a>
+                        <a href="{% url 'logout' %}" class="w3-bar-item ">Logout </a>
                     </div>
                 </div>
             </div>

@@ -211,40 +211,26 @@ body a {
 }
 
 /*====================================== heading to all pages====================================== */
-.outer-container .contents {
-	padding: 60px 40px;
-	width: 80%;
-	position: relative;
-	left: 18vw;
-}
+
 
 .outer_container .contents {
 	padding: 80px 0px;
 	width: 80%;
 	position: relative;
-	left: 18vw;
+	/* left: 18vw; */
 	width: 85%;
 	position: relative;
-	left: 16vw;
+	
+	
 }
 
 .outer_container .login-contents {
 	padding:20px 40px;
 	width: 100%;
 	position: relative;
-	left: -10vw;
+	/* left: -10vw; */
 }
 
-.outer-container .contents .heading {
-	margin-top: 40px;
-	margin-bottom: 10px;
-	text-align: center;
-	padding: 1px 0px;
-	background: var(--background);
-	height: 50px;
-	border: 0px solid #0e0e0e;
-	color: var(--text);
-}
 
 .outer_container .contents .heading {
 	padding: 1px 0px;
@@ -298,6 +284,7 @@ body a {
 
 .contents form button {
 	background: var(--background);
+	color: white !important;
 
 }
 
@@ -344,22 +331,8 @@ form div span h5 {
 		left: 1vw;
 	}
 
-	.outer-container .contents .heading {
-		/* margin-top: 40px; */
-		margin-bottom: 10px;
-		text-align: center;
-		padding: 1px 0px;
-		background: var(--background);
-		height: 50px;
-		border: 0px solid #0e0e0e;
-		color: var(--text);
-		width: 90vw;
-		position: absolute;
-		left: -6vw;
-	}
-
 	.outer_container .contents .heading {
-		margin: 40px 0px 20px 0px;
+		/* margin: 40px 0px 20px 0px; */
 		padding: 1px 0px;
 		background: var(--background);
 		height: 50px;
@@ -417,20 +390,9 @@ form div span h5 {
 		border: none;
 	}
 
-	.notification {
-		background-color: inherit;
-		color: white;
-		text-decoration: none;
-		padding-left: 0px;
-		margin-left: 0pc;
-	}
-
 	form div span h5 {
 		font-size: 12px;
 	}
-
-	
-
 	.overall-header {
 		text-align: center;
 		margin: 3px 15px 0px;
@@ -458,6 +420,10 @@ form div span h5 {
 	top: 10vh;
 	width: 102vw;
 	left: -2vw;
+}
+.w3-bar-item:hover {
+	background: var(--background) !important;
+	color: #ffffff;
 }
 
 

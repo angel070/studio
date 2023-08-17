@@ -641,6 +641,7 @@ def viewRequestedComponents(request):
     myTemplate = 'studio/viewRequestedComponents.html'
     return render(request, myTemplate, context)
 
+@login_required
 def updateComponent(request):
     data = json.loads(request.body)
     componentId = data['componentId']
@@ -665,23 +666,45 @@ def updateComponent(request):
     
     return JsonResponse("component was added successfully", safe=False)
 
+@login_required
 def updateRequest(request,id):
     req = Request.objects.get(id=id)
     req.requested = True
     req.save()
     return redirect(addRequestedComponents)
 
+@login_required
 def issueComponents(request,id):
     issue = Requestcomponents.objects.get(id=id)
     issue.status = "Accepted"
     issue.save()
     return redirect(viewRequestedComponents)
 
+@login_required
 def declinedComponents(request,id):
     issue = Requestcomponents.objects.get(id=id)
     issue.status = "Declined"
     issue.save()
     return redirect(viewRequestedComponents)
+
+# ..........................................dashboard...................................
+@login_required
+def dashboard(request):
+    members = Member.objects.all().count()
+    chekin = CheckInAndout.objects.filter(status ="CHECK-IN").count()
+    requestedComponent = Requestcomponents.objects.filter(status = None).count()
+
+    print(members)
+    print(chekin)
+    print("request:",request)
+    context = {
+        'members' : members,
+        'checkin' : chekin,
+        'requestedComponent': requestedComponent
+       
+         }
+    myTemplate = 'studio/dashboard.html'
+    return render(request, myTemplate, context)
 
 
 

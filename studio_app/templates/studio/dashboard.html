@@ -1,0 +1,67 @@
+{% extends 'studio/base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{%block content %}
+
+
+    <h2 class="text-center">DashBoard</h2>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    Total Members
+                </div>
+                <div class="card-body text-center">
+                    {{members}}
+                </div>
+                <!-- <div class="card-footer text-center">
+                    <a href="{% url 'viewMembers' %}">View More... </a>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    Total Checkin
+                </div>
+                <div class="card-body text-center">
+                {{checkin}}
+                </div>
+                <!-- <div class="card-footer text-center">
+                    <a href="{% url 'viewCheckedInAndOut' %}">View More... </a>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    Total Request
+                </div>
+                <div class="card-body text-center">
+                {{requestedComponent}}
+                </div>
+                <!-- <div class="card-footer text-center">
+                    <a href="{% url 'viewRequestedComponents' %}">View More... </a>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    Total Users
+                </div>
+                <div class="card-body text-center">
+                   3
+                </div>
+                <!-- <div class="card-footer text-center">
+                    <a href="#">View More... </a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+{%endblock %}

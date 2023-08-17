@@ -636,19 +636,6 @@ form div span h5 {
 		left: 1vw;
 	}
 
-	.outer-container .contents .heading {
-		/* margin-top: 40px; */
-		margin-bottom: 10px;
-		text-align: center;
-		padding: 1px 0px;
-		background: var(--background);
-		height: 50px;
-		border: 0px solid #0e0e0e;
-		color: var(--text);
-		width: 90vw;
-		position: absolute;
-		left: -6vw;
-	}
 
 	.outer_container .contents .heading {
 		margin: 40px 0px 20px 0px;
@@ -743,26 +730,9 @@ form div span h5 {
 		border: none;
 	}
 
-	.notification {
-		background-color: inherit;
-		color: white;
-		text-decoration: none;
-		padding-left: 0px;
-		margin-left: 0pc;
-	}
-
 	form div span h5 {
 		font-size: 12px;
 	}
-
-	/* .notification .badge {
-    border-radius: 50%;
-    background-color: orange;
-    color: white;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-  } */
 
 	.overall-header {
 		text-align: center;
