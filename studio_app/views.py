@@ -535,6 +535,7 @@ def addMember(request):
     myTemplate = 'studio/addMember.html'
     return render(request, myTemplate, context) 
 
+@login_required
 def viewMembers(request):
     members = Member.objects.all()
 
@@ -544,6 +545,7 @@ def viewMembers(request):
     myTemplate = 'studio/viewMembers.html'
     return render(request, myTemplate, context)
 
+@login_required
 def updateMember(request,id):
     instance = get_object_or_404(Member, pk = id)
     form =addMemberForm(request.POST or None,instance = instance)
@@ -559,12 +561,14 @@ def updateMember(request,id):
     myTemplate = 'studio/updateMember.html'
     return render(request, myTemplate, context) 
 
+@login_required
 def deleteMember(request, id):
     get_object = Member.objects.filter(id=id)
     get_object.delete()
     return redirect('viewMembers')
 
 #.........................................CheckInAndCheckOut....................................................
+@login_required
 def viewCheck(request):
     allMembers = Member.objects.all()
 
@@ -574,6 +578,7 @@ def viewCheck(request):
     myTemplate = 'studio/checkinAndOut.html'
     return render(request, myTemplate, context)
 
+@login_required
 def addCheckInAndOut(request, member_id):
     check = CheckInAndout.objects.filter(member=member_id, date__date=datetime.now().date()).count()
     member = Member.objects.get(id=member_id)
@@ -588,6 +593,7 @@ def addCheckInAndOut(request, member_id):
     check.save()
     return redirect('checkInAndOut')
 
+@login_required
 def viewCheckedInAndOut(request):
     members = CheckInAndout.objects.all()       
     context = {
@@ -597,7 +603,7 @@ def viewCheckedInAndOut(request):
     return render(request, myTemplate,context)   
 
 #.............................................Requested components..........................
-@login_required
+
 def addRequestedComponents(request):
     components = Component.objects.all()          
     if request.method == 'POST':
@@ -624,8 +630,10 @@ def addRequestedComponents(request):
     myTemplate = 'studio/checkEmail.html'
     return render(request, myTemplate, context) 
 
+@login_required
 def viewRequestedComponents(request):
-    Components = Requestcomponents.objects.all()
+    # Components = Requestcomponents.objects.all()
+    Components = Requestcomponents.objects.filter(status = None)
 
     context = {
         'Components': Components,
@@ -662,6 +670,23 @@ def updateRequest(request,id):
     req.requested = True
     req.save()
     return redirect(addRequestedComponents)
+
+def issueComponents(request,id):
+    issue = Requestcomponents.objects.get(id=id)
+    issue.status = "Accepted"
+    issue.save()
+    return redirect(viewRequestedComponents)
+
+def declinedComponents(request,id):
+    issue = Requestcomponents.objects.get(id=id)
+    issue.status = "Declined"
+    issue.save()
+    return redirect(viewRequestedComponents)
+
+
+
+
+
 
 
  

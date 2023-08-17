@@ -132,11 +132,10 @@
                     <a href="#home8Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User </a>
                     <ul class="collapse list-unstyled" id="home8Submenu">
                         <li>
-                            <a href="{% url 'add-user' %}" class="w3-bar-item ">Add User</a> 
+                            <a href="{% url 'add-user' %}" class="w3-bar-item "><i class="fa fa-key mr-3"></i>Add User</a> 
                         </li>
-                        <li>
-                            <a href="{% url 'login' %}" class="w3-bar-item ">Logout </a> 
-                        </li>
+                     
+                        <!--  -->
                     
                     </ul>
                 </li>
@@ -158,11 +157,21 @@
                 <div class=" col-8 text-center top">
                     <h4>STUDIO MANAGEMENT SYSTEM</h2>
                 </div>
-                <div class="w3-dropdown-hover col-3">
+                <!-- <div class="w3-dropdown-hover col-3">
                     <a class="nav-link settings"><i class="fa fa-user "></i></a>
                     <div class="w3-dropdown-content w3-bar-block navback">
-                        <a href="#" class="w3-bar-item "><i class="fa fa-key "></i>Logout</a>
+                        <a href="{% url 'logout' %}" class="w3-bar-item "><i class="fa fa-key "></i>Logout</a>
+                        
                 
+                    </div>
+                </div> -->
+
+                <div class="w3-dropdown-hover">
+                    <a class="nav-link settings"><i class="fa fa-user mr-3"></i>Settings</a>
+                    <div class="w3-dropdown-content w3-bar-block navback">
+                        <a href="{% url 'change-password' %}" class="w3-bar-item ">Change Password</a>
+                        <a href="{% url 'logout' %}" class="w3-bar-item "><i class="fa fa-arrow-right mr-3"
+                                aria-hidden="true"></i>Logout </a>
                     </div>
                 </div>
             </div>

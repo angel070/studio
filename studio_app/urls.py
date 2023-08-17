@@ -49,5 +49,7 @@ urlpatterns = [
     path('viewRequestedComponents/', views.viewRequestedComponents, name='viewRequestedComponents'),
     path('updateComponent/', views.updateComponent, name='updateComponent'),
     path('updateRequest/<int:id>/', views.updateRequest, name='updateRequest'),
+    path('issueComponents/<int:id>/', views.issueComponents, name='issueComponents'),
+    path('declinedComponents/<int:id>/', views.declinedComponents, name='declinedComponents'),
 
 ]

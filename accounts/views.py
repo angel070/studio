@@ -183,7 +183,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, f'Password successfully changed!!')
-            return redirect('dashboard')
+            return redirect('login')
     else:
         form = PasswordChangeForm(request.user)
     myTemplate = 'accounts/change_password.html'

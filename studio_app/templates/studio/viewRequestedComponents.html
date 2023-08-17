@@ -21,7 +21,7 @@
                     {% endfor %}
                     {% endif %}
 
-                    <h3 class="text-center">Components</h3>
+                    <h3 class="text-center">Requested Components</h3>
                 
                     <table id="example" class="table table-hover table-striped table-bordered  ">
                         <thead>
@@ -30,6 +30,7 @@
                                 <th>Member</th>
                                 <th>Member Id</th>
                                 <th>Component</th>
+                                <th>Quantity</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -42,7 +43,7 @@
                                     {{ forloop.counter}}
                                 </td>
                                 <td>
-                                    {{ component.request.member.firstName}} {{ component.request.member.middleName}} {{ component.request.member.lastName}}
+                                    {{ component.request.member.firstName}} {{ component.request.member.lastName}}
                                 </td>
                                 
                                 <td>
@@ -52,15 +53,18 @@
                                     {{ component.component}}
                                 </td>
                                 <td>
-                                    {{ component.request.requestedDate|date:"Y-m-d" }}
-                                </td>
-                                <td>
                                     {{ component.quantity}}
                                 </td>
-                               
-
-                                <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
+                                <td>
+                                    {{ component.request.requestedDate|date:"Y-m-d" }}
+                                </td>
+                
+                                <!-- <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#deleteComponent{{component.id}}"><i class="fa fa-check"></i></a>
+                                    
+                                </td> -->
+                                <td><a href="{% url 'issueComponents' component.id%}" ><button><i class="fa fa-check"></i></button></a>| 
+                                <a href="{% url 'declinedComponents' component.id%}" ><button><i class="fa fa-cross"></i></button></a>
                                     
                                 </td>
                             </tr>
@@ -77,7 +81,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are you sure, you want to delete?</p>
+                                            <p>Are you sure, you want to confirm?</p>
                                         </div>
                                         <div class="p-4">
                                             <button type="button" class="btn button"
