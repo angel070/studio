@@ -1,6 +1,7 @@
 {% extends 'studio/base.html' %}
 {% block title %}Components{% endblock %}
 {% load static %}
+{% load tz %}
 
 {% block link %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/datatable.min.css' %}" />
@@ -62,7 +63,10 @@
                                     {{ member.date |date:"Y-m-d"}}
                                 </td>
                                 <td>
-                                    {{ member.date |date:"H:i"}}
+                                    {% locatime on %}
+                                        {{ member.date |date:"H:i"}}
+                                    {%endlocaltime %}
+                                    
                                 </td>
                             
                                 <td>
