@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, date
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
+from accounts.models import *
 
 # Create your views here.
 #....................................Labs...............................
@@ -693,6 +694,8 @@ def dashboard(request):
     members = Member.objects.all().count()
     chekin = CheckInAndout.objects.filter(status ="CHECK-IN").count()
     requestedComponent = Requestcomponents.objects.filter(status = None).count()
+    totalUsers = CustomUser.objects.all().count()
+
 
     print(members)
     print(chekin)
@@ -700,7 +703,8 @@ def dashboard(request):
     context = {
         'members' : members,
         'checkin' : chekin,
-        'requestedComponent': requestedComponent
+        'requestedComponent': requestedComponent,
+        'totalUsers':totalUsers
        
          }
     myTemplate = 'studio/dashboard.html'
