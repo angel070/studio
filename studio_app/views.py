@@ -105,8 +105,9 @@ def updateComponent(request,id):
     form =addComponentsForm(request.POST or None,instance = instance)
     get_name =request.POST.get('name') 
     get_lab = request.POST.get('lab')   
-    get_value = request.POST.get('value')   
-    check_name = Component.objects.filter(name=get_name,lab = get_lab,value = get_value).count()
+    get_value = request.POST.get('value') 
+    get_quantity = request.POST.get('quantity')
+    check_name = Component.objects.filter(name=get_name,lab = get_lab,value = get_value,quantity = get_quantity).count()
     if request.method == 'POST': 
         if form.is_valid():  
             if check_name == 0:       
@@ -122,9 +123,14 @@ def updateComponent(request,id):
     return render(request, myTemplate, context) 
 
 def deleteComponent(request, id):
-    get_object = Lab.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewComponent')
+    try:
+        get_object = Lab.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewComponent')
+    except:
+        messages.success(request,"component is already used can't be deleted ")
+        return redirect('viewComponent')
+    
 
 #.....................................Source of income...................................
 def addSourceOfIncome(request):
@@ -177,9 +183,13 @@ def updateSourceOfIncome(request,id):
     return render(request, myTemplate, context) 
 
 def deleteSourceOfIncome(request, id):
-    get_object = Source_of_Income.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewSourceOfIncome')
+    try:
+        get_object = Source_of_Income.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewSourceOfIncome')
+    except:
+        messages.success(request,"Source of income is already used can't be deleted ")
+        return redirect('viewSourceOfIncome')
 
 #............................................Income..................................
 def addIncome(request):
@@ -222,9 +232,13 @@ def updateIncome(request,id):
     return render(request, myTemplate, context) 
 
 def deleteIncome(request, id):
-    get_object = Income.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewIncome')
+    try:
+        get_object = Income.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewIncome')
+    except:
+        messages.success(request,"Income is already used can't be deleted ")
+        return redirect('viewIncome')
 
 #............................................Purchases..................................
 def addPurchase(request):
@@ -267,9 +281,13 @@ def updatePurchases(request,id):
     return render(request, myTemplate, context) 
 
 def deletePurchase(request, id):
-    get_object = Purchases.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewPurchases')
+    try:
+        get_object = Purchases.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewPurchases')
+    except:
+        messages.success(request,"Purchases is already used can't be deleted ")
+        return redirect('viewPurchases')
 
 #.............................................Source of expenses................................................
 def addSourceOfExpenses(request):
@@ -320,9 +338,13 @@ def updateExpensesSource(request,id):
     return render(request, myTemplate, context) 
 
 def deleteSourceOfExpenses(request, id):
-    get_object = Source_Of_Expenses.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewSourceOfExpenses')
+    try:
+        get_object = Source_Of_Expenses.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewSourceOfExpenses')
+    except:
+        messages.success(request,"Source of expenses is already used can't be deleted ")
+        return redirect('viewSourceOfExpenses')
 
 #......................................................Expenses...........................
 def addExpenses(request):
@@ -365,9 +387,13 @@ def updateExpenses(request,id):
     return render(request, myTemplate, context) 
 
 def deleteExpenses(request, id):
-    get_object = Expenses.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewExpenses')
+    try:
+        get_object = Expenses.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewExpenses')
+    except:
+        messages.success(request,"Expenses is already used can't be deleted ")
+        return redirect('viewExpenses')
 
 #.......................................................Location........................................
 def addLocation(request):
@@ -422,9 +448,13 @@ def updateLocation(request,id):
     return render(request, myTemplate, context) 
 
 def deleteLocation(request, id):
-    get_object = Location.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewLocation')
+    try:
+        get_object = Location.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewLocation')
+    except:
+        messages.success(request,"Location is already used can't be deleted ")
+        return redirect('viewLocation')
 
 #.....................................................Member Type........................................
 def addMemberType(request):
@@ -479,9 +509,13 @@ def updateMemberType(request,id):
     return render(request, myTemplate, context) 
 
 def deleteMemberType(request, id):
-    get_object = Member_type.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewMemberType')
+    try:
+        get_object = Member_type.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewMemberType')
+    except:
+        messages.success(request,"Member type is already used can't be deleted ")
+        return redirect('viewMemberType')
 
 
 #......................................................Member.................................................
@@ -510,7 +544,7 @@ def addMember(request):
            
             dob = datetime.strptime(get_DOB, '%Y-%m-%d').date().day
            
-            get_idNumber =f'{get_nationality.strip()[0].upper()} {get_fname.strip()[0].upper()} {get_lname.strip()[0].upper()} {get_gender.strip()[0].upper()} {memberType.strip()[0].upper()} {get_registeredDate.date().day} {str(get_phone).strip()[-2:]} {dob} '  
+            get_idNumber =f'{get_nationality.strip()[0].upper()}{get_fname.strip()[0].upper()}{get_lname.strip()[0].upper()}{get_gender.strip()[0].upper()}{memberType.strip()[0].upper()}{get_registeredDate.date().day}{str(get_phone).strip()[-2:]}{dob} '  
             form = Member(
                 firstName = get_fname,
                 middleName = get_mname,
@@ -551,8 +585,46 @@ def updateMember(request,id):
     instance = get_object_or_404(Member, pk = id)
     form =addMemberForm(request.POST or None,instance = instance)
     if request.method == 'POST': 
-        if form.is_valid():          
-            form.save()
+        if form.is_valid(): 
+            get_fname =request.POST.get('firstName')        
+            get_mname =request.POST.get('middleName')        
+            get_lname =request.POST.get('lastName')        
+            get_DOB =request.POST.get('dateOfBirth')        
+            get_regNo =request.POST.get('registrationNumber')        
+            get_phone =request.POST.get('phoneNumber')         
+            get_email =request.POST.get('email')        
+            get_nationality =request.POST.get('nationality')         
+            get_gender =request.POST.get('gender')                
+            get_registeredDate =datetime.now()  
+            get_location =request.POST.get('location') 
+            get_memberType = request.POST.get('type')
+            get_memberTypeName = Member_type.objects.get(id=get_memberType )  
+            get_LocationName = Location.objects.get(id=get_location ) 
+            print(get_LocationName) 
+            memberType = str(get_memberTypeName)           
+            dob = datetime.strptime(get_DOB, '%Y-%m-%d').date().day           
+            get_idNumber =f'{get_nationality.strip()[0].upper()} {get_fname.strip()[0].upper()} {get_lname.strip()[0].upper()} {get_gender.strip()[0].upper()} {memberType.strip()[0].upper()} {get_registeredDate.date().day} {str(get_phone).strip()[-2:]} {dob} '  
+            
+            updateMember = Member.objects.get(id = id)
+           
+            # updateMember.firstName = get_fname,
+            # updateMember.middleName = get_mname,
+            # updateMember.lastName = get_lname,
+            # updateMember.dateOfBirth = get_DOB,
+            # updateMember.registrationNumber = get_regNo,
+            # updateMember.phoneNumber = get_phone,
+            # updateMember.email=get_email,
+            # updateMember.nationality = get_nationality,
+            # updateMember.gender = get_gender,
+            # updateMember.registeredDate = get_registeredDate,
+            updateMember.idNumber = get_idNumber
+            # updateMember.location= get_location,
+            # # updateMember.type = get_memberTypeName          
+               
+
+            updateId=form.save()
+            updateId.idNumber = get_idNumber
+            updateId.save()
             messages.success(request, f'Member updated successfully!')
             return redirect('viewMembers')
 
@@ -564,9 +636,13 @@ def updateMember(request,id):
 
 @login_required
 def deleteMember(request, id):
-    get_object = Member.objects.filter(id=id)
-    get_object.delete()
-    return redirect('viewMembers')
+    try:
+        get_object = Member.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewMembers')
+    except:
+        messages.success(request,"Member is already used can't be deleted ")
+        return redirect('viewMembers')
 
 #.........................................CheckInAndCheckOut....................................................
 @login_required
@@ -643,7 +719,7 @@ def viewRequestedComponents(request):
     return render(request, myTemplate, context)
 
 @login_required
-def updateComponent(request):
+def updateComponentRequest(request):
     data = json.loads(request.body)
     componentId = data['componentId']
     action = data['action']

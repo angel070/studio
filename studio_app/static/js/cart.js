@@ -13,7 +13,7 @@ for (var i = 0; i < updateBtns.length; i++) {
 
 function updateMemberOrder(componentId, action, member) {
 
-    var url = /updateComponent/
+    var url = /updateComponentRequest/
     fetch(url, {
         method: 'POST',
         headers: { 

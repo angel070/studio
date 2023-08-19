@@ -66,37 +66,12 @@
                                 </td>
                                
 
-                                <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
-                                        data-target="#deletePurchases{{purchase.id}}"><i class="fa fa-trash"></i></a> |
+                                <td><a href="{% url 'deletePurchase' purchase.id %}" onclick="return confirm('Seriously Delete this Purchases!?');" type="button"
+                                    class="btn btn-outline-danger"><i class="fa fa-trash"></i></a> |
                                     <a href="{% url 'updatePurchases' purchase.id %}" type="button" class="btn btn-outline-danger"><i
                                             class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
-
-                            <div class="modal fade" id="deletePurchases{{purchase.id}}" data-backdrop="static"
-                                data-keyboard="false" tabindex="-1" aria-labelledby="deleteproductLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteproductLabel">Confirm Purchase Deletion
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure, you want to delete?</p>
-                                        </div>
-                                        <div class="p-4">
-                                            <button type="button" class="btn button"
-                                                data-dismiss="modal">Cancel</button>
-                                            <a href=" {% url 'deletePurchase' purchase.id %}"
-                                                class="btn btn-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             {%endfor%}
                         </tbody>
 
