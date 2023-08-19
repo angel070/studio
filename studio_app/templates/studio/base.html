@@ -110,12 +110,8 @@
                         <li>
                             <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
                         </li>
-                        <li>
-                            <a href="{% url 'addRequestedComponents' %}" class="w3-bar-item ">Request</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'viewRequestedComponents' %}" class="w3-bar-item ">view Request</a>
-                        </li>
+                       
+                        
             
                     </ul>
                 </li>
@@ -131,17 +127,13 @@
             
                     </ul>
                 </li>
-                <li class="">
-                    <a href="#home8Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User </a>
-                    <ul class="collapse list-unstyled" id="home8Submenu">
-                        <li>
-                            <a href="{% url 'add-user' %}" class="w3-bar-item "><i class="fa fa-key mr-3"></i>Add User</a> 
-                        </li>
-                     
-                        <!--  -->
-                    
-                    </ul>
+                <li>
+                    <a href="{% url 'viewRequestedComponents' %}" class="w3-bar-item ">view Request</a>
                 </li>
+              
+                <li>
+                    <a href="{% url 'all-users' %}" class="w3-bar-item ">View Users</a> 
+                </li>                   
                 
     
             </ul>
