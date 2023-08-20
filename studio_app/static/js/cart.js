@@ -22,9 +22,8 @@ function updateMemberOrder(componentId, action, member) {
             },
         body: JSON.stringify({ 'componentId':componentId, 'action':action, 'member':member})
     })
-
-    .then((Response) => { 
-     return Response.json()
+    .then((Response) => {   
+        return Response.json()
      })
 
     .then((data) => { 

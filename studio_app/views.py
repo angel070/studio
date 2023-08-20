@@ -727,14 +727,13 @@ def viewRequestedComponents(request):
     myTemplate = 'studio/viewRequestedComponents.html'
     return render(request, myTemplate, context)
 
-@login_required
+# @login_required
 def updateComponentRequest(request):
     data = json.loads(request.body)
     componentId = data['componentId']
     action = data['action']
     member = data['member']
- 
-    print('member:', member, 'action:', action  )
+
     req, created =Request.objects.get_or_create(member_id = member, requested = False) 
 
     component = Component.objects.get(id=componentId)
@@ -748,10 +747,9 @@ def updateComponentRequest(request):
 
     if requestcomponents.quantity <= 0 or action == 'delete':
         requestcomponents.delete()
-    
     return JsonResponse("component was added successfully", safe=False)
 
-@login_required
+# @login_required
 def updateRequest(request,id):
     req = Request.objects.get(id=id)
     req.requested = True
