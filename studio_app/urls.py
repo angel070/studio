@@ -73,4 +73,9 @@ urlpatterns = [
     path('issueComponents/<int:id>/', views.issueComponents, name='issueComponents'),
     path('declinedComponents/<int:id>/', views.declinedComponents, name='declinedComponents'),
 
+
+    path('returnComponents//<int:id>/', views.returnComponents, name='returnComponents'),
+    path('viewAcceptedRequest/', views.viewAcceptedRequest, name='viewAcceptedRequest'),
+    path('viewReturnedComponents/', views.viewReturnedComponents, name='viewReturnedComponents'),
+
 ]

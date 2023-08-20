@@ -773,6 +773,33 @@ def declinedComponents(request,id):
     issue.save()
     return redirect(viewRequestedComponents)
 
+@login_required
+def viewAcceptedRequest(request):
+    acceptedRequest = Requestcomponents.objects.filter(status = "Accepted")
+
+    context = {
+        'acceptedRequest': acceptedRequest 
+        }
+    myTemplate = 'studio/viewAcceptedComponents.html'
+    return render(request, myTemplate, context)
+
+def returnComponents(request,id):
+    memberReturned = Requestcomponents.objects.get(id=id)
+    memberReturned.status = "Returned"
+    memberReturned.save()
+    messages.success(request, f'Successfully returned')
+    return redirect(viewAcceptedRequest)
+
+def viewReturnedComponents(request):
+    returnedComponents = Requestcomponents.objects.filter(status = "Returned")
+
+    context = {
+        'returnedComponents': returnedComponents 
+        }
+    myTemplate = 'studio/viewReturnedComponents.html'
+    return render(request, myTemplate, context)
+
+
 # ..........................................dashboard...................................
 @login_required
 def dashboard(request):

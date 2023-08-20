@@ -127,8 +127,21 @@
             
                     </ul>
                 </li>
-                <li>
-                    <a href="{% url 'viewRequestedComponents' %}" class="w3-bar-item ">view Request</a>
+
+                <li class="">
+                    <a href="#home8Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> View Request</a>
+                    <ul class="collapse list-unstyled" id="home8Submenu">
+                        <li>
+                            <a href="{% url 'viewRequestedComponents' %}" class="w3-bar-item ">view Request</a>
+                        </li>
+                        <li>
+                        <a href="{% url 'viewAcceptedRequest' %}" class="w3-bar-item ">view Accepted</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'viewReturnedComponents' %}" class="w3-bar-item ">view Returned</a>
+                        </li>
+            
+                    </ul>
                 </li>
               
                 <li>
