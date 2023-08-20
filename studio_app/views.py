@@ -815,15 +815,6 @@ def dashboard(request):
         'checkin' : chekin,
         'requestedComponent': requestedComponent,
         'totalUsers':totalUsers
-       
-         }
+    }
     myTemplate = 'studio/dashboard.html'
     return render(request, myTemplate, context)
-
-
-
-
-
-
-
- 
