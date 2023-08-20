@@ -690,23 +690,26 @@ def addRequestedComponents(request):
     components = Component.objects.all()          
     if request.method == 'POST':
             get_email = request.POST.get('email') 
-            get_member = Member.objects.get(email=get_email)
-
-            if get_member == None:
-                messages.success(request, f'Email does not exist')
+            try:
+                get_member = Member.objects.get(email=get_email)
+            except Member.DoesNotExist:
+                messages.warning(request, f'Sorry,no member with this email address exists!')
                 return redirect('addRequestedComponents')
-            else: 
-                req, created =Request.objects.get_or_create(member = get_member, requested = False)   
-                # items = order.Requestcomponents_set.all()
-                items= Requestcomponents.objects.filter (request=req)  
-                context = {
+            # if get_member == None:
+            #     messages.success(request, f'Email does not exist')
+            #     return redirect('addRequestedComponents')
+            # else: 
+            req, created =Request.objects.get_or_create(member = get_member, requested = False)   
+            # items = order.Requestcomponents_set.all()
+            items= Requestcomponents.objects.filter (request=req)  
+            context = {
                 'components':components,
                 'member': get_member,  
                 'items':items,
                 'request':req.id
-                }
-                myTemplate = 'studio/requestComponents.html'
-                return render(request, myTemplate, context) 
+            }
+            myTemplate = 'studio/requestComponents.html'
+            return render(request, myTemplate, context) 
     
     context = { }
     myTemplate = 'studio/checkEmail.html'

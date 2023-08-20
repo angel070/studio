@@ -99,7 +99,7 @@ def loginView(request, *args, **kwargs):
         if form.is_valid():
             user_obj = form.cleaned_data.get('user_obj')
             login(request, user_obj)
-            return HttpResponseRedirect('dashboard')
+            return HttpResponseRedirect('/dashboard')
     myTemplate = 'accounts/login.html'
     context = {
         'form':form

@@ -1,9 +1,11 @@
 from . import views
 from django.urls import path
 
+# app_name = 'studio_app'
+
 urlpatterns = [
     path('', views.addRequestedComponents, name='addRequestedComponents'),
-    path('dashboard', views.dashboard, name='dashboard'),
+    path('dashboard/', views.dashboard, name='dashboard'),
    
 
     #............................lab...................................
