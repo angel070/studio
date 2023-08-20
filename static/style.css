@@ -1,0 +1,460 @@
+body {
+	--background: #367588;
+	/* --background : #3399ff; */
+	/* --background : #2d2d2d; */
+	--hover: #adc6f0;
+	--text: #fff;
+	--linkNavTop: 40px;
+	--decor: none;
+	font-family: "Montserrat", sans-serif;
+	--theme: #367588;
+    --font-color: #3D566E;
+	--color-logo: #0d4da6;
+				
+}
+
+body a {
+	text-decoration: var(--decor);
+}
+
+/* ======================LANDING PAGE=================================== */
+
+.backgroundimg {
+	background-image: url(img/12.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 98vh;
+	width: 100%;
+}
+
+.backgroundimg .row .col-12 .button {
+	position: relative;
+	top: 40vh;
+	left: 44%;
+}
+
+.backgroundimg .row .col-12 .button a {
+	font-size: 30px;
+	color: #fff;
+	border: 1px solid #fff;
+}
+
+.backgroundimg .row .col-12 .button a:hover {
+	background: #000000;
+	opacity: 0.5;
+}
+
+.opaq {
+	background-color: var(--background);
+	visibility: visible;
+	height: 45vh;
+	opacity: 0.5;
+	width: 105%;
+}
+
+.home-text {
+	position: relative;
+	bottom: 10vh;
+	height: 0px;
+	left: 0vw;
+
+}
+
+.home-text h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 60px;
+	color: #fff;
+	border: 2px solid #fff;
+	margin: 0 29vw 0 30px;
+	padding-top: 20px;
+	position: relative;
+	left: 13vw;
+	bottom: 4vh;
+	/* background: #000000; */
+}
+
+.home-text h1 span {
+	font-family: 'Great Vibes', cursive;
+	position: relative;
+	left: 22vw;
+	color: #fff;
+	background: rgba(40, 70, 90, 0.9);
+	top: 7vh;
+	padding: 20px 50px 25px;
+	border-radius: 50%;
+}
+
+@media (max-width:480px) {
+	.backgroundimg {
+		background-image: url(img/12.jpg);
+		background-size: repeat;
+		background-position: center;
+		background-repeat: no-repeat;
+		height: 100vh;
+		width: 100%;
+	}
+
+	.backgroundimg .row .col-12 .button {
+		position: relative;
+		top: 0vh;
+		left: 27%;
+	}
+
+	.backgroundimg .row .col-12 .button a {
+		font-size: 30px;
+		color: #fff;
+		border: 1px solid #fff;
+	}
+
+	.backgroundimg .row .col-12 .button a:hover {
+		background: #000000;
+		opacity: 0.5;
+	}
+
+	.opaq {
+		background-color: var(--background);
+		visibility: visible;
+		height: 45vh;
+		opacity: 0.9;
+		width: 104%;
+	}
+
+	.home-text {
+		position: relative;
+		bottom: 29vh;
+		height: 40vh;
+		left: -20vw;
+		width: 95%;
+	}
+
+	.home-text h1 {
+		font-family: 'Montserrat', sans-serif;
+		font-size: 47px;
+		color: #fff;
+		border: 2px solid #fff;
+		margin: 0 29vw 0 30px;
+		padding: 20px 0 0 5px;
+		position: relative;
+		left: 14vw;
+		bottom: 4vh;
+		width: 100%;
+	}
+
+	.home-text h1 span {
+		font-family: 'Great Vibes', cursive;
+		position: relative;
+		left: 12vw;
+		color: #fff;
+		background: rgba(40, 70, 90, 0.9);
+		top: 7vh;
+		padding: 20px 50px 25px;
+		border-radius: 50%;
+	}
+}
+
+
+/*=================================== View.html ===================================*/
+.w3-card {
+	padding: 20px;
+	
+	/* border-radius: 30px; */
+}
+
+.btn-head {
+	display: flex;
+}
+
+.btn-head a {
+	display: flex;
+	margin-left: 230px;
+	width: 500px;
+	height: 40px;
+	/* color: #fff !important; */
+}
+
+
+
+.btn-head a button i {
+	margin-right: 0px;
+}
+
+.w3-card button {
+	 border:1px solid var(--background);
+	 color: var(--background) !important;	
+	 background: #fff ;	
+}
+.w3-card button:hover {
+	/* color: var(--hover); */
+	color: #f0f0f0 !important;
+	text-decoration: none !important;
+	background: var(--background)
+}
+
+.btn {
+	 border:1px solid var(--background);
+	 color: var(--background) !important;	
+	 background: #fff ;	
+}
+
+
+
+.btn:hover {
+	/* color: var(--hover); */
+	color: #f0f0f0 !important;
+	text-decoration: none !important;
+	background: var(--background)
+}
+
+.w3-card a:hover {
+	text-decoration: none !important;
+}
+
+/*====================================== heading to all pages====================================== */
+
+
+.outer_container .contents {
+	padding: 80px 0px;
+	width: 80%;
+	position: relative;
+	/* left: 18vw; */
+	width: 85%;
+	position: relative;
+	
+	
+}
+
+.outer_container .login-contents {
+	padding:20px 40px;
+	width: 100%;
+	position: relative;
+	/* left: -10vw; */
+}
+
+
+.outer_container .contents .heading {
+	padding: 1px 0px;
+	background: var(--background);
+	height: 50px;
+	text-align: center;
+	color: var(--text);
+}
+
+.outer-container .contents .divB {
+	text-align: center;
+	margin-left: 80%;
+	color: var(--text);
+	margin-top: 10px;
+	display: flex;
+}
+
+.outer-container .contents .divB a {
+	padding: 0px 20px;
+	height: 25px;
+}
+
+.outer-container .contents .divB a.button {
+	background: var(--background) !important;
+	color: var(--text);
+}
+
+.upload_button {
+	border-radius: 10px;
+	color: var(--text);
+	background: var(--background);
+	height: 30px;
+	font-size: 10px;
+}
+
+.outer_container .row .contents form button {
+	border: none;
+	border-radius: 0px !important;
+}
+
+
+
+.outer-container .row .contents table {
+	margin-top: 30px;
+	margin-left: 5px;
+}
+
+.outer-container .row .contents table .btn {
+	border-radius: 0px;
+}
+
+.contents form button {
+	background: var(--background);
+	color: white !important;
+
+}
+
+.button {
+	background-color: inherit !important;
+	border: none;
+}
+
+.notification {
+	background-color: inherit;
+	color: white;
+	text-decoration: none;
+	padding-left: 0px;
+	margin-left: 0pc;
+}
+
+form div span h5 {
+	font-size: 12px;
+}
+
+
+.overall-header {
+	text-align: center;
+	margin: 3px 15px 0px;
+	padding: 0px 0px 0px;
+	position: relative;
+	top: 12px;
+	right: 40px;
+
+}
+
+@media (max-width:480px) {
+	.outer-container .contents {
+		padding: 60px 40px;
+		width: 100%;
+		position: relative;
+		left: 1.5vw;
+	}
+
+	.outer_container .contents {
+		padding: 80px 0px;
+		width: 100%;
+		position: relative;
+		left: 1vw;
+	}
+
+	.outer_container .contents .heading {
+		/* margin: 40px 0px 20px 0px; */
+		padding: 1px 0px;
+		background: var(--background);
+		height: 50px;
+		border: 0px solid #0e0e0e;
+		width: 7vw;
+		text-align: center;
+		color: var(--text);
+	}
+
+
+	.outer-container .contents .divB {
+		text-align: center;
+		margin-left: 80%;
+		color: var(--text);
+		margin-top: 10px;
+		display: flex;
+	}
+
+	.outer-container .contents .divB a {
+		padding: 0px 20px;
+		height: 25px;
+	}
+
+	.outer-container .contents .divB a.button {
+		background: var(--background) !important;
+		color: var(--text);
+	}
+
+
+	.outer_container .row .contents form button {
+		border: none;
+		border-radius: 0px !important;
+	}
+
+
+
+	.outer-container .row .contents table {
+		margin-top: 30px;
+		/* margin-left: 5px; */
+		position: absolute;
+		left: -10vw;
+		width: 90vw;
+	}
+
+	.outer-container .row .contents table .btn {
+		border-radius: 0px;
+	}
+
+	.contents form button {
+		background: var(--background)
+	}
+
+	.button {
+		background-color: inherit !important;
+		border: none;
+	}
+
+	form div span h5 {
+		font-size: 12px;
+	}
+	.overall-header {
+		text-align: center;
+		margin: 3px 15px 0px;
+		padding: 0px 0px 0px;
+		position: relative;
+		top: 12px;
+		right: 40px;
+	}
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	
+}
+
+.footer p {
+	background: var(--background) !important;
+	color: #ffffff;
+	/* padding: 20px 0; */
+	position: relative;
+	top: 10vh;
+	width: 102vw;
+	left: -2vw;
+}
+.w3-bar-item:hover {
+	background: var(--background) !important;
+	color: #ffffff;
+}
+.company-logo{
+	border-right: 1px solid #272727 !important;	
+}
+
+.company-logo .logo {
+	width: 250px;
+}
+
+.company-logo .logo img {
+	width: 100%;
+	/* border-radius: 40%; */
+	margin-left: 30%;
+}
+
+.btn-next button {
+	margin-left: 86%;
+}
+.btn-login a {
+	margin-left: 86%;
+	text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+

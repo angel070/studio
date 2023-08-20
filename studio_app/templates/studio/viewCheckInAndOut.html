@@ -55,7 +55,7 @@
                                 <td>
                                     {{ member.member.lastName}}
                                 </td>
-                            
+
                                 <td>
                                     {{ member.member.idNumber}}
                                 </td>
@@ -66,15 +66,14 @@
                                     {% localtime on %}
                                         {{ member.date |date:"H:i"}}
                                     {% endlocaltime %}
-                                    
                                 </td>
-                            
+
                                 <td>
-                                    {{ member.status}}      
+                                    {{ member.status}}
                                 </td>
                             </tr>
 
-                    
+
                             {%endfor%}
                         </tbody>
 
