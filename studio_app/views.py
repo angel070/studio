@@ -593,17 +593,22 @@ def updateMember(request,id):
             get_regNo =request.POST.get('registrationNumber')        
             get_phone =request.POST.get('phoneNumber')         
             get_email =request.POST.get('email')        
+            # get_registeredDate =request.POST.get('registeredDate')              
             get_nationality =request.POST.get('nationality')         
-            get_gender =request.POST.get('gender')                
-            get_registeredDate =datetime.now()  
+            get_gender =request.POST.get('gender')       
             get_location =request.POST.get('location') 
             get_memberType = request.POST.get('type')
             get_memberTypeName = Member_type.objects.get(id=get_memberType )  
-            get_LocationName = Location.objects.get(id=get_location ) 
-            print(get_LocationName) 
-            memberType = str(get_memberTypeName)           
+            get_LocationName = Location.objects.get(id=get_location )
+
+            memberType = str(get_memberTypeName)  
+            memberEdited  = Member.objects.get(id=id)
+            get_registeredDate = memberEdited.registeredDate
+    
+            print(get_registeredDate.day) 
+
             dob = datetime.strptime(get_DOB, '%Y-%m-%d').date().day           
-            get_idNumber =f'{get_nationality.strip()[0].upper()} {get_fname.strip()[0].upper()} {get_lname.strip()[0].upper()} {get_gender.strip()[0].upper()} {memberType.strip()[0].upper()} {get_registeredDate.date().day} {str(get_phone).strip()[-2:]} {dob} '  
+            get_idNumber =f'{get_nationality.strip()[0].upper()} {get_fname.strip()[0].upper()} {get_lname.strip()[0].upper()} {get_gender.strip()[0].upper()} {memberType.strip()[0].upper()} {get_registeredDate.day} {str(get_phone).strip()[-2:]} {dob} '  
             
             updateMember = Member.objects.get(id = id)
            
@@ -738,7 +743,6 @@ def updateComponentRequest(request):
     requestcomponents.save()
 
     if requestcomponents.quantity <= 0 or action == 'delete':
-        print("hello am here")
         requestcomponents.delete()
     
     return JsonResponse("component was added successfully", safe=False)
@@ -748,6 +752,7 @@ def updateRequest(request,id):
     req = Request.objects.get(id=id)
     req.requested = True
     req.save()
+    messages.success(request, f'Your request has been sent successfully!')
     return redirect(addRequestedComponents)
 
 @login_required

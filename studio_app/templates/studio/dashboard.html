@@ -8,58 +8,48 @@
     <h2 class="text-center">DashBoard</h2>
 
     <div class="row">
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 mt-3">
             <div class="card">
                 <div class="card-header text-center">
-                    Total Members
+                    <a href="{% url 'viewMembers' %}">Total Members</a>
                 </div>
                 <div class="card-body text-center">
                     {{members}}
                 </div>
-                <!-- <div class="card-footer text-center">
-                    <a href="{% url 'viewMembers' %}">View More... </a>
-                </div> -->
+                
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 mt-3">
             <div class="card">
                 <div class="card-header text-center">
-                    Total Checkin
+                    <a href="{% url 'viewCheckedInAndOut' %}">Total Checkin</a>
                 </div>
                 <div class="card-body text-center">
                 {{checkin}}
                 </div>
-                <!-- <div class="card-footer text-center">
-                    <a href="{% url 'viewCheckedInAndOut' %}">View More... </a>
-                </div> -->
+              
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 mt-3">
             <div class="card">
                 <div class="card-header text-center">
-                    Total Request
+                   <a href="{% url 'viewRequestedComponents' %}">Total Request</a> 
                 </div>
                 <div class="card-body text-center">
-                {{requestedComponent}}
+                    {{requestedComponent}}
                 
-                </div>
-                <!-- <div class="card-footer text-center">
-                    <a href="{% url 'viewRequestedComponents' %}">View More... </a>
-                </div> -->
+                </div>            
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-12 mt-3">
             <div class="card">
                 <div class="card-header text-center">
-                    Total Users
+                    <a  href="{% url 'all-users' %}">Total Users</a>
                 </div>
                 <div class="card-body text-center">
                 {{totalUsers}}
-                </div>
-                <!-- <div class="card-footer text-center">
-                    <a href="#">View More... </a>
-                </div> -->
+                </div>              
             </div>
         </div>
     </div>

@@ -24,8 +24,10 @@
           <div class="heading">
             <h3 class="text-center">USERS</h3>
           </div>
-          <a href="{% url 'add-user' %}"><button class="btn btn-outline-primary mb-3 w3-right "><i class="fa fa-plus"></i> Add
-              New</button></a>
+          {% if request.user.is_admin %}
+                  <a href="{% url 'add-user' %}"><button class="btn btn-outline-primary mb-3 w3-right "><i class="fa fa-plus"></i> Add
+                      New</button></a>
+          {% endif %}
           <!-- <form class="form-inline mt-5 ml-2 block" method="GET">
             <div class="searchBar">
               <input type="text" name = "q" placeholder="Search User">
@@ -45,7 +47,9 @@
                     <th>Name</th>
                     <th>Active</th>
                     <th>Admin</th>
-                    <th>Action</th>
+                    {% if request.user.is_admin %}
+                      <th>Action</th>
+                    {% endif%}
               </tr>
             </thead>
               <tbody>
@@ -68,12 +72,14 @@
                           <i class="fa fa-window-close text-danger"></i>
                           {% endif %}
                         </td>
-                        <td class="text-center">
-                          <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{% url 'update-user' user.id %}" type="button" class="btn btn-outline-primary mr-2"><i class="fa fa-edit"></i></a>
-                            <a href="{% url 'delete-user' user.id %}" onclick="return confirm('Seriously Delete this!?');" type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
-                            </div>
-                        </td>
+                        {% if request.user.is_admin %}
+                            <td class="text-center">
+                              <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{% url 'update-user' user.id %}" type="button" class="btn btn-outline-primary mr-2"><i class="fa fa-edit"></i></a>
+                                <a href="{% url 'delete-user' user.id %}" onclick="return confirm('Seriously Delete this!?');" type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </td>
+                        {% endif%}
                       </tr>
                   {% endfor %}
               </tbody>
