@@ -693,7 +693,7 @@ def addRequestedComponents(request):
             try:
                 get_member = Member.objects.get(email=get_email)
             except Member.DoesNotExist:
-                messages.warning(request, f'Sorry,no member with this email address exists!')
+                messages.warning(request, f'Sorry,no member with this email address')
                 return redirect('addRequestedComponents')
             # if get_member == None:
             #     messages.success(request, f'Email does not exist')
@@ -714,6 +714,7 @@ def addRequestedComponents(request):
     context = { }
     myTemplate = 'studio/checkEmail.html'
     return render(request, myTemplate, context) 
+
 
 @login_required
 def viewRequestedComponents(request):
