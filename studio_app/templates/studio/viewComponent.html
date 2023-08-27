@@ -34,6 +34,7 @@
                                 <th>Lab</th>
                                 <th>Name</th>
                                 <th>Quantity</th>
+                                <th>Remaining</th>
                                 <th>Value</th>
                                 <th>Cost</th>
                                 <th>Action</th>
@@ -54,6 +55,9 @@
                                 </td>
                                 <td>
                                     {{ component.quantity}}
+                                </td>
+                                <td>
+                                    {{ component.get_remaining_quantity }}
                                 </td>
                                 <td>
                                     {{ component.value}}

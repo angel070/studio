@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.db import models
 from multiselectfield import MultiSelectField
+from django.db.models import Sum
 
 # Create your models here
 class Lab(models.Model):       
@@ -26,7 +27,12 @@ class Component(models.Model):
 
     def __str__(self):
      return self.name
-
+    
+    @property
+    def get_remaining_quantity(self):
+       remaining_quantity = self.quantity - sum(request.quantity for request in self.requestcomponents_set.filter(status="ACCEPTED"))
+       return remaining_quantity
+    
 class Department(models.Model): 
    name = models.CharField(max_length = 255, blank = False, null=False)
 
