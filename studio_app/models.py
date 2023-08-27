@@ -27,6 +27,16 @@ class Component(models.Model):
     def __str__(self):
      return self.name
 
+class Department(models.Model): 
+   name = models.CharField(max_length = 255, blank = False, null=False)
+
+   class Meta:
+        verbose_name_plural = 'Departments'     
+
+
+   def __str__(self):
+     return self.name
+
 
 class Source_of_Income(models.Model):       
     name = models.CharField(max_length = 100, null = False, blank = False )
@@ -120,6 +130,7 @@ class Member(models.Model):
                )
     type = models.ForeignKey(Member_type,on_delete = models.PROTECT )
     location = models.ForeignKey(Location,on_delete = models.PROTECT )
+    department = models.ForeignKey(Department,on_delete = models. PROTECT )            
     firstName = models.CharField(max_length = 255, blank = False, null = False)
     middleName = models.CharField(max_length = 255, blank = True, null = True)
     lastName = models.CharField(max_length = 255, blank = False, null = False)
@@ -131,6 +142,7 @@ class Member(models.Model):
     registeredDate = models.DateField(null = True, blank = False)
     nationality = models.CharField(max_length=255, blank = False, null = False)
     gender = models.CharField(max_length=255, choices = CHOICES,null = False, blank = False)
+    department = models.ForeignKey(Department,on_delete = models.PROTECT )
 
     class Meta:
         verbose_name_plural = 'Members'

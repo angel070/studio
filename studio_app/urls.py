@@ -20,6 +20,12 @@ urlpatterns = [
     path('delete/component/<int:id>/', views.deleteComponent, name='deleteComponent'),
     path('update/component/<int:id>/', views.updateComponent, name='updateComponent'),
 
+    #.............................Departments.................................
+     path('addDepartment/', views.addDepartment, name='addDepartment'),
+     path('viewDepartment/', views.viewDepartment, name='viewDepartment'),
+     path('updateDepartment/<int:id>/', views.updateDepartment, name='updateDepartment'),
+     path('deleteDepartment/<int:id>/', views.deleteDepartment, name='deleteDepartment'),
+
     #....................................source ofincome........................
     path('addSourceOfIncome/', views.addSourceOfIncome, name='addSourceOfIncome'),
     path('viewSourceOfIncome/', views.viewSourceOfIncome, name='viewSourceOfIncome'),
@@ -68,7 +74,8 @@ urlpatterns = [
     path('viewCheckInAndOut/', views.viewCheckedInAndOut, name='viewCheckedInAndOut'),
     
     path('viewRequestedComponents/', views.viewRequestedComponents, name='viewRequestedComponents'),
-    path('updateComponentRequest/', views.updateComponentRequest, name='updateComponentRequest'),
+    path('updateRequestedComponents/<int:id>/', views.updateRequestedComponents, name='updateRequestedComponents'),
+    path('updateComponentRequest/<int:id>/', views.updateComponentRequest, name='updateComponentRequest'),
     path('updateRequest/<int:id>/', views.updateRequest, name='updateRequest'),
     path('issueComponents/<int:id>/', views.issueComponents, name='issueComponents'),
     path('declinedComponents/<int:id>/', views.declinedComponents, name='declinedComponents'),

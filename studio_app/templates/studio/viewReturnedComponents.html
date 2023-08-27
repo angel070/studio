@@ -23,7 +23,7 @@
 
                     <h3 class="text-center">Returned Components</h3>
 
-                    <table id="example" class="table table-hover table-striped table-bordered ">
+                    <table id="example" class="table table-hover table-striped table-bordered " style="overflow-x: auto;">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -57,31 +57,7 @@
                                 <td>
                                     {{ component.request.requestedDate|date:"Y-m-d" }}
                                 </td>                               
-                            </tr>
-
-                            <div class="modal fade" id="deleteComponent{{component.id}}" data-backdrop="static"
-                                data-keyboard="false" tabindex="-1" aria-labelledby="deleteproductLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteproductLabel">Confirm Component Deletion
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you sure, you want to confirm?</p>
-                                        </div>
-                                        <div class="p-4">
-                                            <button type="button" class="btn button"
-                                                data-dismiss="modal">Cancel</button>
-                                            <a href=" #" class="btn btn-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </tr>                            
                             {%endfor%}
                         </tbody>
 

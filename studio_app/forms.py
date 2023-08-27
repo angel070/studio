@@ -22,6 +22,16 @@ class updateComponentsForm(forms.ModelForm):
         model = Component
         fields = '__all__'
 
+class addDepartmentForm(forms.ModelForm): 
+    class Meta:     
+        model = Department
+        fields = '__all__'   
+
+class updateDeparmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = '__all__'   
+
 class addSourceOfIncomeForm(forms.ModelForm):
     class Meta:
         model = Source_of_Income
@@ -87,7 +97,7 @@ class addLocationForm(forms.ModelForm):
 class addMemberForm(forms.ModelForm):
     class Meta:
         model = Member
-        fields = ('firstName','middleName', 'lastName', 'dateOfBirth', 'registrationNumber', 'phoneNumber', 'email', 'nationality', 'gender','type','location' )
+        fields = ('firstName','middleName', 'lastName', 'dateOfBirth', 'registrationNumber', 'phoneNumber', 'email', 'nationality', 'gender','type','location','department' )
 
         widgets = {
             'dateOfBirth': forms.DateInput(attrs={'type':'date' }),
@@ -96,6 +106,11 @@ class addMemberForm(forms.ModelForm):
 class addCheckInAndOutForm(forms.ModelForm):    
     class meta: 
         model = CheckInAndout  
+        fields ='__all__'  
+
+class updateRequestedComponentsForm(forms.ModelForm):    
+    class meta: 
+        model = Requestcomponents  
         fields ='__all__'  
 
 

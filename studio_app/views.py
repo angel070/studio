@@ -130,6 +130,69 @@ def deleteComponent(request, id):
     except:
         messages.success(request,"component is already used can't be deleted ")
         return redirect('viewComponent')
+
+#...................................Department..................................................
+def addDepartment(request):
+    print("Adding department")        
+    form = addDepartmentForm()
+    if request.method == 'POST':
+        form = addDepartmentForm(request.POST or None)
+        get_name =request.POST.get('name')   
+        check_name = Department.objects.filter(name=get_name).count()
+    if request.method == 'POST': 
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Department added successfully!')
+                 return redirect('viewDepartment')
+            else:
+                 messages.warning(request, f'Department already exists!') 
+                 return redirect('addDepartment')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/addDepartment.html'
+    return render(request, myTemplate, context) 
+
+def viewDepartment(request):    
+    departments = Department.objects.all()  
+
+    context = {
+     'departments': departments,
+    }
+    myTemplate = 'studio/viewDepartment.html'
+    return render(request, myTemplate, context) 
+
+def updateDepartment(request,id):
+    print = ("this is new department")
+    instance = get_object_or_404(Department, pk = id)
+    form = updateDeparmentForm(request.POST or None,instance = instance)
+    get_name =request.POST.get('name') 
+    check_name =Department.objects.filter(name=get_name ).count()
+    if request.method == 'POST': 
+        if form.is_valid():  
+            if check_name == 0:       
+                 form.save()
+                 messages.success(request, f'Department edited successfully!')
+                 return redirect('viewDepartment')
+            else:
+                 messages.warning(request, f'Department already exists!')
+
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/updateDepartment.html'
+    return render(request, myTemplate, context)
+
+def deleteDepartment(request,id):
+    try:
+        get_object = Department.objects.filter(id=id)
+        get_object.delete()
+        return redirect('viewDepartment')
+    except:
+        messages.success(request,"Department is already used can't be deleted ")
+        return redirect('viewDepartment')
     
 
 #.....................................Source of income...................................
@@ -536,6 +599,7 @@ def addMember(request):
             get_registeredDate =datetime.now()  
             get_location =request.POST.get('location') 
             get_memberType = request.POST.get('type')
+            get_department =request.POST.get('department')      
             print(get_memberType)
             #get name of member type and location using their Id
             get_memberTypeName = Member_type.objects.get(id=get_memberType )  
@@ -558,7 +622,8 @@ def addMember(request):
                 registeredDate = get_registeredDate,
                 idNumber = get_idNumber, 
                 location = get_LocationName,
-                type = get_memberTypeName          
+                type = get_memberTypeName,
+                department_id = get_department                  
             )     
             form.save()
             messages.success(request, f'Student added successfully!')
@@ -756,6 +821,18 @@ def updateRequest(request,id):
     req.save()
     messages.success(request, f'Your request has been sent successfully!')
     return redirect(addRequestedComponents)
+
+def updateRequestedComponents(request,id):
+    instance = get_object_or_404(Requestcomponents, pk = id)
+    print("instance")
+    form =updateRequestedComponentsForm(request.POST or None,instance = instance)
+
+    context = {
+        'form':form 
+             }    
+    myTemplate = 'studio/updateRequestedComponent.html'
+    return render(request, myTemplate, context)
+
 
 @login_required
 def issueComponents(request,id):

@@ -2,34 +2,37 @@
 
 import datetime
 from django.db import migrations, models
-import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('studio_app', '0003_remove_member_deparment_alter_expenses_date_and_more'),
+        ('studio_app', '0002_alter_expenses_date_alter_income_date_and_more'),
     ]
 
     operations = [
+        migrations.RemoveField(
+            model_name='member',
+            name='deparment',
+        ),
         migrations.AlterField(
             model_name='expenses',
             name='date',
-            field=models.DateField(default=datetime.datetime(2023, 8, 23, 16, 33, 59, 355830)),
+            field=models.DateField(default=datetime.datetime(2023, 8, 23, 16, 33, 3, 244138)),
         ),
         migrations.AlterField(
             model_name='income',
             name='date',
-            field=models.DateField(default=datetime.datetime(2023, 8, 23, 16, 33, 59, 355830)),
+            field=models.DateField(default=datetime.datetime(2023, 8, 23, 16, 33, 3, 244138)),
         ),
         migrations.AlterField(
             model_name='member',
             name='department',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='studio_app.department'),
+            field=models.CharField(max_length=255),
         ),
         migrations.AlterField(
             model_name='purchases',
             name='date',
-            field=models.DateField(default=datetime.datetime(2023, 8, 23, 16, 33, 59, 355830)),
+            field=models.DateField(default=datetime.datetime(2023, 8, 23, 16, 33, 3, 244138)),
         ),
     ]

@@ -28,7 +28,7 @@
                     <h3 class="text-center">Members</h3>
                     <a href="{% url 'addMember' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i class="fa fa-plus"></i> Add
                             New</button></a>
-                    <table id="example" class="table table-hover table-striped table-bordered table-responsive mb-5 ">
+                    <table id="example" class="table table-hover table-striped table-bordered table-responsive mb-5 " style="overflow-x:auto">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -44,6 +44,7 @@
                                 <th>Gender</th>
                                 <th>Type</th>                                
                                 <th>Location</th>
+                                <th>Department</th>
                                 <th>Id No.</th>
                                 <th>Action</th>
                             </tr>
@@ -90,6 +91,9 @@
                                 </td>
                                 <td>
                                     {{ member.location}}
+                                </td>
+                                <td>
+                                    {{ member.department}}
                                 </td>
                                 <td>
                                     {{ member.idNumber}}
