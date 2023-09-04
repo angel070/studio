@@ -30,7 +30,7 @@ class Component(models.Model):
     
     @property
     def get_remaining_quantity(self):
-       remaining_quantity = self.quantity - sum(request.quantity for request in self.requestcomponents_set.filter(status="ACCEPTED"))
+       remaining_quantity = self.quantity - sum(request.quantity for request in self.respondedcomponents_set.filter(status="ACCEPTED"))
        return remaining_quantity
     
 class Department(models.Model): 
@@ -188,6 +188,18 @@ class Requestcomponents(models.Model):
 
    class Meta:
         verbose_name_plural = 'Request Components'
+
+   def __str__(self):
+     return f'{self.request.member.firstName} {self.request.member.lastName}' 
+     
+class RespondedComponents(models.Model):
+   request = models.ForeignKey(Request, on_delete=models.CASCADE)
+   component = models.ForeignKey(Component,  on_delete=models.PROTECT)
+   quantity = models.PositiveIntegerField(default=0)
+   status = models.CharField(max_length = 255, null = True)
+
+   class Meta:
+        verbose_name_plural = 'responded Components'
 
    def __str__(self):
      return f'{self.request.member.firstName} {self.request.member.lastName}'   

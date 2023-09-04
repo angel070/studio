@@ -12,9 +12,11 @@ for (var i = 0; i < updateBtns.length; i++) {
 }
 
 function updateMemberOrder(componentId, action, member) {
+    console.log("hi 5")
 
     var url = /updateComponentRequest/
     fetch(url, {
+        
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

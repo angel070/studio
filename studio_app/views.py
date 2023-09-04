@@ -792,8 +792,9 @@ def viewRequestedComponents(request):
     myTemplate = 'studio/viewRequestedComponents.html'
     return render(request, myTemplate, context)
 
-# @login_required
+
 def updateComponentRequest(request):
+    print("Update")
     data = json.loads(request.body)
     componentId = data['componentId']
     action = data['action']
@@ -814,7 +815,7 @@ def updateComponentRequest(request):
         requestcomponents.delete()
     return JsonResponse("component was added successfully", safe=False)
 
-# @login_required
+
 def updateRequest(request,id):
     req = Request.objects.get(id=id)
     req.requested = True
@@ -822,14 +823,38 @@ def updateRequest(request,id):
     messages.success(request, f'Your request has been sent successfully!')
     return redirect(addRequestedComponents)
 
-def updateRequestedComponents(request,id):
-    instance = get_object_or_404(Requestcomponents, pk = id)
-    print("instance")
+def updateRequestedComponents(request, id):
+    instance = get_object_or_404(Requestcomponents,pk=id)
+    # form = updateRequestedComponentsForm(request.POST or None,instance = instance)
     form =updateRequestedComponentsForm(request.POST or None,instance = instance)
+    get_request =request.POST.get('request')
+    get_component =request.POST.get('component')
+    get_quantity =request.POST.get('quantity') 
+             
+    if request.method == 'POST':        
+        if form.is_valid():
+          
+            print(type(get_quantity))
+            if instance.component.get_remaining_quantity < int(get_quantity):
+                messages.error(request, 'not enough quantity')
+                return redirect('viewRequestedComponents')
+            else:
+                form1 = RespondedComponents(
+                    request_id = get_request,
+                    component_id =get_component,           
+                    quantity = get_quantity ,    
+                    status = "ACCEPTED"
+                )           
+                form1.save()
+                instance.status = "ACCEPTED"            
+                instance.save() 
+                messages.success(request, f'Request accepted successfully!')
+                return redirect('viewRequestedComponents')
+
 
     context = {
         'form':form 
-             }    
+    }    
     myTemplate = 'studio/updateRequestedComponent.html'
     return render(request, myTemplate, context)
 
@@ -850,7 +875,7 @@ def declinedComponents(request,id):
 
 @login_required
 def viewAcceptedRequest(request):
-    acceptedRequest = Requestcomponents.objects.filter(status = "Accepted")
+    acceptedRequest = RespondedComponents.objects.filter(status = "ACCEPTED")
 
     context = {
         'acceptedRequest': acceptedRequest 
@@ -859,14 +884,14 @@ def viewAcceptedRequest(request):
     return render(request, myTemplate, context)
 
 def returnComponents(request,id):
-    memberReturned = Requestcomponents.objects.get(id=id)
+    memberReturned = RespondedComponents.objects.get(id=id)
     memberReturned.status = "Returned"
     memberReturned.save()
     messages.success(request, f'Successfully returned')
     return redirect(viewAcceptedRequest)
 
 def viewReturnedComponents(request):
-    returnedComponents = Requestcomponents.objects.filter(status = "Returned")
+    returnedComponents = RespondedComponents.objects.filter(status = "Returned")
 
     context = {
         'returnedComponents': returnedComponents 

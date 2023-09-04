@@ -109,9 +109,9 @@ class addCheckInAndOutForm(forms.ModelForm):
         fields ='__all__'  
 
 class updateRequestedComponentsForm(forms.ModelForm):    
-    class meta: 
+    class Meta: 
         model = Requestcomponents  
-        fields ='__all__'  
+        fields =('request','component','quantity') 
 
 
 

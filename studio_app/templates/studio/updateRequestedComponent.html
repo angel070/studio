@@ -19,22 +19,22 @@
                 {% endif %}
                 <h5 class="text-center">Update Component </h5>
                 
-                <form action="" method="post" class="mt-3 w3-card pt-3 pb-4">
+                <form action="" method="POST" class="mt-3 w3-card pt-3 pb-4">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Lab<strong>*</strong></h6>
-                            {{ form.member | add_class:'form-control'}}
+                            <h6>Member<strong>*</strong></h6>
+                            {{ form.request| add_class:'form-control'}}
                         </div>
                         <div class="col-md-6">
-                            <h6>Name<strong>*</strong></h6>
-                            {{ form.member.idNumber | add_class:'form-control'}}
+                            <h6>Id Number<strong>*</strong></h6>
+                            {{ form.request.member.idNumber | add_class:'form-control'}}
                         </div>
                     </div>
                 
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Value<strong>*</strong></h6>
+                            <h6>Component<strong>*</strong></h6>
                             {{ form.component | add_class:'form-control'}}
                         </div>
                         <div class="col-md-6">
