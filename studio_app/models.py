@@ -185,6 +185,7 @@ class Requestcomponents(models.Model):
    component = models.ForeignKey(Component,  on_delete=models.PROTECT)
    quantity = models.PositiveIntegerField(default=0)
    status = models.CharField(max_length = 255, null = True)
+   responseDate = models.DateTimeField(null=True, blank=True)
 
    class Meta:
         verbose_name_plural = 'Request Components'
@@ -197,6 +198,7 @@ class RespondedComponents(models.Model):
    component = models.ForeignKey(Component,  on_delete=models.PROTECT)
    quantity = models.PositiveIntegerField(default=0)
    status = models.CharField(max_length = 255, null = True)
+   responseDate = models.DateTimeField(null=True, blank=True)
 
    class Meta:
         verbose_name_plural = 'responded Components'

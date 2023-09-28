@@ -75,13 +75,13 @@ urlpatterns = [
     
     path('viewRequestedComponents/', views.viewRequestedComponents, name='viewRequestedComponents'),
     path('updateRequestedComponents/<int:id>/', views.updateRequestedComponents, name='updateRequestedComponents'),
-    path('updateComponentRequest/<int:id>/', views.updateComponentRequest, name='updateComponentRequest'),
+    path('updateComponentRequest/', views.updateComponentRequest, name='updateComponentRequest'),
     path('updateRequest/<int:id>/', views.updateRequest, name='updateRequest'),
     path('issueComponents/<int:id>/', views.issueComponents, name='issueComponents'),
     path('declinedComponents/<int:id>/', views.declinedComponents, name='declinedComponents'),
 
 
-    path('returnComponents//<int:id>/', views.returnComponents, name='returnComponents'),
+    path('returnComponents/<int:id>/', views.returnComponents, name='returnComponents'),
     path('viewAcceptedRequest/', views.viewAcceptedRequest, name='viewAcceptedRequest'),
     path('viewReturnedComponents/', views.viewReturnedComponents, name='viewReturnedComponents'),
 

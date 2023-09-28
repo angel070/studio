@@ -37,35 +37,34 @@
                         </thead>
 
                         <tbody>
-                            {% for component in acceptedRequest %}
+                            {% for request in acceptedRequests %}
                             <tr>
                                 <td>
                                     {{ forloop.counter}}
                                 </td>
                                 <td>
-                                    {{ component.request.member.firstName}} {{ component.request.member.lastName}}
+                                    {{ request.request.member.firstName}} {{ component.request.member.lastName}}
                                 </td>
 
                                 <td>
-                                    {{ component.request.member.idNumber}}
+                                    {{ request.request.member.idNumber}}
                                 </td>
                                 <td>
-                                    {{ component.component}}
+                                    {{ request.component}}
                                 </td>
                                 <td>
-                                    {{ component.quantity}}
+                                    {{ request.quantity}}
                                 </td>
                                 <td>
-                                    {{ component.request.requestedDate|date:"Y-m-d" }}
+                                    {{ request.request.requestedDate|date:"Y-m-d" }}
                                 </td>
 
                                 <!-- <td><a href="#" class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#deleteComponent{{component.id}}"><i class="fa fa-check"></i></a>
                                     
                                 </td> -->
-                                <td><a href="{% url 'returnComponents' component.id%}"><button><i
-                                                class="fa fa-check"></i></button></a>
-                                   
+                                <td><a href="{% url 'returnComponents' request.id %}"><button><i
+                                                class="fa fa-check"></i></button></a>                                   
 
                                 </td>
                             </tr>

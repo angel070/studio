@@ -765,7 +765,7 @@ def addRequestedComponents(request):
             #     return redirect('addRequestedComponents')
             # else: 
             req, created =Request.objects.get_or_create(member = get_member, requested = False)   
-            # items = order.Requestcomponents_set.all()
+           # items = order.Requestcomponents_set.all()
             items= Requestcomponents.objects.filter (request=req)  
             context = {
                 'components':components,
@@ -794,7 +794,6 @@ def viewRequestedComponents(request):
 
 
 def updateComponentRequest(request):
-    print("Update")
     data = json.loads(request.body)
     componentId = data['componentId']
     action = data['action']
@@ -825,6 +824,9 @@ def updateRequest(request,id):
 
 def updateRequestedComponents(request, id):
     instance = get_object_or_404(Requestcomponents,pk=id)
+    component =Component.objects.get(name=instance.component)
+    print(component.id)
+    
     # form = updateRequestedComponentsForm(request.POST or None,instance = instance)
     form =updateRequestedComponentsForm(request.POST or None,instance = instance)
     get_request =request.POST.get('request')
@@ -832,11 +834,9 @@ def updateRequestedComponents(request, id):
     get_quantity =request.POST.get('quantity') 
              
     if request.method == 'POST':        
-        if form.is_valid():
-          
-            print(type(get_quantity))
+        if form.is_valid():        
             if instance.component.get_remaining_quantity < int(get_quantity):
-                messages.error(request, 'not enough quantity')
+                messages.warning(request, f'There is no enough quantity in the stock')
                 return redirect('viewRequestedComponents')
             else:
                 form1 = RespondedComponents(
@@ -853,7 +853,8 @@ def updateRequestedComponents(request, id):
 
 
     context = {
-        'form':form 
+        'form':form ,
+        'component':component
     }    
     myTemplate = 'studio/updateRequestedComponent.html'
     return render(request, myTemplate, context)
@@ -864,7 +865,7 @@ def issueComponents(request,id):
     issue = Requestcomponents.objects.get(id=id)
     issue.status = "Accepted"
     issue.save()
-    return redirect(viewRequestedComponents)
+    return redirect("viewRequestedComponents")
 
 @login_required
 def declinedComponents(request,id):
@@ -875,18 +876,27 @@ def declinedComponents(request,id):
 
 @login_required
 def viewAcceptedRequest(request):
-    acceptedRequest = RespondedComponents.objects.filter(status = "ACCEPTED")
+    acceptedRequests = RespondedComponents.objects.filter(status = "ACCEPTED")
 
     context = {
-        'acceptedRequest': acceptedRequest 
+        'acceptedRequests': acceptedRequests 
         }
     myTemplate = 'studio/viewAcceptedComponents.html'
     return render(request, myTemplate, context)
 
 def returnComponents(request,id):
-    memberReturned = RespondedComponents.objects.get(id=id)
-    memberReturned.status = "Returned"
-    memberReturned.save()
+    # requestComponent = Requestcomponents.objects.get(id=id)
+    # quantity = request.POST.get('quantity')
+    # RespondedComponents.objects.create(
+    #     request = requestComponent.request,  
+    #     component = requestComponent.component,
+    #     quantity =requestComponent.quantity,
+    #     status  = 'Returned',
+    #     responseDate = datetime.now()
+    # )
+    returned = RespondedComponents.objects.get(id = id)
+    returned.status = 'Returned'
+    returned.save()
     messages.success(request, f'Successfully returned')
     return redirect(viewAcceptedRequest)
 
