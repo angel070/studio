@@ -70,13 +70,18 @@
                   
                         <div class="w3-card mt-3">
                                 <h5 class="text-center">Request Components </h5>
-                                
-                                <div class="row mt-3">
-                                    <div class="col-md-12">
-                                        <input name="email" class="form-control" placeholder="search">
+                                <form action="{% url 'addRequestedComponents' %}" method="get">
+                                    <div class="row mt-3">
+                                        <div class="col-md-9">
+                                            <input name="q" class="form-control" placeholder="search">
+                                            <input name="request" value="{{request}}" hidden>
+                                            <input name="email" value="{{email}}" hidden>
+                                        </div>
+                                        <div class="col-3">
+                                            <input type="submit" class="btn btn-outline-info" value="Search">
+                                        </div>
                                     </div>
-                                
-                                </div>
+                                </form>
                                 <div class="row mt-3">
                                     <table class="table table-bordered table-striped" id="example">
                                         <thead>

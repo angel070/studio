@@ -752,29 +752,51 @@ def viewCheckedInAndOut(request):
 #.............................................Requested components..........................
 
 def addRequestedComponents(request):
-    components = Component.objects.all()          
     if request.method == 'POST':
+            components = Component.objects.all()          
             get_email = request.POST.get('email') 
             try:
                 get_member = Member.objects.get(email=get_email)
             except Member.DoesNotExist:
                 messages.warning(request, f'Sorry,no member with this email address')
                 return redirect('addRequestedComponents')
-            # if get_member == None:
-            #     messages.success(request, f'Email does not exist')
-            #     return redirect('addRequestedComponents')
-            # else: 
-            req, created =Request.objects.get_or_create(member = get_member, requested = False)   
-           # items = order.Requestcomponents_set.all()
+            req, created =Request.objects.get_or_create(member = get_member, requested = False)
             items= Requestcomponents.objects.filter (request=req)  
             context = {
                 'components':components,
                 'member': get_member,  
                 'items':items,
-                'request':req.id
+                'request':req.id,
+                'email': get_email
             }
             myTemplate = 'studio/requestComponents.html'
-            return render(request, myTemplate, context) 
+            return render(request, myTemplate, context)
+    
+    email = request.GET.get('email')
+    request_id = request.GET.get('request')
+    q = request.GET.get('q')
+
+    if request_id:
+        components = None
+        if q:
+            components = Component.objects.filter(name__icontains=q)
+        if not components:
+            components = Component.objects.all()
+            messages.warning(
+                request, f'No component was found')
+        
+        get_member = Member.objects.get(email=email)
+        req, created = Request.objects.get_or_create(member = get_member, requested = False)
+        items = Requestcomponents.objects.filter (request=req)  
+        context = {
+            'components': components,
+            'member': get_member,
+            'items': items,
+            'request': request_id,
+            'email': email
+        }
+        myTemplate = 'studio/requestComponents.html'
+        return render(request, myTemplate, context)
     
     context = { }
     myTemplate = 'studio/checkEmail.html'
@@ -825,35 +847,28 @@ def updateRequest(request,id):
 def updateRequestedComponents(request, id):
     instance = get_object_or_404(Requestcomponents,pk=id)
     component =Component.objects.get(name=instance.component)
-    print(component.id)
-    
-    # form = updateRequestedComponentsForm(request.POST or None,instance = instance)
-    form =updateRequestedComponentsForm(request.POST or None,instance = instance)
-    get_request =request.POST.get('request')
-    get_component =request.POST.get('component')
     get_quantity =request.POST.get('quantity') 
              
-    if request.method == 'POST':        
-        if form.is_valid():        
-            if instance.component.get_remaining_quantity < int(get_quantity):
-                messages.warning(request, f'There is no enough quantity in the stock')
-                return redirect('viewRequestedComponents')
-            else:
-                form1 = RespondedComponents(
-                    request_id = get_request,
-                    component_id =get_component,           
-                    quantity = get_quantity ,    
-                    status = "ACCEPTED"
-                )           
-                form1.save()
-                instance.status = "ACCEPTED"            
-                instance.save() 
-                messages.success(request, f'Request accepted successfully!')
-                return redirect('viewRequestedComponents')
+    if request.method == 'POST':     
+        if instance.component.get_remaining_quantity < int(get_quantity):
+            messages.warning(request, f'There is no enough quantity in the stock')
+            return redirect('viewRequestedComponents')
+        else:
+            responseComponent = RespondedComponents(
+                request = instance.request,
+                component = instance.component,           
+                quantity = get_quantity,    
+                status = "ACCEPTED"
+            )           
+            responseComponent.save()
+            instance.status = "ACCEPTED"            
+            instance.save() 
+            messages.success(request, f'Request accepted successfully!')
+            return redirect('viewRequestedComponents')
 
 
     context = {
-        'form':form ,
+        'requestComponent': instance,
         'component':component
     }    
     myTemplate = 'studio/updateRequestedComponent.html'
