@@ -89,4 +89,8 @@ urlpatterns = [
     path('addPaymentSetting/', views.addPaymentSetting, name='addPaymentSetting'),
     path('viewPaymentSetting/', views.viewPaymentSetting, name='viewPaymentSetting'),
 
+
+    path('addMemberPayment/', views.addMemberPayment, name='addMemberPayment'),
+
+
 ]

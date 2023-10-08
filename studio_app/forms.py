@@ -118,6 +118,15 @@ class paymentSettingsForm(forms.ModelForm):
         model = PaymentSetting
         fields = '__all__'
 
+class MemberPaymentForm(forms.ModelForm):
+    class Meta: 
+        model = MemberPayment
+        fields = ('member','paymentDate')
+
+        widgets = {
+            'paymentDate': forms.DateInput(attrs={'type':'date' }),
+        }
+
 
 
 
