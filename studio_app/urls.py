@@ -85,4 +85,8 @@ urlpatterns = [
     path('viewAcceptedRequest/', views.viewAcceptedRequest, name='viewAcceptedRequest'),
     path('viewReturnedComponents/', views.viewReturnedComponents, name='viewReturnedComponents'),
 
+
+    path('addPaymentSetting/', views.addPaymentSetting, name='addPaymentSetting'),
+    path('viewPaymentSetting/', views.viewPaymentSetting, name='viewPaymentSetting'),
+
 ]

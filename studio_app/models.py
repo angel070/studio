@@ -204,5 +204,14 @@ class RespondedComponents(models.Model):
         verbose_name_plural = 'responded Components'
 
    def __str__(self):
-     return f'{self.request.member.firstName} {self.request.member.lastName}'   
+     return f'{self.request.member.firstName} {self.request.member.lastName}' 
+
+class PaymentSetting(models.Model):
+   amount = models.FloatField(null=False, blank=False)
+
+   class Meta:
+       verbose_name_plural = 'Payment Setting'
+
+   def __str__(self):
+     return 'self.amount '  
 

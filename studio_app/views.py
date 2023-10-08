@@ -848,12 +848,14 @@ def updateRequestedComponents(request, id):
     instance = get_object_or_404(Requestcomponents,pk=id)
     component =Component.objects.get(name=instance.component)
     get_quantity =request.POST.get('quantity') 
-             
+
+    checkresponse = RespondedComponents.objects.filter(request = instance.request).count()        
+    
     if request.method == 'POST':     
         if instance.component.get_remaining_quantity < int(get_quantity):
             messages.warning(request, f'There is no enough quantity in the stock')
             return redirect('viewRequestedComponents')
-        else:
+        else: 
             responseComponent = RespondedComponents(
                 request = instance.request,
                 component = instance.component,           
@@ -945,3 +947,29 @@ def dashboard(request):
     }
     myTemplate = 'studio/dashboard.html'
     return render(request, myTemplate, context)
+
+#.......................................... PAYMENT SETTINGS ........................
+def addPaymentSetting(request):
+    setting = PaymentSetting.objects.first()
+    if setting:
+        form = paymentSettingsForm(instance=setting)
+    if request.method == 'POST':
+        form = paymentSettingsForm(request.POST or None)      
+        if form.is_valid():                      
+            form.save()
+            messages.success(request, f'Amount added successfully!')
+            return redirect('viewPaymentSetting')               
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/addPaymentSetting.html'
+    return render(request, myTemplate, context) 
+
+def viewPaymentSetting(request):
+    allAmounts = PaymentSetting.objects.all()
+
+    context = {
+        'allAmounts': allAmounts
+    }
+    myTemplate = 'studio/viewPaymentSetting.html'
+    return render(request, myTemplate, context) 

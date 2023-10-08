@@ -113,6 +113,12 @@ class updateRequestedComponentsForm(forms.ModelForm):
         model = Requestcomponents  
         fields =('request','component','quantity') 
 
+class paymentSettingsForm(forms.ModelForm):
+    class Meta: 
+        model = PaymentSetting
+        fields = '__all__'
+
+
 
 
 

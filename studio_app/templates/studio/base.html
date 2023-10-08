@@ -149,10 +149,21 @@
               
                 <li>
                     <a href="{% url 'all-users' %}" class="w3-bar-item ">View Users</a> 
-                </li>                   
+                </li>  
+                
+                <li class="">
+                    <a href="#home9Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Payment</a>
+                    <ul class="collapse list-unstyled" id="home9Submenu">
+                        <li>
+                            <a href="{% url 'viewPaymentSetting' %}" class="w3-bar-item ">Set Payment</a>
+                        </li>                       
+                
+                    </ul>
+                </li>
                 
     
             </ul>
+
         </nav>
 
         <!-- Page Content Holder -->
