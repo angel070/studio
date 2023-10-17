@@ -735,7 +735,8 @@ def addCheckInAndOut(request, member_id):
         messages.warning(request, f'Please make payment!')
         return redirect('checkInAndOut')
     else:
-        check_payment = MemberPayment.objects.get(member_id=member_id)
+        check_payment = MemberPayment.objects.filter(member_id=member_id).last()
+        print("hello"+str(check_payment))
         if check_payment.remainingDays < 0 :
             messages.warning(request, f'Please make payment!')
             return redirect('checkInAndOut')    
@@ -776,12 +777,12 @@ def addRequestedComponents(request):
                 messages.warning(request, f'Sorry,no member with this email address')
                 return redirect('addRequestedComponents')
             try:            
-                check_member = MemberPayment.objects.get(member_id=get_member_id)
+                check_member = MemberPayment.objects.filter(member_id=get_member_id)
             except MemberPayment.DoesNotExist:
                 messages.warning(request, f'Please make payment')
                 return redirect('addRequestedComponents')
             
-            check_payment = MemberPayment.objects.get(member_id=get_member_id)
+            check_payment = MemberPayment.objects.filter(member_id=get_member_id).last()
             if check_payment.remainingDays < 0 :
                 messages.warning(request, f'Please make payment before requesting component!')
                 return redirect('addRequestedComponents')    

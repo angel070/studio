@@ -226,7 +226,7 @@ class MemberPayment(models.Model):
          verbose_name_plural = 'Member Payment'
 
    def __str__(self):
-     return self.member 
+     return 'self.remainingDays'
    
 
 
