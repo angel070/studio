@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5rku-*p(68h-0b2^dl35++o^%*p-@41#$uht_u)hazn9@k@kx-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['studio.pythonanywhere.com']
+ALLOWED_HOSTS = ['studio.pythonanywhere.com']
 
 # Tell django auth user model
 AUTH_USER_MODEL = 'accounts.CustomUser'

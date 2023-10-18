@@ -41,7 +41,7 @@
 
     </script>
 
-    
+
 </head>
 
 <body>
@@ -52,7 +52,7 @@
             <div class="sidebar-header">
                     <img src="{% static 'img/ditSttudio.jpg' %}" class="image-logo">
                 <!-- <h3>DIT STUDIO </h3> -->
-               
+
             </div>
 
             <ul class="list-unstyled components">
@@ -68,25 +68,23 @@
                 <li>
                     <a href=" {% url 'viewDepartment' %}" class="w3-bar-item ">View Department </a>
                 </li>
-        
+
                 <li class="">
                     <a href="#home3Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="material-icons"></span>Income</a>
                     <ul class="collapse list-unstyled" id="home3Submenu">
-                
+
                         <li>
                             <a href=" {% url 'viewSourceOfIncome' %}" class="w3-bar-item ">View Income Source </a>
                         </li>
-                    
+
                         <li>
                             <a href=" {% url 'viewIncome' %}" class="w3-bar-item ">View Income </a>
                         </li>
 
                     </ul>
                 </li>
-                <li>
-                    <a href=" {% url 'viewPurchases' %}" class="w3-bar-item "> Purchases </a>
-                </li>
-                
+
+
                 <li class="">
                     <a href="#home5Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> Expenses</a>
                     <ul class="collapse list-unstyled" id="home5Submenu">
@@ -96,38 +94,41 @@
                         <li>
                             <a href=" {% url 'viewExpenses' %}" class="w3-bar-item ">View Expenses</a>
                         </li>
-            
+                         <li>
+                            <a href=" {% url 'viewPurchases' %}" class="w3-bar-item ">View Purchases </a>
+                        </li>
+
                     </ul>
                 </li>
                 <li class="">
                     <a href="#home6Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Member</a>
                     <ul class="collapse list-unstyled" id="home6Submenu">
-                    
+
                         <li>
                             <a href="{% url 'viewMemberType' %}" class="w3-bar-item ">View Member Type</a>
                         </li>
-                    
+
                         <li>
                             <a href="{% url 'viewLocation' %}" class="w3-bar-item ">view Location</a>
                         </li>
                         <li>
                             <a href="{% url 'viewMembers' %}" class="w3-bar-item ">view Members</a>
                         </li>
-                       
-                        
-            
+
+
+
                     </ul>
                 </li>
                 <li class="">
                     <a href="#home7Submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">CheckIn & Out</a>
                     <ul class="collapse list-unstyled" id="home7Submenu">
                         <li>
-                            <a href="{% url 'checkInAndOut' %}" class="w3-bar-item ">Check</a> 
+                            <a href="{% url 'checkInAndOut' %}" class="w3-bar-item ">Check</a>
                         </li>
                         <li>
-                            <a href="{% url 'viewCheckedInAndOut' %}" class="w3-bar-item ">view</a> 
+                            <a href="{% url 'viewCheckedInAndOut' %}" class="w3-bar-item ">view</a>
                         </li>
-            
+
                     </ul>
                 </li>
 
@@ -143,15 +144,15 @@
                         <li>
                             <a href="{% url 'viewReturnedComponents' %}" class="w3-bar-item ">view Returned</a>
                         </li>
-            
+
                     </ul>
                 </li>
-              
+
                 <li>
-                    <a href="{% url 'all-users' %}" class="w3-bar-item ">View Users</a> 
-                </li>                   
-                
-    
+                    <a href="{% url 'all-users' %}" class="w3-bar-item ">View Users</a>
+                </li>
+
+
             </ul>
         </nav>
 
@@ -172,8 +173,8 @@
                     <a class="nav-link settings"><i class="fa fa-user "></i></a>
                     <div class="w3-dropdown-content w3-bar-block navback">
                         <a href="{% url 'logout' %}" class="w3-bar-item "><i class="fa fa-key "></i>Logout</a>
-                        
-                
+
+
                     </div>
                 </div> -->
 
@@ -190,11 +191,11 @@
                  {% block content %}{% endblock %}
             </div>
 
-        
+
         </div>
     </div>
     <div class="page ">
-    
+
         <footer class="footer  text-center">
             <p>Copyright &copy <a href="#">Developed By Angela Macha</a>
                 <script>document.write(new Date().getFullYear());</script>. All rights reserved
@@ -209,7 +210,7 @@
     <script type="text/javascript" src="{% static 'fontawesome/js/all.js' %}"></script>
     <script src="{% static '/js/virtual-select.min.js' %}"></script>
     <script src="{% static '/js/cart.js' %}"></script>
-   
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -217,10 +218,10 @@
                 $(this).toggleClass('active');
             });
         });
-       
-    </script> 
+
+    </script>
     {% block js %}
-    
+
     {% endblock %}
 
 
