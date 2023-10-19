@@ -206,3 +206,25 @@ class RespondedComponents(models.Model):
    def __str__(self):
      return f'{self.request.member.firstName} {self.request.member.lastName}'
 
+class PaymentSetting(models.Model):
+   amount = models.FloatField(null=False, blank=False)
+
+   class Meta:
+       verbose_name_plural = 'Payment Setting'
+
+   def __str__(self):
+     return 'self.amount '
+
+class MemberPayment(models.Model):
+   member = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
+   amount = models.FloatField()
+   paymentDate = models.DateField(default=datetime.now)
+   expieryDate = models.DateField()
+   remainingDays = models.IntegerField()
+
+   class Meta:
+         verbose_name_plural = 'Member Payment'
+
+   def __str__(self):
+     return 'self.remainingDays'
+

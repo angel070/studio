@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from accounts.models import *
+from dateutil.relativedelta import relativedelta
+import pandas as pd
+
 
 # Create your views here.
 #....................................Labs...............................
@@ -727,18 +730,28 @@ def viewCheck(request):
 
 @login_required
 def addCheckInAndOut(request, member_id):
-    check = CheckInAndout.objects.filter(member=member_id, date__date=datetime.now().date()).count()
-    member = Member.objects.get(id=member_id)
-    status = "CHECK-IN" if check % 2 == 0 else "CHECK-OUT"
-    check = CheckInAndout(
-        member_id = member_id,
-        date = datetime.now(),
-        status = status
-    )
-    status_message  = "checked in" if status == "CHECK-IN" else "checked out"
-    messages.success(request, f'{member.firstName} {member.lastName} you have successful {status_message}')
-    check.save()
-    return redirect('checkInAndOut')
+    check_member = MemberPayment.objects.filter(member_id=member_id).count()
+    if check_member == 0:
+        messages.warning(request, f'Please make payment!')
+        return redirect('checkInAndOut')
+    else:
+        check_payment = MemberPayment.objects.filter(member_id=member_id).last()
+        if check_payment.remainingDays <= 0 :
+            messages.warning(request, f'Please make payment!')
+            return redirect('checkInAndOut')
+        else:
+            check = CheckInAndout.objects.filter(member=member_id, date__date=datetime.now().date()).count()
+            member = Member.objects.get(id=member_id)
+            status = "CHECK-IN" if check % 2 == 0 else "CHECK-OUT"
+            check = CheckInAndout(
+                member_id = member_id,
+                date = datetime.now(),
+                status = status
+            )
+            check.save()
+            status_message  = "checked in" if status == "CHECK-IN" else "checked out"
+            messages.success(request, f'{member.firstName} {member.lastName} you have successful {status_message}')
+            return redirect('checkInAndOut')
 
 @login_required
 def viewCheckedInAndOut(request):
@@ -753,13 +766,25 @@ def viewCheckedInAndOut(request):
 
 def addRequestedComponents(request):
     if request.method == 'POST':
-            components = Component.objects.all()
-            get_email = request.POST.get('email')
-            try:
-                get_member = Member.objects.get(email=get_email)
-            except Member.DoesNotExist:
-                messages.warning(request, f'Sorry,no member with this email address')
-                return redirect('addRequestedComponents')
+        components = Component.objects.all()
+        get_email = request.POST.get('email')
+        get_member_id =Member.objects.get(email=get_email)
+        try:
+            get_member = Member.objects.get(email=get_email)
+        except Member.DoesNotExist:
+            messages.warning(request, f'Sorry,no member with this email address')
+            return redirect('addRequestedComponents')
+        try:
+            check_member = MemberPayment.objects.filter(member_id=get_member_id)
+        except MemberPayment.DoesNotExist:
+            messages.warning(request, f'Please make payment')
+            return redirect('addRequestedComponents')
+
+        check_payment = MemberPayment.objects.filter(member_id=get_member_id).last()
+        if check_payment.remainingDays < 0 :
+            messages.warning(request, f'Please make payment before requesting component!')
+            return redirect('addRequestedComponents')
+        else:
             req, created =Request.objects.get_or_create(member = get_member, requested = False)
             items= Requestcomponents.objects.filter (request=req)
             context = {
@@ -848,6 +873,8 @@ def updateRequestedComponents(request, id):
     instance = get_object_or_404(Requestcomponents,pk=id)
     component =Component.objects.get(name=instance.component)
     get_quantity =request.POST.get('quantity')
+
+    checkresponse = RespondedComponents.objects.filter(request = instance.request).count()
 
     if request.method == 'POST':
         if instance.component.get_remaining_quantity < int(get_quantity):
@@ -944,4 +971,58 @@ def dashboard(request):
         'totalUsers':totalUsers
     }
     myTemplate = 'studio/dashboard.html'
+    return render(request, myTemplate, context)
+
+#.......................................... PAYMENT SETTINGS ........................
+def addPaymentSetting(request):
+    setting = PaymentSetting.objects.first()
+    if setting:
+        form = paymentSettingsForm(instance=setting)
+    if request.method == 'POST':
+        form = paymentSettingsForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Amount added successfully!')
+            return redirect('viewPaymentSetting')
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/addPaymentSetting.html'
+    return render(request, myTemplate, context)
+
+def viewPaymentSetting(request):
+    allAmounts = PaymentSetting.objects.all()
+
+    context = {
+        'allAmounts': allAmounts
+    }
+    myTemplate = 'studio/viewPaymentSetting.html'
+    return render(request, myTemplate, context)
+
+#.............................MEMBER PAYMENT...............................................
+def addMemberPayment(request):
+    form = MemberPaymentForm()
+    if request.method == 'POST':
+        form = MemberPaymentForm(request.POST or None)
+        get_amount = PaymentSetting.objects.first()
+        get_member = request.POST.get('member')
+        get_payment_date = request.POST.get('paymentDate')
+        expieryDate = pd.to_datetime(get_payment_date)+pd.DateOffset(years= 1)
+        remainingDays = (expieryDate - datetime.now()).days
+
+        if form.is_valid():
+            paymentRecord =  MemberPayment(
+                member_id = get_member,
+                amount = get_amount.amount,
+                paymentDate = get_payment_date,
+                expieryDate = expieryDate,
+                remainingDays = remainingDays
+            )
+            paymentRecord.save()
+            messages.success(request, f'Member payment added successfully!')
+            return redirect('addMemberPayment')
+    context = {
+     'form': form,
+    }
+    myTemplate = 'studio/addMemberPayment.html'
     return render(request, myTemplate, context)
