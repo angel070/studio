@@ -4,7 +4,7 @@ from multiselectfield import MultiSelectField
 from django.db.models import Sum
 
 # Create your models here
-class Lab(models.Model):       
+class Lab(models.Model):
     name= models.CharField(max_length = 100, null = False, blank = False)
 
     class Meta:
@@ -14,12 +14,12 @@ class Lab(models.Model):
     def __str__(self):
      return self.name
 
-class Component(models.Model):     
-    lab = models.ForeignKey( Lab,on_delete=models.PROTECT)  
-    name = models.CharField(max_length = 100, null = False , blank= False)
+class Component(models.Model):
+    lab = models.ForeignKey( Lab,on_delete=models.PROTECT)
+    name = models.CharField(max_length = 100, null = False , blank= False,unique = True)
     value = models.CharField(max_length = 20, null = False, blank = False)
     quantity = models.PositiveIntegerField(null = False, blank = False)
-    cost =models.IntegerField(null = False, blank = False )
+
 
     class Meta:
         verbose_name_plural = 'Components'
@@ -27,25 +27,25 @@ class Component(models.Model):
 
     def __str__(self):
      return self.name
-    
+
     @property
     def get_remaining_quantity(self):
        remaining_quantity = self.quantity - sum(request.quantity for request in self.respondedcomponents_set.filter(status="ACCEPTED"))
        return remaining_quantity
-    
-class Department(models.Model): 
-   name = models.CharField(max_length = 255, blank = False, null=False)
+
+class Department(models.Model):
+   name = models.CharField(max_length = 255, blank = False, null=False, unique = True)
 
    class Meta:
-        verbose_name_plural = 'Departments'     
+        verbose_name_plural = 'Departments'
 
 
    def __str__(self):
      return self.name
 
 
-class Source_of_Income(models.Model):       
-    name = models.CharField(max_length = 100, null = False, blank = False )
+class Source_of_Income(models.Model):
+    name = models.CharField(max_length = 100, null = False, blank = False, unique = True )
 
     class Meta:
         verbose_name_plural = 'Source-of-Income'
@@ -55,19 +55,19 @@ class Source_of_Income(models.Model):
      return self.name
 
 
-class Income(models.Model): 
-    name = models.ForeignKey(Source_of_Income, on_delete = models.PROTECT)  
-    lab = models.ForeignKey(Lab, on_delete = models.PROTECT)  
-    amount = models.FloatField(null = False, blank = False ) 
+class Income(models.Model):
+    name = models.ForeignKey(Source_of_Income, on_delete = models.PROTECT)
+    lab = models.ForeignKey(Lab, on_delete = models.PROTECT)
+    amount = models.FloatField(null = False, blank = False )
     description = models.CharField(max_length = 1000, null = True ,blank = True)
-    date = models.DateField(null = False, blank = False, default = datetime.now())  
+    date = models.DateField(null = False, blank = False, default = datetime.now())
 
     class Meta:
         verbose_name_plural = 'Income'
 
 
     def __str__(self):
-     return self.name  
+     return self.name
 
 class Purchases(models.Model):
     lab = models.ForeignKey(Lab, on_delete = models.PROTECT)
@@ -75,14 +75,14 @@ class Purchases(models.Model):
     quantity = models.PositiveIntegerField(null = False, blank = False)
     amount = models.FloatField(null = True, blank = True)
     description = models.CharField(max_length = 1000, null = True ,blank = True)
-    date= models.DateField(null = False, blank = False,default = datetime.now())  
+    date= models.DateField(null = False, blank = False,default = datetime.now())
 
     class Meta:
         verbose_name_plural = 'Purchases'
 
 
     def __str__(self):
-     return self.lab.name  
+     return self.lab.name
 
 class Source_Of_Expenses(models.Model):
     name = models.CharField(max_length = 255, null = False, blank = False)
@@ -107,9 +107,9 @@ class Expenses(models.Model):
 
     def __str__(self):
      return self.name
-    
+
 class Member_type(models.Model):
-   type =  models.CharField(max_length=255)
+   type =  models.CharField(max_length=255,null = True ,blank = True, unique = True)
 
    class Meta:
         verbose_name_plural = 'Member Type'
@@ -119,7 +119,7 @@ class Member_type(models.Model):
      return self.type
 
 class Location(models.Model):
-   name =  models.CharField(max_length=255)
+   name =  models.CharField(max_length=255,null = True ,blank = True, unique = True)
 
    class Meta:
         verbose_name_plural = 'Location'
@@ -136,14 +136,14 @@ class Member(models.Model):
                )
     type = models.ForeignKey(Member_type,on_delete = models.PROTECT )
     location = models.ForeignKey(Location,on_delete = models.PROTECT )
-    department = models.ForeignKey(Department,on_delete = models. PROTECT )            
+    department = models.ForeignKey(Department,on_delete = models. PROTECT )
     firstName = models.CharField(max_length = 255, blank = False, null = False)
     middleName = models.CharField(max_length = 255, blank = True, null = True)
     lastName = models.CharField(max_length = 255, blank = False, null = False)
     dateOfBirth = models.DateField(null = False, blank = False)
     registrationNumber = models.CharField(max_length = 255, blank = False, null = False)
     phoneNumber = models.CharField(max_length = 255, blank = False, null = False)
-    email = models.EmailField(null = False, blank = False)
+    email = models.EmailField(null = False, blank = False, unique = True)
     idNumber = models.CharField(max_length = 255, blank = False, null = False)
     registeredDate = models.DateField(null = True, blank = False)
     nationality = models.CharField(max_length=255, blank = False, null = False)
@@ -156,7 +156,7 @@ class Member(models.Model):
 
     def __str__(self):
      return f'{self.firstName}  {self.lastName}'
-    
+
 class CheckInAndout(models.Model):
     member = models.ForeignKey(Member,on_delete= models.PROTECT)
     date = models.DateTimeField(blank=False, null=False)
@@ -168,17 +168,17 @@ class CheckInAndout(models.Model):
 
     def __str__(self):
      return f'{self.member.firstName} '
-    
+
 class Request(models.Model):
-   member = models.ForeignKey(Member, on_delete= models.PROTECT,null = True) 
+   member = models.ForeignKey(Member, on_delete= models.PROTECT,null = True)
    requestedDate = models.DateTimeField(auto_now_add=True)
-   requested = models.BooleanField(null=True)  
+   requested = models.BooleanField(null=True)
 
    class Meta:
         verbose_name_plural = 'Requests'
 
    def __str__(self):
-     return f'{self.member.firstName} {self.member.lastName}'    
+     return f'{self.member.firstName} {self.member.lastName}'
 
 class Requestcomponents(models.Model):
    request = models.ForeignKey(Request, on_delete=models.CASCADE)
@@ -191,8 +191,8 @@ class Requestcomponents(models.Model):
         verbose_name_plural = 'Request Components'
 
    def __str__(self):
-     return f'{self.request.member.firstName} {self.request.member.lastName}' 
-     
+     return f'{self.request.member.firstName} {self.request.member.lastName}'
+
 class RespondedComponents(models.Model):
    request = models.ForeignKey(Request, on_delete=models.CASCADE)
    component = models.ForeignKey(Component,  on_delete=models.PROTECT)
@@ -204,7 +204,7 @@ class RespondedComponents(models.Model):
         verbose_name_plural = 'responded Components'
 
    def __str__(self):
-     return f'{self.request.member.firstName} {self.request.member.lastName}' 
+     return f'{self.request.member.firstName} {self.request.member.lastName}'
 
 class PaymentSetting(models.Model):
    amount = models.FloatField(null=False, blank=False)
@@ -213,8 +213,8 @@ class PaymentSetting(models.Model):
        verbose_name_plural = 'Payment Setting'
 
    def __str__(self):
-     return 'self.amount '  
-   
+     return 'self.amount '
+
 class MemberPayment(models.Model):
    member = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
    amount = models.FloatField()
@@ -227,8 +227,4 @@ class MemberPayment(models.Model):
 
    def __str__(self):
      return 'self.remainingDays'
-   
-
-
-
 

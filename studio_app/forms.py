@@ -22,15 +22,15 @@ class updateComponentsForm(forms.ModelForm):
         model = Component
         fields = '__all__'
 
-class addDepartmentForm(forms.ModelForm): 
-    class Meta:     
+class addDepartmentForm(forms.ModelForm):
+    class Meta:
         model = Department
-        fields = '__all__'   
+        fields = '__all__'
 
 class updateDeparmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = '__all__'   
+        fields = '__all__'
 
 class addSourceOfIncomeForm(forms.ModelForm):
     class Meta:
@@ -103,15 +103,15 @@ class addMemberForm(forms.ModelForm):
             'dateOfBirth': forms.DateInput(attrs={'type':'date' }),
         }
 
-class addCheckInAndOutForm(forms.ModelForm):    
-    class meta: 
-        model = CheckInAndout  
-        fields ='__all__'  
+class addCheckInAndOutForm(forms.ModelForm):
+    class meta:
+        model = CheckInAndout
+        fields ='__all__'
 
-class updateRequestedComponentsForm(forms.ModelForm):    
-    class Meta: 
-        model = Requestcomponents  
-        fields =('request','component','quantity') 
+class updateRequestedComponentsForm(forms.ModelForm):
+    class Meta:
+        model = Requestcomponents
+        fields =('request','component','quantity')
 
 class paymentSettingsForm(forms.ModelForm):
     class Meta: 

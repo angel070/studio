@@ -27,7 +27,7 @@
                     <h3 class="text-center">Components</h3>
                     <a href="{% url 'addComponent' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i
                                 class="fa fa-plus"></i> Add New</button></a>
-                    <table id="example" class="table table-hover table-striped table-bordered table-responsive ">
+                    <table id="example" class="table table-hover table-striped table-bordered ">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -36,7 +36,6 @@
                                 <th>Quantity</th>
                                 <th>Remaining</th>
                                 <th>Value</th>
-                                <th>Cost</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -62,9 +61,6 @@
                                 <td>
                                     {{ component.value}}
                                 </td>
-                                <td>
-                                    {{ component.cost}}
-                                </td>
 
                                 <td><a href="{% url 'deleteComponent' component.id %}" onclick="return confirm('Seriously Delete this component!?');" type="button"
                                     class="btn btn-outline-danger"><i class="fa fa-trash"></i></a> |
@@ -72,7 +68,7 @@
                                             class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
-                           
+
                             {%endfor%}
                         </tbody>
 
