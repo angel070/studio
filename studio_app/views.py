@@ -749,7 +749,7 @@ def addCheckInAndOut(request, member_id):
                 date = datetime.now(),
                 status = status
             )
-            status_message  = "checked in" if status == "CHECK-IN " else "checked out"      
+            status_message  = "checked in" if status == "CHECK-IN" else "checked out"      
             messages.success(request, f'{member.firstName} {member.lastName} you have successful {status_message}')
             check.save()
             return redirect('checkInAndOut')
@@ -958,14 +958,14 @@ def viewReturnedComponents(request):
 @login_required
 def dashboard(request):
     members = Member.objects.all().count()
-    chekin = CheckInAndout.objects.filter(status ="CHECK-IN").count()
+    chekin = CheckInAndout.objects.filter(status ="CHECK-IN" , date__date = datetime.now().date()).count()
     requestedComponent = Requestcomponents.objects.filter(status = None).count()
     totalUsers = CustomUser.objects.all().count()
 
 
     print(members)
     print(chekin)
-    print("request:",request)
+    print("request:",request) 
     context = {
         'members' : members,
         'checkin' : chekin,
