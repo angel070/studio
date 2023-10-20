@@ -56,7 +56,16 @@
                             <td>
                                 {{ member.idNumber}}
                             </td>
-                                <td><a href="{% url 'addCheckInAndOut' member.id %} " class="btn btn-outline-danger"> submit</a> </td>
+                            
+                            <td>
+                                <a href="{% url 'addCheckInAndOut' member.id %} " class="btn btn-outline-danger"> 
+                                    {% if member.get_checkin_status  %}
+                                    CHECK OUT
+                                    {% else %}  
+                                    CHECK IN
+                                    {% endif %}
+
+                                </a> </td>
                             
                             </tr>
 

@@ -458,7 +458,7 @@ def deleteExpenses(request, id):
         get_object.delete()
         return redirect('viewExpenses')
     except:
-        messages.success(request,"Expenses is already used can't be deleted ")
+        messages.success(request,"Exgi penses is already used can't be deleted ")
         return redirect('viewExpenses')
 
 #.......................................................Location........................................

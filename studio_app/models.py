@@ -156,6 +156,10 @@ class Member(models.Model):
 
     def __str__(self):
      return f'{self.firstName}  {self.lastName}'
+    
+    @property
+    def get_checkin_status(self):
+      return False if self.checkinandout_set.filter(date__date=datetime.now().date()).count() % 2 == 0 else True
 
 class CheckInAndout(models.Model):
     member = models.ForeignKey(Member,on_delete= models.PROTECT)
