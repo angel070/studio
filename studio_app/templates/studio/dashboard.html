@@ -54,21 +54,16 @@
         </div>
     </div>
 
-  <div class="row">
-        <div class="mt-5 col-md -6">
-            <canvas id="myChart"></canvas>
-            <div id="departments" hidden>
-                {% for department in departments %}{{ department.name }},{% endfor %}
-            </div>
-            <div id="requestsCount" hidden>
-                {% for department in departments %}{{ department.count_requests }},{% endfor %}
-            </div>
+    <div class="mt-5 col-md -6">
+        <canvas id="myChart"></canvas>
+        <div id="departments" hidden>
+            {% for department in departments %}{{ department.name }},{% endfor %}
         </div>
-        <div class="col-md-6">
-
+        <div id="requestsCount" hidden>
+            {% for department in departments %}{{ department.count_requests }},{% endfor %}
         </div>
-  </div>
-    
+    </div>
+ 
     
     
     <script>
