@@ -42,6 +42,10 @@ class Department(models.Model):
 
    def __str__(self):
      return self.name
+   
+   @property
+   def count_requests(self):
+      return Requestcomponents.objects.filter(request__member__department=self).count()
 
 
 class Source_of_Income(models.Model):
@@ -148,7 +152,6 @@ class Member(models.Model):
     registeredDate = models.DateField(null = True, blank = False)
     nationality = models.CharField(max_length=255, blank = False, null = False)
     gender = models.CharField(max_length=255, choices = CHOICES,null = False, blank = False)
-    department = models.ForeignKey(Department,on_delete = models.PROTECT )
 
     class Meta:
         verbose_name_plural = 'Members'

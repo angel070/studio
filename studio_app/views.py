@@ -78,15 +78,15 @@ def addComponent(request):
         get_name =request.POST.get('name')
         get_lab = request.POST.get('lab')
         get_value = request.POST.get('value')
-        check_name = Component.objects.filter(name=get_name,lab = get_lab, value = get_value).count()
-    if request.method == 'POST':
-        if form.is_valid():
-            if check_name == 0:
-                 form.save()
-                 messages.success(request, f'Component added successfully!')
-                 return redirect('viewComponent')
-            else:
-                 messages.warning(request, f'Component already exists!')
+        check_name = Component.objects.filter(name=get_name).count()
+        if check_name != 0:
+            messages.warning(request, f'Component already exists!')
+        else:
+            if form.is_valid():
+                    form.save()
+                    messages.success(request, f'Component added successfully!')
+                    return redirect('viewComponent')
+                                    
 
     context = {
      'form': form,
@@ -136,21 +136,19 @@ def deleteComponent(request, id):
 
 #...................................Department..................................................
 def addDepartment(request):
-    print("Adding department")
     form = addDepartmentForm()
-    if request.method == 'POST':
+    if request.method == 'POST':       
         form = addDepartmentForm(request.POST or None)
         get_name =request.POST.get('name')
         check_name = Department.objects.filter(name=get_name).count()
-    if request.method == 'POST':
-        if form.is_valid():
-            if check_name == 0:
-                 form.save()
-                 messages.success(request, f'Department added successfully!')
-                 return redirect('viewDepartment')
-            else:
-                 messages.warning(request, f'Department already exists!')
-                 return redirect('addDepartment')
+        if check_name != 0:
+            messages.warning(request, f'Department already exists!')
+        else:
+            if form.is_valid():               
+                form.save()
+                messages.success(request, f'Department added successfully!')
+                return redirect('viewDepartment')
+  
 
     context = {
      'form': form,
@@ -168,19 +166,20 @@ def viewDepartment(request):
     return render(request, myTemplate, context)
 
 def updateDepartment(request,id):
-    print = ("this is new department")
     instance = get_object_or_404(Department, pk = id)
     form = updateDeparmentForm(request.POST or None,instance = instance)
     get_name =request.POST.get('name')
     check_name =Department.objects.filter(name=get_name ).count()
-    if request.method == 'POST':
-        if form.is_valid():
-            if check_name == 0:
-                 form.save()
-                 messages.success(request, f'Department edited successfully!')
-                 return redirect('viewDepartment')
-            else:
-                 messages.warning(request, f'Department already exists!')
+    if check_name != 0:
+        messages.warning(request, f'Department already exists!')
+    else:
+        if request.method == 'POST':
+            if form.is_valid():
+                if check_name == 0:
+                    form.save()
+                    messages.success(request, f'Department edited successfully!')
+                    return redirect('viewDepartment')
+                         
 
     context = {
      'form': form,
@@ -769,33 +768,33 @@ def addRequestedComponents(request):
         components = Component.objects.all()
         get_email = request.POST.get('email')
         get_member_id =Member.objects.get(email=get_email)
+        check_member = MemberPayment.objects.filter(member_id=get_member_id).count()
         try:
             get_member = Member.objects.get(email=get_email)
         except Member.DoesNotExist:
             messages.warning(request, f'Sorry,no member with this email address')
             return redirect('addRequestedComponents')
-        try:
-            check_member = MemberPayment.objects.filter(member_id=get_member_id)
-        except MemberPayment.DoesNotExist:
+        
+        if check_member == 0:
             messages.warning(request, f'Please make payment')
             return redirect('addRequestedComponents')
-
-        check_payment = MemberPayment.objects.filter(member_id=get_member_id).last()
-        if check_payment.remainingDays < 0 :
-            messages.warning(request, f'Please make payment before requesting component!')
-            return redirect('addRequestedComponents')
         else:
-            req, created =Request.objects.get_or_create(member = get_member, requested = False)
-            items= Requestcomponents.objects.filter (request=req)
-            context = {
-                'components':components,
-                'member': get_member,
-                'items':items,
-                'request':req.id,
-                'email': get_email
-            }
-            myTemplate = 'studio/requestComponents.html'
-            return render(request, myTemplate, context)
+            check_payment = MemberPayment.objects.filter(member_id=get_member_id).last()
+            if check_payment.remainingDays < 0 :
+                messages.warning(request, f'Please make payment before requesting component!')
+                return redirect('addRequestedComponents')
+            else:
+                req, created =Request.objects.get_or_create(member = get_member, requested = False)
+                items= Requestcomponents.objects.filter (request=req)
+                context = {
+                    'components':components,
+                    'member': get_member,
+                    'items':items,
+                    'request':req.id,
+                    'email': get_email
+                }
+                myTemplate = 'studio/requestComponents.html'
+                return render(request, myTemplate, context)
 
     email = request.GET.get('email')
     request_id = request.GET.get('request')
@@ -959,16 +958,14 @@ def dashboard(request):
     chekin = CheckInAndout.objects.filter(status ="CHECK-IN" , date__date = datetime.now().date()).count()
     requestedComponent = Requestcomponents.objects.filter(status = None).count()
     totalUsers = CustomUser.objects.all().count()
+    departments = Department.objects.all()
 
-
-    print(members)
-    print(chekin)
-    print("request:",request) 
     context = {
         'members' : members,
         'checkin' : chekin,
         'requestedComponent': requestedComponent,
-        'totalUsers':totalUsers
+        'totalUsers':totalUsers,
+        'departments' : departments
     }
     myTemplate = 'studio/dashboard.html'
     return render(request, myTemplate, context)

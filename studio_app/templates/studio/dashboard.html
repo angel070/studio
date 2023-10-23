@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {%block content %}
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <h2 class="text-center">DashBoard</h2>
 
@@ -53,6 +53,62 @@
             </div>
         </div>
     </div>
+
+  <div class="row">
+        <div class="mt-5 col-md -6">
+            <canvas id="myChart"></canvas>
+            <div id="departments" hidden>
+                {% for department in departments %}{{ department.name }},{% endfor %}
+            </div>
+            <div id="requestsCount" hidden>
+                {% for department in departments %}{{ department.count_requests }},{% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+  </div>
+    
+    
+    
+    <script>
+        const ctx = document.getElementById('myChart');
+        let departments = []
+        let requests = []
+
+        const departmentsText = document.getElementById('departments').innerText.split(',');
+        departmentsText.forEach((department) => {
+            departments.push(department.trim())
+        })
+        
+        const depRequests = document.getElementById('requestsCount').innerText.split(',').filter((request) => request?.length);
+        depRequests.forEach((request) => {
+            requests.push(request.trim())
+        })
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: departments,
+                datasets: [{
+                    label: '# of Requests',
+                    data: requests,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+
+    
+
 
 
 {%endblock %}
