@@ -57,6 +57,7 @@
                         </tbody>
 
                     </table>
+            
                 </div>
 
             </div>
@@ -70,10 +71,13 @@
 
 <script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
 <script type="text/javascript">
-    // Data table
-    $(document).ready(function () {
-        $('#example').DataTable();
-
-    })
+   $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
 </script>
 {% endblock %}

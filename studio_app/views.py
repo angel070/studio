@@ -972,6 +972,7 @@ def dashboard(request):
 
 #.......................................... PAYMENT SETTINGS ........................
 def addPaymentSetting(request):
+    form = paymentSettingsForm(request.POST or None)
     setting = PaymentSetting.objects.first()
     if setting:
         form = paymentSettingsForm(instance=setting)
