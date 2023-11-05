@@ -124,12 +124,13 @@ def updateComponent(request, id):
     return render(request, myTemplate, context)
 
 def deleteComponent(request, id):
+    instance = get_object_or_404(Component, pk = id)
     try:
-        get_object = Lab.objects.filter(id=id)
-        get_object.delete()
+        instance.delete()
+        messages.success(request,"Component deleted successfully!")
         return redirect('viewComponent')
     except:
-        messages.success(request,"component is already used can't be deleted ")
+        messages.warning(request,"Component can't be deleted ")
         return redirect('viewComponent')
     
 #...................................Lab Component..................................................
@@ -386,11 +387,16 @@ def addPurchase(request):
         if form.is_valid():
             purchase = form.save()
             try:
-                component = Component.objects.get(id=purchase.component.id, lab=purchase.lab)
+                component = LabComponent.objects.get(component=purchase.component, lab=purchase.lab)
                 component.quantity += purchase.quantity
                 component.save()
-            except Component.DoesNotExist:
-                pass
+            except LabComponent.DoesNotExist:
+                labComponent = LabComponent(
+                    component=purchase.component, 
+                    lab=purchase.lab,
+                    quantity = purchase.quantity
+                )
+                labComponent.save()
             messages.success(request, f'Purchase added successfully!')
             return redirect('viewPurchases')
 

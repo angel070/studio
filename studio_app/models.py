@@ -15,7 +15,7 @@ class Lab(models.Model):
      return self.name
 
 class Component(models.Model):
-    name = models.CharField(max_length = 100, null = False , blank= False, unique = True)
+    name = models.CharField(max_length = 100, null = False , blank= False)
     unit = models.CharField(max_length = 20, null = False, blank = False)
     description = models.CharField(max_length = 200, null = True, blank = True)
 
@@ -23,7 +23,7 @@ class Component(models.Model):
         verbose_name_plural = 'Components'
 
     def __str__(self):
-     return self.name
+     return self.name + ' - ' + self.unit
 
     @property
     def get_remaining_quantity(self):
