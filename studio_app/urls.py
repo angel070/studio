@@ -19,6 +19,12 @@ urlpatterns = [
     path('viewComponent/', views.viewComponent, name='viewComponent'),
     path('delete/component/<int:id>/', views.deleteComponent, name='deleteComponent'),
     path('update/component/<int:id>/', views.updateComponent, name='updateComponent'),
+   
+    #...........................Lab Compoents.............................
+    path('addComponent/', views.addComponent, name='addComponent'),
+    path('view-lab-component/', views.view_lab_components, name='viewLabComponent'),
+    path('delete/component/<int:id>/', views.deleteComponent, name='deleteComponent'),
+    path('update/component/<int:id>/', views.updateComponent, name='updateComponent'),
 
     #.............................Departments.................................
      path('addDepartment/', views.addDepartment, name='addDepartment'),

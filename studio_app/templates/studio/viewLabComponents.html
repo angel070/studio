@@ -31,32 +31,32 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Name</th>
-                                <th>Unit</th>
-                                <th>Description</th>
+                                <th>Component</th>
+                                <th>Lab</th>
+                                <th>Quantity</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {% for component in Components %}
+                            {% for labComponent in labComponents %}
                             <tr>
                                 <td>
                                     {{ forloop.counter}}
                                 </td>
                                 <td>
-                                    {{ component.name}}
+                                    {{ labComponent.component.name}}
                                 </td>
                                 <td>
-                                    {{ component.unit}}
+                                    {{ labComponent.lab.name}}
                                 </td>
                                 <td>
-                                    {{ component.description}}
+                                    {{ labComponent.quantity}}
                                 </td>
 
-                                <td><a href="{% url 'deleteComponent' component.id %}" onclick="return confirm('Seriously Delete this component!?');" type="button"
+                                <td><a href="#" onclick="return confirm('Seriously remove this component from this lab!?');" type="button"
                                     class="btn btn-outline-danger"><i class="fa fa-trash"></i></a> |
-                                    <a href="{% url 'updateComponent' component.id %}" type="button" class="btn btn-outline-danger"><i
+                                    <a href="#" type="button" class="btn btn-outline-danger"><i
                                             class="fa fa-edit"></i></a>
                                 </td>
                             </tr>

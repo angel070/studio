@@ -138,7 +138,7 @@ def view_lab_components(request):
     context = {
      'labComponents': labComponents,
     }
-    myTemplate = 'studio/labComponents.html'
+    myTemplate = 'studio/viewLabComponents.html'
     return render(request, myTemplate, context)
 
 def add_component_to_lab(request):

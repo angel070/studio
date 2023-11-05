@@ -23,23 +23,19 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Lab<strong>*</strong></h6>
-                            {{ form.lab | add_class:'form-control'}}
-                        </div>
-                        <div class="col-md-6">
                             <h6>Name<strong>*</strong></h6>
                             {{ form.name | add_class:'form-control'}}
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Unit<strong>*</strong></h6>
+                            {{ form.unit | add_class:'form-control'}}
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <h6>Value<strong>*</strong></h6>
-                            {{ form.value | add_class:'form-control'}}
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Quantity<strong>*</strong></h6>
-                            {{ form.quantity| add_class:'form-control'}}
+                        <div class="col-md-12">
+                            <h6>Description<strong>*</strong></h6>
+                            {{ form.description| add_class:'form-control'}}
                         </div>
                     </div>
 
