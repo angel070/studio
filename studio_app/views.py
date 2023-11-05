@@ -150,35 +150,57 @@ def add_component_to_lab(request):
         lab = get_object_or_404(Lab, pk = get_lab)
         component = get_object_or_404(Component, pk = get_component)
 
-        labComponent = LabComponent(
-            lab = lab,
-            component = component,
-            quantity = get_quantity
-        )
-        labComponent.save()
-        messages.success(request, f"Component {component.name} added to lab {lab.name}!")
-        return redirect('addComponentToLab')
+        try:
+            labComponent = LabComponent.objects.get(lab=lab, component=component)
+            messages.warning(request, f"Component {component.name} already exists in lab {lab.name}!")
+        except LabComponent.DoesNotExist:
+            labComponent = LabComponent(
+                lab = lab,
+                component = component,
+                quantity = get_quantity
+            )
+            labComponent.save()
+            messages.success(request, f"Component {component.name} - {component.unit} added to lab {lab.name}!")
+        return redirect('addLabComponent')
+    labs = Lab.objects.all()
+    components = Component.objects.all()
+    context = {
+     'labs': labs,
+     'components': components,
+    }
+    myTemplate = 'studio/addLabComponent.html'
+    return render(request, myTemplate, context)
 
 def update_component_in_lab(request, id):
+    labComponent = get_object_or_404(LabComponent, pk = id)
     if request.method == 'POST':
         get_lab =request.POST.get('lab')
         get_component = request.POST.get('component')
         get_quantity = request.POST.get('quantity')
 
-        labComponent = get_object_or_404(LabComponent, pk = id)
         lab = get_object_or_404(Lab, pk = get_lab)
         component = get_object_or_404(Component, pk = get_component)
 
         labComponent.lab = lab
-        labComponent.component = get_component
+        labComponent.component = component
         labComponent.quantity = get_quantity
         labComponent.save()
-        messages.success(request, f"Component {component.name} updated to lab {lab.name}!")
+        messages.success(request, f"Component {component.name}- {component.unit} in lab {lab.name} has been updated!")
         return redirect('viewLabComponents')
+    labs = Lab.objects.all()
+    components = Component.objects.all()
+    context = {
+     'labs': labs,
+     'components': components,
+     'labComponent': labComponent
+    }
+    myTemplate = 'studio/addLabComponent.html'
+    return render(request, myTemplate, context)
+
 
 def remove_component_to_lab(request, id):
     lab_component = get_object_or_404(LabComponent, pk = id)
-    component_name = lab_component.component.name
+    component_name = lab_component.component.name + " - " + lab_component.component.unit
     lab_name = lab_component.lab.name
     lab_component.delete()
     messages.success(request, f"Component {component_name} removed from lab {lab_name}!")

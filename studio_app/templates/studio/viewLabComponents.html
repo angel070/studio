@@ -24,8 +24,8 @@
                     {% endfor %}
                     {% endif %}
 
-                    <h3 class="text-center">Components</h3>
-                    <a href="{% url 'addComponent' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i
+                    <h3 class="text-center">Components in Lab</h3>
+                    <a href="{% url 'addLabComponent' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i
                                 class="fa fa-plus"></i> Add New</button></a>
                     <table id="example" class="table table-hover table-striped table-bordered ">
                         <thead>
@@ -45,7 +45,7 @@
                                     {{ forloop.counter}}
                                 </td>
                                 <td>
-                                    {{ labComponent.component.name}}
+                                    {{ labComponent.component.name}} - {{ labComponent.component.unit}}
                                 </td>
                                 <td>
                                     {{ labComponent.lab.name}}
@@ -54,10 +54,11 @@
                                     {{ labComponent.quantity}}
                                 </td>
 
-                                <td><a href="#" onclick="return confirm('Seriously remove this component from this lab!?');" type="button"
-                                    class="btn btn-outline-danger"><i class="fa fa-trash"></i></a> |
-                                    <a href="#" type="button" class="btn btn-outline-danger"><i
-                                            class="fa fa-edit"></i></a>
+                                <td>
+                                    <a href="{% url "updateLabComponent" labComponent.id %}" type="button" class="btn btn-outline-danger"><i
+                                            class="fa fa-edit"></i></a> |
+                                    <a href="{% url 'deleteLabComponent' labComponent.id %}" onclick="return confirm('Seriously remove this component from this lab!?');" type="button"
+                                    class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 

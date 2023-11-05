@@ -21,10 +21,10 @@ urlpatterns = [
     path('update/component/<int:id>/', views.updateComponent, name='updateComponent'),
    
     #...........................Lab Compoents.............................
-    path('addComponent/', views.addComponent, name='addComponent'),
-    path('view-lab-component/', views.view_lab_components, name='viewLabComponent'),
-    path('delete/component/<int:id>/', views.deleteComponent, name='deleteComponent'),
-    path('update/component/<int:id>/', views.updateComponent, name='updateComponent'),
+    path('add-lab-component/', views.add_component_to_lab, name='addLabComponent'),
+    path('view-lab-component/', views.view_lab_components, name='viewLabComponents'),
+    path('delete-lab-component/<int:id>/', views.remove_component_to_lab, name='deleteLabComponent'),
+    path('update-lab-component/<int:id>/', views.update_component_in_lab, name='updateLabComponent'),
 
     #.............................Departments.................................
      path('addDepartment/', views.addDepartment, name='addDepartment'),

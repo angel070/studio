@@ -1,0 +1,59 @@
+{% extends 'studio/base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{%block content %}
+
+<div class="outer-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 ">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <h5 class="text-center">Add Component in a Lab </h5>
+                
+                {% if labComponent %}
+                    <form action="{% url 'updateLabComponent' labComponent.id%}" method="post" class="w3-card ">
+                {% else %}
+                    <form action="" method="post" class="w3-card ">
+                {% endif %}
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>Component<strong>*</strong></h6>
+                            <select class="form-control" name="component" value="{{labComponent.component.name}}">
+                                <option value="">Select Component</option>
+                                {% for component in components %}
+                                    <option value="{{component.id}}" {% if labComponent.component.id == component.id %}selected{% endif %}>{{component.name}} - {{component.unit}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Lab<strong>*</strong></h6>
+                            <select class="form-control" name="lab" value="{{labComponent.lab.name}}">
+                                <option value="">Select Lab</option>
+                                {% for lab in labs %}
+                                    <option value="{{lab.id}}" {% if labComponent.lab.id == lab.id %}selected{% endif %}>{{lab.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Quantity<strong>*</strong></h6>
+                            <input type="number" name="quantity" value="{{labComponent.quantity}}" min="0" class="form-control"/>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary btn-block mt-3" type="submit" name="button">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
