@@ -76,17 +76,17 @@ def addComponent(request):
     if request.method == 'POST':
         form = addComponentsForm(request.POST or None)
         get_name =request.POST.get('name')
-        get_lab = request.POST.get('lab')
-        get_value = request.POST.get('value')
-        check_name = Component.objects.filter(name=get_name).count()
-        if check_name != 0:
+        get_unit = request.POST.get('unit')
+
+        try:
+            component = Component.objects.get(name=get_name, unit=get_unit)
             messages.warning(request, f'Component already exists!')
-        else:
+        except Component.DoesNotExist:
             if form.is_valid():
-                    form.save()
-                    messages.success(request, f'Component added successfully!')
-                    return redirect('viewComponent')
-                                    
+                form.save()
+                messages.success(request, f'Component added successfully!')
+                return redirect('viewComponent')
+                                
 
     context = {
      'form': form,
@@ -103,22 +103,20 @@ def viewComponent(request):
     myTemplate = 'studio/viewComponent.html'
     return render(request, myTemplate, context)
 
-def updateComponent(request,id):
+def updateComponent(request, id):
     instance = get_object_or_404(Component, pk = id)
-    form =addComponentsForm(request.POST or None,instance = instance)
+    form =addComponentsForm(request.POST or None, instance = instance)
     get_name =request.POST.get('name')
-    get_lab = request.POST.get('lab')
-    get_value = request.POST.get('value')
-    get_quantity = request.POST.get('quantity')
-    check_name = Component.objects.filter(name=get_name,lab = get_lab,value = get_value,quantity = get_quantity).count()
-    if request.method == 'POST':
-        if form.is_valid():
-            if check_name == 0:
-                 form.save()
-                 messages.success(request, f'Component added successfully!')
-                 return redirect('viewComponent')
-            else:
-                 messages.warning(request, f'Component already exists!')
+    get_unit = request.POST.get('unit')
+
+    try:
+        component = Component.objects.get(name=get_name, unit = get_unit)
+        messages.warning(request, f'Component already exists!')
+    except Component.DoesNotExist:
+        if request.method == 'POST' and form.is_valid():
+            form.save()
+            messages.success(request, f'Component updated successfully!')
+            return redirect('viewComponent')
     context = {
      'form': form,
     }
@@ -133,6 +131,58 @@ def deleteComponent(request, id):
     except:
         messages.success(request,"component is already used can't be deleted ")
         return redirect('viewComponent')
+    
+#...................................Lab Component..................................................
+def view_lab_components(request):
+    labComponents = LabComponent.objects.all()
+    context = {
+     'labComponents': labComponents,
+    }
+    myTemplate = 'studio/labComponents.html'
+    return render(request, myTemplate, context)
+
+def add_component_to_lab(request):
+    if request.method == 'POST':
+        get_lab =request.POST.get('lab')
+        get_component = request.POST.get('component')
+        get_quantity = request.POST.get('quantity')
+
+        lab = get_object_or_404(Lab, pk = get_lab)
+        component = get_object_or_404(Component, pk = get_component)
+
+        labComponent = LabComponent(
+            lab = lab,
+            component = component,
+            quantity = get_quantity
+        )
+        labComponent.save()
+        messages.success(request, f"Component {component.name} added to lab {lab.name}!")
+        return redirect('addComponentToLab')
+
+def update_component_in_lab(request, id):
+    if request.method == 'POST':
+        get_lab =request.POST.get('lab')
+        get_component = request.POST.get('component')
+        get_quantity = request.POST.get('quantity')
+
+        labComponent = get_object_or_404(LabComponent, pk = id)
+        lab = get_object_or_404(Lab, pk = get_lab)
+        component = get_object_or_404(Component, pk = get_component)
+
+        labComponent.lab = lab
+        labComponent.component = get_component
+        labComponent.quantity = get_quantity
+        labComponent.save()
+        messages.success(request, f"Component {component.name} updated to lab {lab.name}!")
+        return redirect('viewLabComponents')
+
+def remove_component_to_lab(request, id):
+    lab_component = get_object_or_404(LabComponent, pk = id)
+    component_name = lab_component.component.name
+    lab_name = lab_component.lab.name
+    lab_component.delete()
+    messages.success(request, f"Component {component_name} removed from lab {lab_name}!")
+    return redirect('viewLabComponents')
 
 #...................................Department..................................................
 def addDepartment(request):
@@ -140,10 +190,11 @@ def addDepartment(request):
     if request.method == 'POST':       
         form = addDepartmentForm(request.POST or None)
         get_name =request.POST.get('name')
-        check_name = Department.objects.filter(name=get_name).count()
-        if check_name != 0:
+        
+        try:
+            department = Department.objects.get(name = get_name)
             messages.warning(request, f'Department already exists!')
-        else:
+        except Department.DoesNotExist:
             if form.is_valid():               
                 form.save()
                 messages.success(request, f'Department added successfully!')
