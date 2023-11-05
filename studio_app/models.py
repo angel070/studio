@@ -15,15 +15,12 @@ class Lab(models.Model):
      return self.name
 
 class Component(models.Model):
-    lab = models.ForeignKey( Lab,on_delete=models.PROTECT)
-    name = models.CharField(max_length = 100, null = False , blank= False,unique = True)
-    value = models.CharField(max_length = 20, null = False, blank = False)
-    quantity = models.PositiveIntegerField(null = False, blank = False)
-
+    name = models.CharField(max_length = 100, null = False , blank= False, unique = True)
+    unit = models.CharField(max_length = 20, null = False, blank = False)
+    description = models.CharField(max_length = 200, null = True, blank = True)
 
     class Meta:
         verbose_name_plural = 'Components'
-
 
     def __str__(self):
      return self.name
@@ -32,6 +29,17 @@ class Component(models.Model):
     def get_remaining_quantity(self):
        remaining_quantity = self.quantity - sum(request.quantity for request in self.respondedcomponents_set.filter(status="ACCEPTED"))
        return remaining_quantity
+
+class LabComponent(models.Model):
+    lab = models.ForeignKey(Lab, on_delete=models.PROTECT)
+    component = models.ForeignKey(Component, on_delete=models.PROTECT)
+    quantity = models.PositiveIntegerField()
+
+    class Meta:
+        verbose_name_plural = 'Lab Components'
+
+    def __str__(self):
+        return self.component.name
 
 class Department(models.Model):
    name = models.CharField(max_length = 255, blank = False, null=False, unique = True)

@@ -311,7 +311,13 @@ def addPurchase(request):
     if request.method == 'POST':
         form = addPurchaseForm(request.POST or None)
         if form.is_valid():
-            form.save()
+            purchase = form.save()
+            try:
+                component = Component.objects.get(id=purchase.component.id, lab=purchase.lab)
+                component.quantity += purchase.quantity
+                component.save()
+            except Component.DoesNotExist:
+                pass
             messages.success(request, f'Purchase added successfully!')
             return redirect('viewPurchases')
 
