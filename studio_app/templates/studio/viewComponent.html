@@ -31,9 +31,9 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Name</th>
+                                <th>Lab</th>
+                                <th>Name</th>                           
                                 <th>Unit</th>
-                                <th>Description</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -52,8 +52,10 @@
                                 </td>
                                 <td>
                                     {{ component.description}}
-                                </td>
-
+                                </td>                              
+                              
+                               
+                               
                                 <td><a href="{% url 'deleteComponent' component.id %}" onclick="return confirm('Seriously Delete this component!?');" type="button"
                                     class="btn btn-outline-danger"><i class="fa fa-trash"></i></a> |
                                     <a href="{% url 'updateComponent' component.id %}" type="button" class="btn btn-outline-danger"><i

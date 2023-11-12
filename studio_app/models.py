@@ -25,11 +25,7 @@ class Component(models.Model):
     def __str__(self):
      return self.name + ' - ' + self.unit
 
-    @property
-    def get_remaining_quantity(self):
-       remaining_quantity = self.quantity - sum(request.quantity for request in self.respondedcomponents_set.filter(status="ACCEPTED"))
-       return remaining_quantity
-
+   
 class LabComponent(models.Model):
     lab = models.ForeignKey(Lab, on_delete=models.PROTECT)
     component = models.ForeignKey(Component, on_delete=models.PROTECT)
@@ -40,6 +36,11 @@ class LabComponent(models.Model):
 
     def __str__(self):
         return self.component.name
+    
+    @property
+    def get_remaining_quantity(self):
+        remaining_quantity = self.quantity - sum(request.quantity for request in self.respondedcomponents_set.filter(status="ACCEPTED", labComponent =self))
+        return remaining_quantity
 
 class Department(models.Model):
    name = models.CharField(max_length = 255, blank = False, null=False, unique = True)
@@ -207,10 +208,14 @@ class Requestcomponents(models.Model):
 
    def __str__(self):
      return f'{self.request.member.firstName} {self.request.member.lastName}'
+   
+   @property
+   def get_component_lab(self):
+      return LabComponent.objects.filter(component = self.component)
 
 class RespondedComponents(models.Model):
-   request = models.ForeignKey(Request, on_delete=models.CASCADE)
-   component = models.ForeignKey(Component,  on_delete=models.PROTECT)
+   request = models.ForeignKey(Request, on_delete=models.PROTECT)
+   labComponent = models.ForeignKey(LabComponent,  on_delete=models.PROTECT)
    quantity = models.PositiveIntegerField(default=0)
    status = models.CharField(max_length = 255, null = True)
    responseDate = models.DateTimeField(null=True, blank=True)
@@ -221,25 +226,25 @@ class RespondedComponents(models.Model):
    def __str__(self):
      return f'{self.request.member.firstName} {self.request.member.lastName}'
 
-class PaymentSetting(models.Model):
-   amount = models.FloatField(null=False, blank=False)
+# class PaymentSetting(models.Model):
+#    amount = models.FloatField(null=False, blank=False)
 
-   class Meta:
-       verbose_name_plural = 'Payment Setting'
+#    class Meta:
+#        verbose_name_plural = 'Payment Setting'
 
-   def __str__(self):
-     return 'self.amount '
+#    def __str__(self):
+#      return 'self.amount '
 
-class MemberPayment(models.Model):
-   member = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
-   amount = models.FloatField()
-   paymentDate = models.DateField(default=datetime.now)
-   expieryDate = models.DateField()
-   remainingDays = models.IntegerField()
+# class MemberPayment(models.Model):
+#    member = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
+#    amount = models.FloatField()
+#    paymentDate = models.DateField(default=datetime.now)
+#    expieryDate = models.DateField()
+#    remainingDays = models.IntegerField()
 
-   class Meta:
-         verbose_name_plural = 'Member Payment'
+#    class Meta:
+#          verbose_name_plural = 'Member Payment'
 
-   def __str__(self):
-     return 'self.remainingDays'
+#    def __str__(self):
+#      return 'self.remainingDays'
 

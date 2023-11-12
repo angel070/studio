@@ -92,11 +92,11 @@ urlpatterns = [
     path('viewReturnedComponents/', views.viewReturnedComponents, name='viewReturnedComponents'),
 
 
-    path('addPaymentSetting/', views.addPaymentSetting, name='addPaymentSetting'),
-    path('viewPaymentSetting/', views.viewPaymentSetting, name='viewPaymentSetting'),
+    # path('addPaymentSetting/', views.addPaymentSetting, name='addPaymentSetting'),
+    # path('viewPaymentSetting/', views.viewPaymentSetting, name='viewPaymentSetting'),
 
 
-    path('addMemberPayment/', views.addMemberPayment, name='addMemberPayment'),
+    # path('addMemberPayment/', views.addMemberPayment, name='addMemberPayment'),
 
 
 ]

@@ -108,24 +108,24 @@ class addCheckInAndOutForm(forms.ModelForm):
         model = CheckInAndout
         fields ='__all__'
 
-class updateRequestedComponentsForm(forms.ModelForm):
-    class Meta:
-        model = Requestcomponents
-        fields =('request','component','quantity')
+# class updateRequestedComponentsForm(forms.ModelForm):
+#     class Meta:
+#         model = Requestcomponents
+#         fields =('request','component','quantity')
 
-class paymentSettingsForm(forms.ModelForm):
-    class Meta: 
-        model = PaymentSetting
-        fields = '__all__'
+# class paymentSettingsForm(forms.ModelForm):
+#     class Meta: 
+#         model = PaymentSetting
+#         fields = '__all__'
 
-class MemberPaymentForm(forms.ModelForm):
-    class Meta: 
-        model = MemberPayment
-        fields = ('member','paymentDate')
+# class MemberPaymentForm(forms.ModelForm):
+#     class Meta: 
+#         model = MemberPayment
+#         fields = ('member','paymentDate')
 
-        widgets = {
-            'paymentDate': forms.DateInput(attrs={'type':'date' }),
-        }
+#         widgets = {
+#             'paymentDate': forms.DateInput(attrs={'type':'date' }),
+#         }
 
 
 

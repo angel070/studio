@@ -34,6 +34,7 @@
                                 <th>Component</th>
                                 <th>Lab</th>
                                 <th>Quantity</th>
+                                <th>Remaining Quantity</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -53,9 +54,12 @@
                                 <td>
                                     {{ labComponent.quantity}}
                                 </td>
+                                <td>
+                                    {{ labComponent.get_remaining_quantity}}
+                                </td>
 
                                 <td>
-                                    <a href="{% url "updateLabComponent" labComponent.id %}" type="button" class="btn btn-outline-danger"><i
+                                    <a href="{% url 'updateLabComponent' labComponent.id %}" type="button" class="btn btn-outline-danger"><i
                                             class="fa fa-edit"></i></a> |
                                     <a href="{% url 'deleteLabComponent' labComponent.id %}" onclick="return confirm('Seriously remove this component from this lab!?');" type="button"
                                     class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
