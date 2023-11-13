@@ -1014,18 +1014,23 @@ def viewAcceptedRequest(request):
 
 def returnComponents(request,id):
     instance = get_object_or_404(RespondedComponents,pk=id)
-    quantity = request.POST.get('quantity')
-    try:
-        ReturnedComponents.objects.create(
-            respondedComponent_id = id,
-            quantity = quantity,
-            status  = 'Returned',
-            responseDate = datetime.now()
-        ).save()
-        messages.success(request, f'Your component returned successfully!')
-        return redirect('viewAcceptedRequest')
-    except:
-        messages.success(request, f'your request has failed')
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity')
+        if int(quantity) > instance.get_remaining_quantity:
+            messages.warning(request, f"Can't receive more than {instance.get_remaining_quantity}! ")
+            return redirect(returnComponents, id)
+        try:
+            ReturnedComponents(
+                respondedComponent_id = id,
+                quantity = quantity,
+                status  = 'Returned',
+                responseDate = datetime.now()
+            ).save()
+            messages.success(request, f'Your component returned successfully!')
+            return redirect('viewAcceptedRequest')
+        except:
+            messages.warning(request, f'your request has failed')
+            return redirect(returnComponents, id)
         
 
     context = {
