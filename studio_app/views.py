@@ -860,6 +860,12 @@ def addRequestedComponents(request):
             messages.warning(request, f'Sorry,no member with this email address')
             return redirect('addRequestedComponents')
         
+        # Check if member has already taken any component
+        if sum([data.get_remaining_quantity for data in RespondedComponents.objects.filter(request__member = get_member)]) > 0:
+            messages.warning(request, f"You haven't returned some components that have already taken! Kindly, return them so you can have what you need!")
+            return redirect('addRequestedComponents')
+
+
         # if check_member == 0:
         #     messages.warning(request, f'Please make payment')
         #     return redirect('addRequestedComponents')
