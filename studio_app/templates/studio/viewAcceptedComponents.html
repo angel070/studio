@@ -30,7 +30,8 @@
                                 <th>Member</th>
                                 <th>Member Id</th>
                                 <th>Component</th>
-                                <th>Quantity</th>
+                                <th>Lent Quantity</th>
+                                <th>returned Quantity</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -50,11 +51,15 @@
                                     {{ request.request.member.idNumber}}
                                 </td>
                                 <td>
-                                    {{ request.component}}
+                                    {{ request.labComponent.component}}
                                 </td>
                                 <td>
                                     {{ request.quantity}}
                                 </td>
+                                <td>
+                                    {{ request.get_returned_quantity }}
+                                </td>
+
                                 <td>
                                     {{ request.request.requestedDate|date:"Y-m-d" }}
                                 </td>

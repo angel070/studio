@@ -225,6 +225,31 @@ class RespondedComponents(models.Model):
 
    def __str__(self):
      return f'{self.request.member.firstName} {self.request.member.lastName}'
+   
+   @property
+   def get_returned_quantity(self):
+        remaining_quantity = self.quantity - sum(request.quantity for request in self.returnedcomponents_set.all())
+        return remaining_quantity
+   
+   @property
+   def get_returned_quantity(self):
+      return sum(request.quantity for request in self.returnedcomponents_set.all())
+   
+class ReturnedComponents(models.Model):
+   respondedComponent = models.ForeignKey(RespondedComponents, on_delete=models.PROTECT)
+   quantity = models.PositiveIntegerField(default=0)
+   responseDate = models.DateTimeField(null=True, blank=True)
+
+   class Meta:
+        verbose_name_plural = 'Returned Components'
+
+   def __str__(self):
+     return f'{self.respondedComponent.request.member.firstName} {self.respondedComponent.request.member.lastName}'
+   
+   @property
+   def get_returned_quantity(self):
+        remaining_quantity = self.respondedComponent.quantity - sum(request.quantity for request in self.returnedcomponents_set)
+        return remaining_quantity
 
 # class PaymentSetting(models.Model):
 #    amount = models.FloatField(null=False, blank=False)

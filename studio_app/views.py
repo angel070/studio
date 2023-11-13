@@ -1013,21 +1013,27 @@ def viewAcceptedRequest(request):
     return render(request, myTemplate, context)
 
 def returnComponents(request,id):
-    # requestComponent = Requestcomponents.objects.get(id=id)
-    # quantity = request.POST.get('quantity')
-    # RespondedComponents.objects.create(
-    #     request = requestComponent.request,
-    #     component = requestComponent.component,
-    #     quantity =requestComponent.quantity,
-    #     status  = 'Returned',
-    #     responseDate = datetime.now()
-    # )
-    returned = RespondedComponents.objects.get(id = id)
-    returned.status = 'Returned'
-    returned.save()
-    messages.success(request, f'Successfully returned')
-    return redirect(viewAcceptedRequest)
+    instance = get_object_or_404(RespondedComponents,pk=id)
+    quantity = request.POST.get('quantity')
+    try:
+        ReturnedComponents.objects.create(
+            respondedComponent_id = id,
+            quantity = quantity,
+            status  = 'Returned',
+            responseDate = datetime.now()
+        ).save()
+        messages.success(request, f'Your component returned successfully!')
+        return redirect('viewAcceptedRequest')
+    except:
+        messages.success(request, f'your request has failed')
+        
 
+    context = {
+        'returnComponent': instance,       
+    }
+    myTemplate = 'studio/returnComponent.html'
+    return render(request, myTemplate, context)
+   
 def viewReturnedComponents(request):
     returnedComponents = RespondedComponents.objects.filter(status = "Returned")
 
