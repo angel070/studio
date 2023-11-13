@@ -29,6 +29,7 @@
                                 <th>No.</th>
                                 <th>Member</th>
                                 <th>Member Id</th>
+                                <th>Lab</th>
                                 <th>Component</th>
                                 <th>Quantity</th>
                                 <th>Date</th>
@@ -49,7 +50,10 @@
                                     {{ component.request.member.idNumber}}
                                 </td>
                                 <td>
-                                    {{ component.component}}
+                                    {{ component.labComponent.lab.name}}
+                                </td>
+                                <td>
+                                    {{ component.labComponent.component.name}} - {{ component.labComponent.component.unit}}
                                 </td>
                                 <td>
                                     {{ component.quantity}}

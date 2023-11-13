@@ -1015,17 +1015,23 @@ def viewAcceptedRequest(request):
 def returnComponents(request,id):
     instance = get_object_or_404(RespondedComponents,pk=id)
     if request.method == 'POST':
-        quantity = request.POST.get('quantity')
-        if int(quantity) > instance.get_remaining_quantity:
+        quantity = int(request.POST.get('quantity'))
+
+        if quantity > instance.get_remaining_quantity:
             messages.warning(request, f"Can't receive more than {instance.get_remaining_quantity}! ")
             return redirect(returnComponents, id)
+        
         try:
-            ReturnedComponents(
+            returnedComponents = ReturnedComponents(
                 respondedComponent_id = id,
                 quantity = quantity,
-                status  = 'Returned',
                 responseDate = datetime.now()
-            ).save()
+            )
+            returnedComponents.save()
+
+            if instance.get_remaining_quantity == 0:
+                instance.status = 'RETURNED'
+                instance.save()
             messages.success(request, f'Your component returned successfully!')
             return redirect('viewAcceptedRequest')
         except:
@@ -1040,7 +1046,7 @@ def returnComponents(request,id):
     return render(request, myTemplate, context)
    
 def viewReturnedComponents(request):
-    returnedComponents = RespondedComponents.objects.filter(status = "Returned")
+    returnedComponents = RespondedComponents.objects.filter(status = "RETURNED")
 
     context = {
         'returnedComponents': returnedComponents
