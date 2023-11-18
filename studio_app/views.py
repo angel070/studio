@@ -860,6 +860,12 @@ def addRequestedComponents(request):
             messages.warning(request, f'Sorry,no member with this email address')
             return redirect('addRequestedComponents')
         
+        # Check if member has already taken any component
+        if sum([data.get_remaining_quantity for data in RespondedComponents.objects.filter(request__member = get_member)]) > 0:
+            messages.warning(request, f"You haven't returned some components that have already taken! Kindly, return them so you can have what you need!")
+            return redirect('addRequestedComponents')
+
+
         # if check_member == 0:
         #     messages.warning(request, f'Please make payment')
         #     return redirect('addRequestedComponents')
@@ -1014,18 +1020,29 @@ def viewAcceptedRequest(request):
 
 def returnComponents(request,id):
     instance = get_object_or_404(RespondedComponents,pk=id)
-    quantity = request.POST.get('quantity')
-    try:
-        ReturnedComponents.objects.create(
-            respondedComponent_id = id,
-            quantity = quantity,
-            status  = 'Returned',
-            responseDate = datetime.now()
-        ).save()
-        messages.success(request, f'Your component returned successfully!')
-        return redirect('viewAcceptedRequest')
-    except:
-        messages.success(request, f'your request has failed')
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity'))
+
+        if quantity > instance.get_remaining_quantity:
+            messages.warning(request, f"Can't receive more than {instance.get_remaining_quantity}! ")
+            return redirect(returnComponents, id)
+        
+        try:
+            returnedComponents = ReturnedComponents(
+                respondedComponent_id = id,
+                quantity = quantity,
+                responseDate = datetime.now()
+            )
+            returnedComponents.save()
+
+            if instance.get_remaining_quantity == 0:
+                instance.status = 'RETURNED'
+                instance.save()
+            messages.success(request, f'Your component returned successfully!')
+            return redirect('viewAcceptedRequest')
+        except:
+            messages.warning(request, f'your request has failed')
+            return redirect(returnComponents, id)
         
 
     context = {
@@ -1035,7 +1052,7 @@ def returnComponents(request,id):
     return render(request, myTemplate, context)
    
 def viewReturnedComponents(request):
-    returnedComponents = RespondedComponents.objects.filter(status = "Returned")
+    returnedComponents = RespondedComponents.objects.filter(status = "RETURNED")
 
     context = {
         'returnedComponents': returnedComponents

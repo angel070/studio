@@ -227,9 +227,8 @@ class RespondedComponents(models.Model):
      return f'{self.request.member.firstName} {self.request.member.lastName}'
    
    @property
-   def get_returned_quantity(self):
-        remaining_quantity = self.quantity - sum(request.quantity for request in self.returnedcomponents_set.all())
-        return remaining_quantity
+   def get_remaining_quantity(self):
+        return self.quantity - sum(request.quantity for request in self.returnedcomponents_set.all())
    
    @property
    def get_returned_quantity(self):
