@@ -383,7 +383,7 @@ def deleteIncome(request, id):
 def addPurchase(request):
     form = addPurchaseForm()
     if request.method == 'POST':
-        form = addPurchaseForm(request.POST or None)
+        form = addPurchaseForm(request.POST,request.FILES or None)
         if form.is_valid():
             purchase = form.save()
             try:

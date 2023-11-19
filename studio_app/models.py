@@ -86,9 +86,10 @@ class Purchases(models.Model):
     lab = models.ForeignKey(Lab, on_delete = models.PROTECT)
     component =models.ForeignKey(Component, on_delete = models.PROTECT)
     quantity = models.PositiveIntegerField(null = False, blank = False)
-    amount = models.FloatField(null = True, blank = True)
+    amount = models.FloatField(null = False, blank = False)
     description = models.CharField(max_length = 1000, null = True ,blank = True)
     date= models.DateField(null = False, blank = False,default = datetime.now())
+    file = models.FileField(upload_to='uploads/', null = True, blank = True)
 
     class Meta:
         verbose_name_plural = 'Purchases'
