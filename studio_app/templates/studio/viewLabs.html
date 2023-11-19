@@ -34,6 +34,9 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Name</th>
+                                <th>Total Income</th>
+                                <th>Total Expenses</th>
+                                <th>Remaining Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -46,6 +49,15 @@
                                 </td>
                                 <td>
                                     {{ lab.name}}
+                                </td>
+                                <td>
+                                    {{ lab.get_total_income}}
+                                </td>
+                                <td>
+                                    {{ lab.get_total_expenses}}
+                                </td>
+                                <td>
+                                    {{ lab.get_amount_remaining}}
                                 </td>
                             
                                 <td><a href="{% url 'deleteLab' lab.id %}" onclick="return confirm('Seriously Delete this lab!?');" type="button"

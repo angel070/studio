@@ -63,9 +63,9 @@
                                     {{ member.date |date:"Y-m-d"}}
                                 </td>
                                 <td>
-                                    {% localtime on %}
-                                        {{ member.date |date:"H:i"}}
-                                    {% endlocaltime %}
+                                    {{ member.date |date:"H:i"}}
+                                    {% comment %} {% localtime on %}
+                                    {% endlocaltime %} {% endcomment %}
                                 </td>
 
                                 <td>

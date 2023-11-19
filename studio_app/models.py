@@ -13,6 +13,18 @@ class Lab(models.Model):
 
     def __str__(self):
      return self.name
+    
+    @property
+    def get_total_income(self):
+       return sum(income.amount for income in self.income_set.filter(lab = self))
+    
+    @property
+    def get_total_expenses(self):
+       return sum(income.amount for income in self.expenses_set.filter(lab = self))
+
+    @property
+    def get_amount_remaining(self):
+       return self.get_total_income - self.get_total_expenses
 
 class Component(models.Model):
     name = models.CharField(max_length = 100, null = False , blank= False)
