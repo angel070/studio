@@ -521,6 +521,19 @@ def viewExpenses(request):
     myTemplate = 'studio/viewExpenses.html'
     return render(request, myTemplate, context)
 
+def ExpensesReport(request):
+    expenses = Expenses.objects.all()
+
+    if request.method == 'POST':
+        get_fromDate = request.POST.get('fromDate')   
+        get_endDate = request.POST.get('endDate')
+
+    context = {
+        'expenses': expenses,
+         }
+    myTemplate = 'studio/viewExpensesReport.html'
+    return render(request, myTemplate, context)
+
 def updateExpenses(request,id):
     instance = get_object_or_404(Expenses, pk = id)
     form = updateExpensesForm(request.POST or None,instance = instance)

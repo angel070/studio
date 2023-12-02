@@ -23,14 +23,25 @@
                     {% endfor %}
                     {% endif %}
 
-                    <h3 class="text-center">Expenses </h3>
-                    <a href="{% url 'addExpenses' %}"><button class="btn btn-outline-primary mb-3 w3-right"><i class="fa fa-plus"></i> Add
-                            New</button></a>
-
-                    <a href="{% url 'ExpensesReport' %}"><button class="btn btn-outline-primary mb-3 w3-right">
-                            Report
-                        </button></a>
-                    <table id="example" class="table table-hover table-striped table-bordered">
+                    <h3 class="text-center">Expenses Report</h3>  
+                    <form action="{% url 'ExpensesReport' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                                <div class="col-md-4">
+                                    <input type="date" name="fromDate">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" name="endDate">
+                                </div>
+                                <div class="col-md-4">
+                                   <!-- <a href="{% url 'ExpensesReport' %}"><button>Search</button></a>  -->
+                                   <button type="submit">submit</button>
+                                </div>
+                        </div>
+                        
+                    </form>                 
+                    
+                    <table id="exampleb" class="table table-hover table-striped table-bordered mt-3">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -39,7 +50,6 @@
                                 <th>Amount</th>
                                 <th>Description</th>
                                 <th>Date</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
 
@@ -59,18 +69,12 @@
                                     {{ expense.amount}}
                                 </td>
                                 <td>
-                                    {{ expense.description }}
+                                    {{ expense.description}}
                                 </td>
                                 <td>
-                                    {{ expense.date }}
-                                </td>
-                               
-                                <td><a href="{% url 'deleteExpenses' expense.id %}" onclick="return confirm('Seriously Delete this !?');"
-                                    type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a> |
-                                    <a href="{% url 'updateExpenses' expense.id %}" type="button" class="btn btn-outline-danger"><i
-                                            class="fa fa-edit"></i></a>
-                                            
-                                </td>
+                                    {{ expense.date}}
+                                </td>                               
+                            
                             </tr>
                             {%endfor%}
                         </tbody>

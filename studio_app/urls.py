@@ -57,8 +57,10 @@ urlpatterns = [
     
     path('addExpenses/', views.addExpenses, name='addExpenses'),
     path('viewExpenses/', views.viewExpenses, name='viewExpenses'),
+    path('ExpensesReport/', views.ExpensesReport, name='ExpensesReport'),
     path('delete/Expenses/<int:id>/', views.deleteExpenses, name='deleteExpenses'),
     path('update/Expenses/<int:id>/', views.updateExpenses, name='updateExpenses'),
+    
     
     path('addLocation/', views.addLocation, name='addLocation'),
     path('viewLocation/', views.viewLocation, name='viewLocation'),
