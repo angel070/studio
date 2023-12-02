@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from.forms import *
 from django.contrib import messages
-from datetime import datetime, timedelta, date
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from accounts.models import *
-from dateutil.relativedelta import relativedelta
-import pandas as pd
+from django.db.models import Q
 
 
 # Create your views here.
@@ -298,7 +297,7 @@ def viewSourceOfIncome(request):
 
     context = {
         'IncomeSources': IncomeSources,
-         }
+    }
     myTemplate = 'studio/viewSourceOfIncome.html'
     return render(request, myTemplate, context)
 
@@ -522,15 +521,33 @@ def viewExpenses(request):
     return render(request, myTemplate, context)
 
 def ExpensesReport(request):
-    expenses = Expenses.objects.all()
+    expenses = None
 
-    if request.method == 'POST':
-        get_fromDate = request.POST.get('fromDate')   
-        get_endDate = request.POST.get('endDate')
+    lab = request.GET.get('lab')
+    startDate = request.GET.get('startDate')
+    endDate = request.GET.get('endDate')
+
+    filter_conditions = Q()
+    dateFormat = '%Y-%m-%d'
+    if startDate:
+        searchStartDate = datetime.strptime(startDate, dateFormat)
+        filter_conditions &= Q(date__gte=searchStartDate)
+    if endDate:
+        searchEndDate = datetime.strptime(endDate, dateFormat)
+        filter_conditions &= Q(date__lte=searchEndDate)
+    if lab:
+        filter_conditions &= Q(lab_id=lab)
+
+    if filter_conditions:
+        expenses = Expenses.objects.filter(filter_conditions) or None
+
 
     context = {
         'expenses': expenses,
-         }
+        'startDate':  startDate,
+        'endDate':  endDate,
+        'lab':  lab,
+    }
     myTemplate = 'studio/viewExpensesReport.html'
     return render(request, myTemplate, context)
 

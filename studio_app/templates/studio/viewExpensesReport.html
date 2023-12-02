@@ -10,7 +10,7 @@
 <div class="outer-container mt-5 ">
     <div class="container">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="w3-card mt-5" >
                     {% if messages %}
                     {% for message in messages %}
@@ -24,24 +24,28 @@
                     {% endif %}
 
                     <h3 class="text-center">Expenses Report</h3>  
-                    <form action="{% url 'ExpensesReport' %}" method="POST">
+                    <form action="{% url 'ExpensesReport' %}" method="GET">
                         {% csrf_token %}
                         <div class="row">
-                                <div class="col-md-4">
-                                    <input type="date" name="fromDate">
+                                <div class="col-md-5">
+                                    <input class="form-control" type="date" name="startDate" value="{{startDate}}">
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="date" name="endDate">
+                                <div class="col-md-5">
+                                    <input class="form-control" type="date" name="endDate" value="{{endDate}}">
                                 </div>
-                                <div class="col-md-4">
-                                   <!-- <a href="{% url 'ExpensesReport' %}"><button>Search</button></a>  -->
-                                   <button type="submit">submit</button>
+                                <div class="col-md-2">
+                                   <button class="btn btn-primary" type="submit">submit</button>
                                 </div>
                         </div>
                         
                     </form>                 
-                    
-                    <table id="exampleb" class="table table-hover table-striped table-bordered mt-3">
+                </div>
+            </div>
+        </div>
+        {% if expenses %}
+        <div class="row">
+            <div class="col-12">
+                <table id="exampleb" class="table table-hover table-striped table-bordered mt-3">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -80,10 +84,9 @@
                         </tbody>
 
                     </table>
-                </div>
-
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 
