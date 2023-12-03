@@ -445,8 +445,7 @@ form div span h5 {
 }
 
 .btn-right {
-	position: relative;
-	left: 59vw;
+	margin: 0 0 0 15px;
 }
 
 

@@ -39,76 +39,76 @@
                         </div>
                         
                     </form>                 
-                </div>
-            </div>
-        </div>
-        {% if expenses %}
-        <div class="row">
-            <form action="{% url 'ExpensesReport' %}" method="GET">
-                <div class="row mt-4 mb-2">
-                        <div class="col-md-5" hidden>
-                            <input class="form-control" type="date" name="startDate" value="{{startDate}}">
-                        </div>
-                        <div class="col-md-5" hidden>
-                            <input class="form-control" type="date" name="endDate" value="{{endDate}}">
-                        </div>
-                        
-                        <div class="col-md-5" hidden>
-                            <input type="checkbox" name="print" checked>
-                        </div>
-                        
-                        <div class="col-md-2 btn-right">
-                            <button class="btn btn-primary " type="submit">Print</button>
-                        </div>
-                </div>
-                        
-            </form>   
-            <div class="col-12"></div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <table id="exampleb" class="table table-hover table-striped table-bordered mt-3">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Name</th>
-                                <th>Lab</th>
-                                <th>Amount</th>
-                                <th>Description</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {% for expense in expenses %}
-                            <tr>
-                                <td>
-                                    {{ forloop.counter}}
-                                </td>
-                                <td>
-                                    {{ expense.name}}
-                                </td>
-                                <td>
-                                    {{ expense.lab.name}}
-                                </td>
-                                <td>
-                                    {{ expense.amount}}
-                                </td>
-                                <td>
-                                    {{ expense.description}}
-                                </td>
-                                <td>
-                                    {{ expense.date}}
-                                </td>                               
+                    {% if expenses %}
+                    <div class="row">
+                        <form action="{% url 'ExpensesReport' %}" method="GET">
+                            <div class="row mt-4 mb-2">
+                                    <div class="col-md-3" hidden>
+                                        <input class="form-control" type="date" name="startDate" value="{{startDate}}">
+                                    </div>
+                                    <div class="col-md-2" hidden>
+                                        <input class="form-control" type="date" name="endDate" value="{{endDate}}">
+                                    </div>
+                                    
+                                    <div class="col-md-2" hidden>
+                                        <input type="checkbox" name="print" checked>
+                                    </div>
                             
-                            </tr>
-                            {%endfor%}
-                        </tbody>
-
-                    </table>
+                                    <div class="col-md-5 btn-right">
+                                        <button class="btn btn-primary " type="submit"><i class="fa fa-file-pdf" aria-hidden="true"></i> Download</button>
+                                    </div>
+                            </div>
+                                    
+                        </form>   
+                        <div class="col-12"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="exampleb" class="table table-hover table-striped table-bordered mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Name</th>
+                                            <th>Lab</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+            
+                                    <tbody>
+                                        {% for expense in expenses %}
+                                        <tr>
+                                            <td>
+                                                {{ forloop.counter}}
+                                            </td>
+                                            <td>
+                                                {{ expense.name}}
+                                            </td>
+                                            <td>
+                                                {{ expense.lab.name}}
+                                            </td>
+                                            <td>
+                                                {{ expense.amount}}
+                                            </td>
+                                            <td>
+                                                {{ expense.description}}
+                                            </td>
+                                            <td>
+                                                {{ expense.date}}
+                                            </td>                               
+                                        
+                                        </tr>
+                                        {%endfor%}
+                                    </tbody>
+            
+                                </table>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
 
