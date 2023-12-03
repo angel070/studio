@@ -25,7 +25,7 @@
 
                     <h3 class="text-center">Expenses Report</h3>  
                     <form action="{% url 'ExpensesReport' %}" method="GET">
-                        {% csrf_token %}
+                        {% comment %} {% csrf_token %} {% endcomment %}
                         <div class="row">
                                 <div class="col-md-5">
                                     <input class="form-control" type="date" name="startDate" value="{{startDate}}">
@@ -43,6 +43,28 @@
             </div>
         </div>
         {% if expenses %}
+        <div class="row">
+            <form action="{% url 'ExpensesReport' %}" method="GET">
+                <div class="row mt-4 mb-2">
+                        <div class="col-md-5" hidden>
+                            <input class="form-control" type="date" name="startDate" value="{{startDate}}">
+                        </div>
+                        <div class="col-md-5" hidden>
+                            <input class="form-control" type="date" name="endDate" value="{{endDate}}">
+                        </div>
+                        
+                        <div class="col-md-5" hidden>
+                            <input type="checkbox" name="print" checked>
+                        </div>
+                        
+                        <div class="col-md-2 btn-right">
+                            <button class="btn btn-primary " type="submit">Print</button>
+                        </div>
+                </div>
+                        
+            </form>   
+            <div class="col-12"></div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <table id="exampleb" class="table table-hover table-striped table-bordered mt-3">

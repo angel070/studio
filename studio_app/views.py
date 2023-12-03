@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from.forms import *
 from django.contrib import messages
 from datetime import datetime
@@ -7,9 +8,20 @@ from django.http import JsonResponse
 import json
 from accounts.models import *
 from django.db.models import Q
+from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
-# Create your views here.
+def render_to_pdf(template_src, context = {}):
+    template = get_template(template_src)
+    html = template.render(context)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type = 'application/pdf')
+    return None
+
 #....................................Labs...............................
 def add_lab(request):
     form = addLabsForm()
@@ -526,6 +538,7 @@ def ExpensesReport(request):
     lab = request.GET.get('lab')
     startDate = request.GET.get('startDate')
     endDate = request.GET.get('endDate')
+    isPrint = request.GET.get('print')
 
     filter_conditions = Q()
     dateFormat = '%Y-%m-%d'
@@ -541,13 +554,29 @@ def ExpensesReport(request):
     if filter_conditions:
         expenses = Expenses.objects.filter(filter_conditions) or None
 
-
+    total_expenses_amount = sum([expense.amount for expense in expenses]) if expenses else 0
+    
     context = {
         'expenses': expenses,
         'startDate':  startDate,
         'endDate':  endDate,
         'lab':  lab,
+        'total_amount': total_expenses_amount,
+        'user': request.user,
     }
+    if isPrint:
+        myTemplate = 'studio/reports/expensesReport.html'
+        pdf = render_to_pdf(myTemplate, context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = f'Expense Report.pdf'
+            content = f"attachment; filename = {filename} "
+            response['Content-Disposition'] = content
+            if response:
+                return response
+            else:
+                return HttpResponse('Not found')
+
     myTemplate = 'studio/viewExpensesReport.html'
     return render(request, myTemplate, context)
 
