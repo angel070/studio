@@ -444,6 +444,11 @@ form div span h5 {
 	text-decoration: underline;
 }
 
+.btn-right {
+	position: relative;
+	left: 59vw;
+}
+
 
 
 

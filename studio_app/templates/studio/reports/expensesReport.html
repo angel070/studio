@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load humanize %}
+<html lang="en" dir="ltr">
+  <head>
+    <style>
+
+      .heading {
+        background: rgba(0, 130, 170, 0.7);
+        color: #ffffff;
+        padding: 10px 0 10px 0;
+        text-align: center;
+        font-size: 15px;
+      }
+      .to h3 {
+        margin-left: 5vw;
+      }
+      .logo {
+        height: 150px;
+        width: 150px;
+      }
+      td {
+        text-align: center;
+        font-size: 12px;
+        padding-top: 5px;
+      }
+      td p {
+        text-align: center;
+        font-size: 12px;
+      }
+      .d-flex {
+        display: flex;
+      }
+      .d-flex .sign {
+        justify-content: flex-start;
+      }
+      .d-flex .seller {
+        justify-content: flex-end;
+      }
+      .head {
+        text-align: center
+      }
+      footer {
+        background: rgba(0, 130, 170, 0.7);
+        color: #ffffff;
+        text-align: center;
+        margin: 95vh 0 0 0;
+        padding: 50px 0 20px 0;
+
+      }
+    </style>
+    <title>Expenses Report</title>
+  </head>
+  <body>
+    <div class="outer-container">
+      <div class="container">
+        <div class="row">
+          <div class="contents">
+            <div  style="margin-left: 30%">
+              <img class="logo" src="static/img/ditSttudio.jpg"/>
+            </div>
+            <div class="col-md-12">
+              <div class="heading">
+                <h2> EXEPENSES REPORT</h2>
+              </div>
+              <div class="from" style="display: flex;">
+                <div style="width:55%"></div>
+                <div  style="text-align: right;">
+                  <h3>DIT Studio <br>
+                    Dar es salaam. <br>
+                    {% comment %} <br> +255 625 488 971 | +255 713 235 960
+                    <br> Email: mwinyifuady@gmail.com
+                    <br> Instagram: latifafarahahmed {% endcomment %}
+                  </h3>
+                </div>
+              </div>
+              <hr>
+              <div class="contents">
+                  <h3>
+                    Total Expenses (TZS): {{total_amount|floatformat:2|intcomma }}
+                  </h3>
+                    {% if expenses %}
+                    <table>
+                      <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Lab</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Date</th>   
+                      </tr>
+                      <tbody>
+                      {% for expense in expenses %}
+                      <tr>
+                        <td>{{ forloop.counter}}</td>
+                        <td>{{expense.name}}</td>
+                        <td>{{expense.lab.name}}</td>
+                        <td style="text-align: right">{{ expense.amount|floatformat:2|intcomma }}</td>
+                        <td class="text-center">
+                          {% if expense.description %}
+                          {{expense.description}}
+                          {% else %}
+                          -
+                          {% endif %}
+                        </td>
+                        <td>{{expense.date|date:"F d Y"}}</td>
+                      </tr>
+                      {% endfor %}
+                      <tr>
+                        <td colspan="3" style="text-align: left"><strong>Total Amount:</strong></td>
+                        <td style="text-align: right"><strong> {{ total_amount|floatformat:2|intcomma }}</strong></td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="d-flex">
+      <div class="sign">
+        <h3>Approved by</h3>
+        <p>.....................................</p>
+      </div>
+      <div class="seller">
+        <h3>Printed by</h3>
+        <p style="text-transform: uppercase;">{{ user.first_name }} {{ user.last_name }}</p>
+        <p>.....................................</p>
+      </div>
+    </div>
+    <footer class="footer pb-3 pt-3 text-center">
+       <p>Copyright &copy DIT Studio <script>document.write(new Date().getFullYear());</script>. All rights reserved</p>
+    </footer>
+
+  </body>
+</html>
